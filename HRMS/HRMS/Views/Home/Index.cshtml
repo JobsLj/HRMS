@@ -1,0 +1,14 @@
+﻿@using System.Collections.Generic
+@model CalendarEvent
+
+@{
+    ViewData["Title"] = "Home";
+    List<CalendarEvent> events = new List<CalendarEvent>();
+    events.Add(new CalendarEvent { Title = "hellp", Date = DateTime.Now, Type = "info" });
+
+}
+
+
+<h2>@ViewData["Title"]</h2>
+
+<calendar month="12" year="2018" events="@events" />

@@ -1,0 +1,79 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+.calendar .display-4 {
+    font-size: 1.5rem;
+}
+
+@media (max-width:991px) {
+    .calendar .day h5 {
+        background-color: #f8f9fa;
+        padding: 3px 5px 5px;
+        margin: -8px -8px 8px -8px;
+    }
+
+    .calendar .date {
+        padding-left: 4px;
+    }
+}
+
+@media (min-width: 992px) {
+    .calendar h5 {
+        font-size: 0.9rem;
+    }
+
+    .calendar .day {
+        height: 8vw;
+    }
+
+    .calendar .event {
+        font-size: 0.67rem;
+    }
+}
+
+@media (min-width: 1440px) {
+    .calendar .day {
+        height: 7vw;
+    }
+}
+
+@media (min-width: 1920px) {
+    .calendar .day {
+        height: 5.5vw;
+    }
+}
