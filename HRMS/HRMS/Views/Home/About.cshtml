@@ -1,12 +1,6 @@
-﻿@using System.Collections.Generic
-@model CalendarEvent
-
+﻿
 @{
-    ViewData["Title"] = "Calendar";
-    List<CalendarEvent> events = new List<CalendarEvent>();
-    DateTime thisDate = new DateTime(2018, 12, 15);
-    events.Add(new CalendarEvent { Title = "hellp", Date = thisDate, Type = "info" });
-
+    ViewData["Title"] = "About";
 }
 
 <!-- pageheader -->
@@ -24,7 +18,6 @@
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
             <div class="card-body">
-                <calendar month="12" year="2018" events="@events" />
             </div>
         </div>
     </div>
