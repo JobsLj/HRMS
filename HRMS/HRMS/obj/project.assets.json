@@ -12218,23 +12218,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Siew Mun\\.nuget\\packages\\": {},
+    "C:\\Users\\USER\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Siew Mun\\Desktop\\FYP-APP\\HRMS\\HRMS\\HRMS.csproj",
+      "projectUniqueName": "C:\\Users\\USER\\Desktop\\FYP-APP\\HRMS\\HRMS\\HRMS.csproj",
       "projectName": "HRMS",
-      "projectPath": "C:\\Users\\Siew Mun\\Desktop\\FYP-APP\\HRMS\\HRMS\\HRMS.csproj",
-      "packagesPath": "C:\\Users\\Siew Mun\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Siew Mun\\Desktop\\FYP-APP\\HRMS\\HRMS\\obj\\",
+      "projectPath": "C:\\Users\\USER\\Desktop\\FYP-APP\\HRMS\\HRMS\\HRMS.csproj",
+      "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\USER\\Desktop\\FYP-APP\\HRMS\\HRMS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Siew Mun\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

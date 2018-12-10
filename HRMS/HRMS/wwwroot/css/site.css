@@ -78,6 +78,15 @@ body {
 }
 
 
+.pageheader-title {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
 .dashboard-header {
 }
 
@@ -424,4 +433,25 @@ Container / Wrapper
 
 .dashboard-content {
     padding: 30px 30px 60px 30px;
+}
+/* ----------------------- 
+Calendar events
+------------------------- */
+.cal-event {
+    height: 3vw;
+}
+
+.cal-event:hover {
+    cursor: pointer;
+}
+/* ----------------------- 
+Modal
+------------------------- */
+.MHeader {
+    background-color: #049372;
+    color: #fff;
+}
+
+.MHeader-close {
+    color: #fff;
 }

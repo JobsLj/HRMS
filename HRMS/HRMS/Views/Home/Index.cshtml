@@ -2,11 +2,18 @@
 @model CalendarEvent
 
 @{
-    ViewData["Title"] = "Calendar";
+    ViewData["Title"] = "Dashboard";
     List<CalendarEvent> events = new List<CalendarEvent>();
-    DateTime thisDate = new DateTime(2018, 12, 15);
-    events.Add(new CalendarEvent { Title = "hellp", Date = thisDate, Type = "info" });
 
+    DateTime thisDate = new DateTime(2018, 12, 15);
+    DateTime thisdasDate = new DateTime(2018, 12, 7);
+    DateTime danger = new DateTime(2018, 12, 21);
+    DateTime prevmonth = new DateTime(2018, 11, 29);
+
+    events.Add(new CalendarEvent { Title = "increase", Date = thisDate, Type = "success" });
+    events.Add(new CalendarEvent { Title = "no diff", Date = thisdasDate, Type = "warning" });
+    events.Add(new CalendarEvent { Title = "decrease", Date = danger, Type = "danger" });
+    events.Add(new CalendarEvent { Title = "past", Date = prevmonth, Type = "danger" });
 }
 
 <!-- pageheader -->
@@ -25,6 +32,44 @@
         <div class="card">
             <div class="card-body">
                 <calendar month="12" year="2018" events="@events" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header MHeader">
+                <h5 class="modal-title" id="exampleModalLongTitle">@danger</h5>
+                <button type="button" class="close MHeader-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="tabContent">
+                    <li class="nav-item"><a href="#details" class="nav-link active" data-toggle="tab">Room Rates</a></li>
+                    <li class="nav-item"><a href="#access-security" class="nav-link" data-toggle="tab">Metrics</a></li>
+                    <li class="nav-item"><a href="#networking" class="nav-link" data-toggle="tab">What-If Analysis</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="details">
+                        Room rates pricing
+                    </div>
+                    <div class="tab-pane" id="access-security">
+                        Prediction metrics herfe
+                    </div>
+                    <div class="tab-pane" id="networking">
+                        What-If analysis
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
