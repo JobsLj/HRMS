@@ -61,7 +61,8 @@ body {
     }
 
     .calendar .event {
-        font-size: 0.67rem;
+        font-size: 1.2rem;
+        text-align: center;
     }
 }
 
@@ -434,8 +435,9 @@ Container / Wrapper
 .dashboard-content {
     padding: 30px 30px 60px 30px;
 }
+
 /* ----------------------- 
-Calendar events
+Calendar
 ------------------------- */
 .cal-event {
     height: 3vw;
@@ -444,6 +446,11 @@ Calendar events
 .cal-event:hover {
     cursor: pointer;
 }
+
+.current-date {
+    background: #ffecb3
+}
+
 /* ----------------------- 
 Modal
 ------------------------- */
@@ -454,4 +461,15 @@ Modal
 
 .MHeader-close {
     color: #fff;
+}
+
+.room-rates-title {
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #007bff;
+    text-align: center;
+}
+
+.room-rates-desc {
 }

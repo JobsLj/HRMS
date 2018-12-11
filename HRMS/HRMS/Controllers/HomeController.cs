@@ -20,6 +20,11 @@ namespace HRMS.Controllers
             return View();
         }
 
+        public IActionResult CalendarModal(string selected)
+        {
+            return ViewComponent("CalendarModal", new { date = selected });
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

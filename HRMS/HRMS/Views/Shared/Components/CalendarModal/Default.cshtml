@@ -1,0 +1,43 @@
+﻿@model DailyPredictionModel
+
+<div class="modal-header MHeader">
+    <h5 class="modal-title" id="exampleModalLongTitle">Details</h5>
+    <button type="button" class="close MHeader-close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ul class="nav nav-tabs" id="tabContent">
+        <li class="nav-item"><a href="#details" class="nav-link active" data-toggle="tab">Room Rates</a></li>
+        <li class="nav-item"><a href="#access-security" class="nav-link" data-toggle="tab">Metrics</a></li>
+        <li class="nav-item"><a href="#networking" class="nav-link" data-toggle="tab">What-If Analysis</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="details">
+            <div class="row">
+                <div class="col-sm">
+                    <h3 class="room-rates-title">Revenue Forecast</h3>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <h3 class="room-rates-title">Growth Comparison</h3>
+                </div>
+            </div>
+            <div class="modal-footer" style="border:none; margin-top:20px;">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        <div class="tab-pane" id="access-security">
+            Prediction metrics herfe
+        </div>
+        <div class="tab-pane" id="networking">
+            What-If analysis
+        </div>
+    </div>
+
+</div>
+

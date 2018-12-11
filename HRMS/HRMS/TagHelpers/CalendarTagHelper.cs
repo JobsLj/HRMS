@@ -61,6 +61,7 @@ namespace HRMS.TagHelpers
             {
                 var startDate = monthStart.AddDays(-(int)monthStart.DayOfWeek);
                 var dates = Enumerable.Range(0, 42).Select(i => startDate.AddDays(i));
+                var currentDate = DateTime.Today;
 
                 foreach (var d in dates)
                 {
@@ -73,25 +74,51 @@ namespace HRMS.TagHelpers
                     }
 
                     var mutedClasses = "d-none d-lg-inline-block bg-light text-muted";
-                    yield return new XElement("div",
-                        new XAttribute("class", $"day col-lg p-2 border border-left-0 border-top-0 text-truncate {(d.Month != monthStart.Month ? mutedClasses : null)}"),
-                        new XElement("h5",
-                            new XAttribute("class", "row align-items-center"),
-                            new XElement("span",
-                                new XAttribute("class", "date col-1"),
-                                d.Day
+
+                    if (d.Date == currentDate)
+                    {
+                        yield return new XElement("div",
+                            new XAttribute("class", $"day col-lg p-2 border border-left-0 current-date border-top-0 text-truncate {(d.Month != monthStart.Month ? mutedClasses : null)}"),
+                            new XElement("h5",
+                                new XAttribute("class", "row align-items-center"),
+                                new XElement("span",
+                                    new XAttribute("class", "date col-1"),
+                                    d.Day
+                                ),
+                                new XElement("small",
+                                    new XAttribute("class", "col d-lg-none text-center text-muted"),
+                                    d.DayOfWeek.ToString()
+                                ),
+                                new XElement("span",
+                                    new XAttribute("class", "col-1"),
+                                    String.Empty
+                                )
                             ),
-                            new XElement("small",
-                                new XAttribute("class", "col d-lg-none text-center text-muted"),
-                                d.DayOfWeek.ToString()
+                            GetEventHtml(d)
+                        );
+                    }
+                    else
+                    {
+                        yield return new XElement("div",
+                            new XAttribute("class", $"day col-lg p-2 border border-left-0 border-top-0 text-truncate {(d.Month != monthStart.Month ? mutedClasses : null)}"),
+                            new XElement("h5",
+                                new XAttribute("class", "row align-items-center"),
+                                new XElement("span",
+                                    new XAttribute("class", "date col-1"),
+                                    d.Day
+                                ),
+                                new XElement("small",
+                                    new XAttribute("class", "col d-lg-none text-center text-muted"),
+                                    d.DayOfWeek.ToString()
+                                ),
+                                new XElement("span",
+                                    new XAttribute("class", "col-1"),
+                                    String.Empty
+                                )
                             ),
-                            new XElement("span",
-                                new XAttribute("class", "col-1"),
-                                String.Empty
-                            )
-                        ),
-                        GetEventHtml(d)
-                    );
+                            GetEventHtml(d)
+                        );
+                    }
                 }
             }
 
@@ -102,6 +129,7 @@ namespace HRMS.TagHelpers
                         new XAttribute("class", $"event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-{e.Type} text-white cal-event"),
                         new XAttribute("data-toggle", $"modal"),
                         new XAttribute("data-target", $"#detailsModal"),
+                        new XAttribute("onclick", $"CallModal(" + d.Day + ")"),
                         new XAttribute("title", e.Title),
                         e.Title
                     )

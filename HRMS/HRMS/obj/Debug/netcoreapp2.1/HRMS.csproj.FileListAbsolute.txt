@@ -61,37 +61,6 @@ C:\Users\USER\Desktop\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.Views.pdb
 C:\Users\USER\Desktop\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.dll
 C:\Users\USER\Desktop\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.pdb
 C:\Users\USER\Desktop\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csproj.CopyComplete
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.deps.json
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.runtimeconfig.json
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.runtimeconfig.dev.json
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.dll
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.pdb
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.Views.dll
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.Views.pdb
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csprojAssemblyReference.cache
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csproj.CoreCompileInputs.cache
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorAssemblyInfo.cache
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorAssemblyInfo.cs
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.AssemblyInfoInputs.cache
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.AssemblyInfo.cs
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.TagHelpers.input.cache
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.TagHelpers.output.cache
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorCoreGenerate.cache
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Login\Index.g.cshtml.cs
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Error.g.cshtml.cs
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.g.cshtml.cs
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\_ViewImports.g.cshtml.cs
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\_ViewStart.g.cshtml.cs
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorTargetAssemblyInfo.cache
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorTargetAssemblyInfo.cs
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.Views.pdb
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.dll
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.pdb
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csproj.CopyComplete
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Home\About.g.cshtml.cs
 C:\Users\USER\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.deps.json
 C:\Users\USER\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.runtimeconfig.json
 C:\Users\USER\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.runtimeconfig.dev.json
@@ -123,3 +92,35 @@ C:\Users\USER\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.Views.pdb
 C:\Users\USER\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.dll
 C:\Users\USER\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.pdb
 C:\Users\USER\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csproj.CopyComplete
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.deps.json
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.runtimeconfig.json
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.runtimeconfig.dev.json
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.dll
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.pdb
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.Views.dll
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.Views.pdb
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csprojAssemblyReference.cache
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csproj.CoreCompileInputs.cache
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorAssemblyInfo.cache
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorAssemblyInfo.cs
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.AssemblyInfoInputs.cache
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.AssemblyInfo.cs
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.TagHelpers.input.cache
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.TagHelpers.output.cache
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorCoreGenerate.cache
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Home\About.g.cshtml.cs
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Login\Index.g.cshtml.cs
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Error.g.cshtml.cs
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.g.cshtml.cs
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\_ViewImports.g.cshtml.cs
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\_ViewStart.g.cshtml.cs
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorTargetAssemblyInfo.cache
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorTargetAssemblyInfo.cs
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.Views.pdb
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.dll
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.pdb
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csproj.CopyComplete
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\CalendarModal\Default.g.cshtml.cs
