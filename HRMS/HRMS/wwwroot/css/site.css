@@ -464,12 +464,51 @@ Modal
 }
 
 .room-rates-title {
-    font-size: 16px;
+    font-size: 17px;
     margin-top: 20px;
     margin-bottom: 8px;
     color: #007bff;
     text-align: center;
+    font-weight: bold;
+}
+
+.room-rates-growth-title {
+    font-size: 15px;
+    margin-bottom: 8px;
+    text-align: center;
+    font-weight: 700;
 }
 
 .room-rates-desc {
+    text-align: center;
+    font-size: 14px;
+    color: #049372;
+    font-weight: 600;
 }
+
+.room-rates-radio {
+    margin-top: 30px;
+}
+
+.metrics-title {
+    font-size: 17px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.metrics-sub-title {
+    font-size: 15px;
+    margin-bottom: 8px;
+    margin-top: 10px;
+    font-weight: 700;
+    color: #049372;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(82, 63, 105, 0.13)
+}
+
+.metrics-container {
+    margin: 0px 15px 50px;
+}
+

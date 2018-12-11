@@ -16,15 +16,69 @@
     <div class="tab-content">
         <div class="tab-pane active" id="details">
             <div class="row">
-                <div class="col-sm">
+                <div class="col-5">
                     <h3 class="room-rates-title">Revenue Forecast</h3>
-                    <div>
-
+                    <div class="room-rates-desc">
+                        ADR: $125
+                    </div>
+                    <div class="room-rates-desc">
+                        OCCUPANCY: 81%
+                    </div>
+                    <div class="room-rates-desc">
+                        RevPAR: $91
                     </div>
                 </div>
-                <div class="col-sm">
+                <div class="col-6">
                     <h3 class="room-rates-title">Growth Comparison</h3>
+                    <div class="row">
+                        <div class="col-6">
+                            <h4 class="room-rates-growth-title">Yesterday</h4>
+                            <div class="room-rates-desc">
+                                ADR: -0.3%
+                            </div>
+                            <div class="room-rates-desc">
+                                OCCUPANCY: -1%
+                            </div>
+                            <div class="room-rates-desc">
+                                RevPAR: -0.4%
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <h4 class="room-rates-growth-title">Previous Month</h4>
+                            <div class="room-rates-desc">
+                                ADR: -0.3%
+                            </div>
+                            <div class="room-rates-desc">
+                                OCCUPANCY: -1%
+                            </div>
+                            <div class="room-rates-desc">
+                                RevPAR: -0.4%
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="row">
+                <form>
+                    <div class="form-check room-rates-radio">
+                        <input class="form-check-input" type="radio" name="recommendedRate" id="RecommendedRate" value="option1" checked>
+                        <label class="form-check-label" for="RecommendedRate">
+                            Use Recommended Rate
+                        </label>
+                    </div>
+                    <div class="form-check room-rates-radio">
+                        <input class="form-check-input" type="radio" name="defaultRate" id="DefaultRate" value="option2">
+                        <label class="form-check-label" for="RecommendedRate">
+                            Use Default Rate
+                        </label>
+                    </div>
+                    <div class="form-check room-rates-radio">
+                        <input class="form-check-input" type="radio" name="adjustedRate" id="AdjustedRate" value="option2">
+                        <label class="form-check-label" for="RecommendedRate">
+                            Use Adjusted Rate
+                        </label>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer" style="border:none; margin-top:20px;">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -32,8 +86,66 @@
             </div>
         </div>
         <div class="tab-pane" id="access-security">
-            Prediction metrics herfe
-        </div>
+            <div class="metrics-container">
+                <h3 class="metrics-title">Distribution Status</h3>
+                <div class="row">
+                    <div class="col-6">
+                        <h4 class="metrics-sub-title">ADR</h4>
+                        <div class="row">
+                            <div class="col-10">
+                                Seasonal Demands
+                            </div>
+                            <div class="col-2">
+                                10%
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-10">
+                                Historical Data
+                            </div>
+                            <div class="col-2">
+                                10%
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-10">
+                                Social Media
+                            </div>
+                            <div class="col-2">
+                                10%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h4 class="metrics-sub-title">OCCUPANCY</h4>
+                        <div class="row">
+                            <div class="col-10">
+                                Seasonal Demands
+                            </div>
+                            <div class="col-2">
+                                10%
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-10">
+                                Historical Data
+                            </div>
+                            <div class="col-2">
+                                10%
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-10">
+                                Social Media
+                            </div>
+                            <div class="col-2">
+                                10%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
         <div class="tab-pane" id="networking">
             What-If analysis
         </div>
