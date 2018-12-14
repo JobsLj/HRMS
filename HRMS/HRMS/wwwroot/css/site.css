@@ -70,11 +70,19 @@ body {
     .calendar .day {
         height: 7vw;
     }
+    .calendar .event {
+        font-size: 1.3rem;
+        text-align: center;
+    }
 }
 
 @media (min-width: 1920px) {
     .calendar .day {
         height: 5.5vw;
+    }
+    .calendar .event {
+        font-size: 1.5rem;
+        text-align: center;
     }
 }
 
@@ -439,16 +447,57 @@ Container / Wrapper
 /* ----------------------- 
 Calendar
 ------------------------- */
-.cal-event {
-    height: 3vw;
+@media (min-width: 992px) {
+    .cal-event {
+        height: 4.5vw;
+    }
+}
+@media (min-width: 1440px) {
+    .cal-event {
+        height: 4vw;
+    }
+}
+
+@media (min-width: 1920px) {
+    .cal-event {
+        height: 3.2vw;
+    }
+}
+
+.over-success {
+    background-color: #28a7457d !important;
+}
+
+.over-warning {
+    background-color: #ffc1077d !important;
+}
+
+.over-danger {
+    background-color: #dc354573 !important;
 }
 
 .cal-event:hover {
     cursor: pointer;
 }
 
+.over-event:hover {
+    cursor: default !important
+}
+
 .current-date {
-    background: #ffecb3
+    background: #9ccaf9
+}
+
+.occupancy {
+    font-size: 0.7rem;
+    position: absolute;
+    margin-top: 35px;
+    margin-left: -5px;
+}
+
+.percentage {
+    font-size: 0.6rem;
+    float: right;
 }
 
 /* ----------------------- 
@@ -488,6 +537,13 @@ Modal
 
 .room-rates-radio {
     margin-top: 30px;
+    margin-left: 35px;
+}
+
+.room-rates-recommended {
+    font-size: 14px;
+    color: #049372;
+    font-weight: 600;
 }
 
 .metrics-title {

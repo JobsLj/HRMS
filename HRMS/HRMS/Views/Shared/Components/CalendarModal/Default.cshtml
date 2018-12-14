@@ -58,32 +58,105 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <form>
-                    <div class="form-check room-rates-radio">
-                        <input class="form-check-input" type="radio" name="recommendedRate" id="RecommendedRate" value="option1" checked>
-                        <label class="form-check-label" for="RecommendedRate">
-                            Use Recommended Rate
-                        </label>
+            <form class="was-validated">
+                <div class="form-row">
+                    <div class="custom-control custom-radio room-rates-radio col">
+                        <input type="radio" class="custom-control-input" id="RecommendedRate" name="radio-stacked" required checked>
+                        <label class="custom-control-label" for="RecommendedRate">Use Recommended Rate</label>
+                        <div class="room-rates-recommended">
+                            Standard Room: $112
+                        </div>
+                        <div class="room-rates-recommended">
+                            Superior Room: $180
+                        </div>
+                        <div class="room-rates-recommended">
+                            Deluxe Room: $200
+                        </div>
+                        <div class="room-rates-recommended">
+                            Family Room: $210
+                        </div>
+                        <div class="room-rates-recommended">
+                            Suite Room: $280
+                        </div>
                     </div>
-                    <div class="form-check room-rates-radio">
-                        <input class="form-check-input" type="radio" name="defaultRate" id="DefaultRate" value="option2">
-                        <label class="form-check-label" for="RecommendedRate">
-                            Use Default Rate
-                        </label>
+                    <div class="custom-control custom-radio mb-3 room-rates-radio col">
+                        <input type="radio" class="custom-control-input" id="DefaultRate" name="radio-stacked" required>
+                        <label class="custom-control-label" for="DefaultRate">Use Default Rate</label>
+                        <div class="room-rates-recommended">
+                            Standard Room: $102
+                        </div>
+                        <div class="room-rates-recommended">
+                            Superior Room: $150
+                        </div>
+                        <div class="room-rates-recommended">
+                            Deluxe Room: $190
+                        </div>
+                        <div class="room-rates-recommended">
+                            Family Room: $200
+                        </div>
+                        <div class="room-rates-recommended">
+                            Suite Room: $230
+                        </div>
                     </div>
-                    <div class="form-check room-rates-radio">
-                        <input class="form-check-input" type="radio" name="adjustedRate" id="AdjustedRate" value="option2">
-                        <label class="form-check-label" for="RecommendedRate">
-                            Use Adjusted Rate
-                        </label>
+                </div>
+                <div class="form-row">
+                    <div class="custom-control custom-radio mb-3 room-rates-radio" style="padding-left:0px;">
+                        <input type="radio" class="custom-control-input" id="AdjustedRate" name="radio-stacked" required>
+                        <label class="custom-control-label" for="AdjustedRate">Set a adjusted rate</label>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer" style="border:none; margin-top:20px;">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+                    <div class="w-100"></div>
+                    <!--Input group-->
+                    <div class="col-4">
+                        <label for="StandardRoom">Standard Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input type="number" class="form-control" id="StandardRoom" min="0" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="SuperiorRoom">Superior Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input type="number" class="form-control" id="SuperiorRoom" min="0" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="DeluxeRoom">Deluxe Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input type="number" class="form-control" id="DeluxeRoom" min="0" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="FamilyRoom" style="margin-top:10px;">Family Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input type="number" class="form-control" id="FamilyRoom" min="0" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="SuiteRoom" style="margin-top:10px;">Suite Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input type="number" class="form-control" id="SuiteRoom" min="0" placeholder="Price">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border:none; margin-top:20px;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
         <div class="tab-pane" id="access-security">
             <div class="metrics-container">
@@ -144,12 +217,60 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="networking">
+            <div class="metrics-container">
+                <h3 class="metrics-title">What-If Analytics</h3>
+                <div class="row" style="margin-top:20px;">
+                    <div class="col-4">
+                        <label for="StandardRoomWI">Standard Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input type="number" class="form-control" id="StandardRoomWI" min="0" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="SuperiorRoomWI">Superior Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input type="number" class="form-control" id="SuperiorRoomWI" min="0" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="DeluxeRoomWI">Deluxe Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input type="number" class="form-control" id="DeluxeRoomWI" min="0" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="FamilyRoomWI" style="margin-top:10px;">Family Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input type="number" class="form-control" id="FamilyRoomWI" min="0" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="SuiteRoomWI" style="margin-top:10px;">Suite Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input type="number" class="form-control" id="SuiteRoomWI" min="0" placeholder="Price">
+                        </div>
+                    </div>
                 </div>
             </div>
-        <div class="tab-pane" id="networking">
-            What-If analysis
         </div>
     </div>
-
 </div>
 

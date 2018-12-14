@@ -29,6 +29,7 @@ namespace HRMS.TagHelpers
         {
             var monthStart = new DateTime(Year, Month, 1);
             var events = Events?.GroupBy(e => e.Date);
+            var currentDate = DateTime.Today;
 
             var html = new XDocument(
                 new XElement("div",
@@ -60,8 +61,7 @@ namespace HRMS.TagHelpers
             IEnumerable<XElement> GetDatesHtml()
             {
                 var startDate = monthStart.AddDays(-(int)monthStart.DayOfWeek);
-                var dates = Enumerable.Range(0, 42).Select(i => startDate.AddDays(i));
-                var currentDate = DateTime.Today;
+                var dates = Enumerable.Range(0, 42).Select(i => startDate.AddDays(i));              
 
                 foreach (var d in dates)
                 {
@@ -124,13 +124,23 @@ namespace HRMS.TagHelpers
 
             IEnumerable<XElement> GetEventHtml(DateTime d)
             {
-                return events?.SingleOrDefault(e => e.Key == d)?.Select(e =>
+                if (d < currentDate)
+                {
+                    return events?.SingleOrDefault(e => e.Key == d)?.Select(e =>
                     new XElement("a",
-                        new XAttribute("class", $"event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-{e.Type} text-white cal-event"),
-                        new XAttribute("data-toggle", $"modal"),
-                        new XAttribute("data-target", $"#detailsModal"),
+                        new XAttribute("class", $"event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small over-{e.Type} text-white cal-event over-event"),
+                        //new XAttribute("data-toggle", $"modal"),
+                        //new XAttribute("data-target", $"#detailsModal"),
                         new XAttribute("onclick", $"CallModal(" + d.Day + ")"),
                         new XAttribute("title", e.Title),
+                        new XElement("span",
+                            new XAttribute("class", $"occupancy"),
+                            "Occupancy: 80%"
+                            ),
+                        new XElement("span",
+                            new XAttribute("class", $"percentage"),
+                            "+3%"
+                            ),
                         e.Title
                     )
                 ) ?? new[] {
@@ -139,6 +149,33 @@ namespace HRMS.TagHelpers
                     "No events"
                 )
                 };
+                }
+                else
+                {
+                    return events?.SingleOrDefault(e => e.Key == d)?.Select(e =>
+                    new XElement("a",
+                        new XAttribute("class", $"event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-{e.Type} text-white cal-event"),
+                        new XAttribute("data-toggle", $"modal"),
+                        new XAttribute("data-target", $"#detailsModal"),
+                        new XAttribute("onclick", $"CallModal(" + d.Day + ")"),
+                        new XAttribute("title", e.Title),
+                        new XElement("span",
+                            new XAttribute("class", $"occupancy"),
+                            "Occupancy: 80%"
+                            ),
+                        new XElement("span",
+                            new XAttribute("class", $"percentage"),
+                            "+3%"
+                            ),
+                        e.Title
+                    )
+                ) ?? new[] {
+                new XElement("p",
+                    new XAttribute("class", "d-lg-none"),
+                    "No events"
+                )
+                };
+                }         
             }
         }
     }
