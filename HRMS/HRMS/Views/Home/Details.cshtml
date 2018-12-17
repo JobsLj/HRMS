@@ -1,0 +1,258 @@
+﻿
+@{
+    ViewData["Title"] = "Details";
+    var id = ViewData["id"];
+}
+
+<!-- pageheader -->
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+            <h2 class="pageheader-title">@ViewData["Title"]</h2>
+            <div class="page-breadcrumb">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-action="Index" class="breadcrumb-link">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Details</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Body -->
+<div class="row">
+    <!-- Details -->
+    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-12 col-12">
+        <!-- card date -->
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <h1 class="date-title mb-0">@id</h1>
+                    <p>Prediction Anaylsis</p>
+                </div>
+            </div>
+            <div class="card-body border-top">
+                <h3 class="profile-title">Revenue Forecast</h3>
+                <div class="">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">ADR: $125</li>
+                        <li class="mb-2">OCCUPANCY: 80%</li>
+                        <li class="mb-2">RevPAR: $91</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body border-top">
+                <h3 class="profile-title">Distribution Status</h3>
+                <div class="">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">Seasonal Demands: 10%</li>
+                        <li class="mb-2">Historical Data: 80%</li>
+                        <li class="mb-2">Social Media: 10%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- end card date -->
+    </div>
+    <!-- end Details -->
+
+    <!-- campaign data -->
+    <div class="col-xl-9 col-lg-9 col-md-7 col-sm-12 col-12">
+        <!-- campaign tab one -->
+        <div class="influence-profile-content pills-regular">
+            <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-campaign-tab" data-toggle="pill" href="#pills-campaign" role="tab" aria-controls="pills-campaign" aria-selected="true">Summary</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-packages-tab" data-toggle="pill" href="#pills-packages" role="tab" aria-controls="pills-packages" aria-selected="false">What-If Analysis</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-campaign" role="tabpanel" aria-labelledby="pills-campaign-tab">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="section-block">
+                                <h3 class="section-title" style="font-size:20px;">Growth Comparison</h3>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body" style="padding-bottom:0px;">
+                                    <h5 class="text-muted">Yesterday</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h5 class="mb-1">ADR: $110</h5>
+                                    </div>
+                                    <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                        <span>+5.86%</span>
+                                    </div>
+                                </div>
+                                <div class="card-body" style="padding-bottom:0px;">
+                                    <div class="metric-value d-inline-block">
+                                        <h5 class="mb-1">OCCUPANCY: 75%</h5>
+                                    </div>
+                                    <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                       <span>+5.86%</span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="metric-value d-inline-block">
+                                        <h5 class="mb-1">RevPAR: $85</h5>
+                                    </div>
+                                    <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                        <span>+5.86%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body" style="padding-bottom:0px;">
+                                    <h5 class="text-muted">Previous Month</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h5 class="mb-1">ADR: $110</h5>
+                                    </div>
+                                    <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                        <span>5.86%</span>
+                                    </div>
+                                </div>
+                                <div class="card-body" style="padding-bottom:0px;">
+                                    <div class="metric-value d-inline-block">
+                                        <h5 class="mb-1">OCCUPANCY: 75%</h5>
+                                    </div>
+                                    <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                        <span>+5.86%</span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="metric-value d-inline-block">
+                                        <h5 class="mb-1">RevPAR: $85</h5>
+                                    </div>
+                                    <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                        <span>+5.86%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-body" style="padding-bottom:0px;">
+                                    <h5 class="text-muted">Previous Year</h5>
+                                    <div class="metric-value d-inline-block">
+                                        <h5 class="mb-1">ADR: $125</h5>
+                                    </div>
+                                    <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                                        <span>N/A</span>
+                                    </div>
+                                </div>
+                                <div class="card-body" style="padding-bottom:0px;">
+                                    <div class="metric-value d-inline-block">
+                                        <h5 class="mb-1">OCCUPANCY: 80%</h5>
+                                    </div>
+                                    <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                                        <span>N/A</span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="metric-value d-inline-block">
+                                        <h5 class="mb-1">RevPAR: $91</h5>
+                                    </div>
+                                    <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                                        <span>N/A</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="section-block">
+                                <h3 class="section-title" style="font-size:20px;">Rates Available</h3>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-header bg-primary text-center p-3 ">
+                                    <h4 class="mb-0 text-white"> Recommended Rate</h4>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h1 class="mb-1">$150</h1>
+                                    <p>Average Daily Rate</p>
+                                </div>
+                                <div class="card-body border-top">
+                                    <ul class="list-unstyled bullet-check font-14">
+                                        <li>Standard Room: $112</li>
+                                        <li>Superior Room: $180</li>
+                                        <li>Deluxe Room: $200</li>
+                                        <li>Family Room: $210</li>
+                                        <li>Suite Room: $280</li>
+                                    </ul>
+                                    <a href="#" class="btn btn-outline-secondary btn-block btn-lg">Selected</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-header bg-info text-center p-3">
+                                    <h4 class="mb-0 text-white"> Default Rate</h4>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h1 class="mb-1">$120</h1>
+                                    <p>Average Daily Rate</p>
+                                </div>
+                                <div class="card-body border-top">
+                                    <ul class="list-unstyled bullet-check font-14">
+                                        <li>Standard Room: $102</li>
+                                        <li>Superior Room: $150</li>
+                                        <li>Deluxe Room: $190</li>
+                                        <li>Family Room: $200</li>
+                                        <li>Suite Room: $230</li>
+                                    </ul>
+                                    <a href="#" class="btn btn-secondary btn-block btn-lg">Use This Rate</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-header bg-primary text-center p-3">
+                                    <h4 class="mb-0 text-white">Adjusted Rate</h4>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h1 class="mb-1">$150</h1>
+                                    <p>Average Daily Rate</p>
+                                </div>
+                                <div class="card-body border-top">
+                                    <ul class="list-unstyled bullet-check font-14">
+                                        <li>Standard Room: $102</li>
+                                        <li>Superior Room: $150</li>
+                                        <li>Deluxe Room: $190</li>
+                                        <li>Family Room: $200</li>
+                                        <li>Suite Room: $230</li>
+                                    </ul>
+                                    <a href="#" class="btn btn-secondary btn-block btn-lg">Adjust Rate</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                <div class="tab-pane fade" id="pills-packages" role="tabpanel" aria-labelledby="pills-packages-tab">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="section-block">
+                                <h2 class="section-title">What-If Analysis</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end campaign tab one -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- end campaign data -->
+    <!-- ============================================================== -->
+</div>
