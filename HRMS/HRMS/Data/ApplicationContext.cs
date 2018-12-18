@@ -14,10 +14,12 @@ namespace HRMS.Data
         }
 
         public DbSet<DailyPredictionModel> Predictions { get; set; }
+        public DbSet<DailyRoomRates> RoomRates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DailyPredictionModel>().ToTable("Predictions");
+            modelBuilder.Entity<DailyRoomRates>().ToTable("RoomRates");
         }
     }
 }

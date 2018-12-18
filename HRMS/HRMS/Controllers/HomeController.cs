@@ -10,52 +10,62 @@ using System.Net.Http.Headers;
 using HRMS.Models;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using HRMS.Repositories;
 
 namespace HRMS.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ISeederRepository repository;
+
+        public HomeController(ISeederRepository repository)
+        {
+            this.repository = repository;
+        }
+
         public async Task<IActionResult> Index()
         {
-            var client = new HttpClient();
-            string output;
-
-            // Create the HttpContent for the form to be posted.
-            var requestContent = new FormUrlEncodedContent(new[] {
-                new KeyValuePair<string, string>("client_id", "49968FB3-3492-4243-9A8D-9EB4DB2A1E8D"),
-                new KeyValuePair<string, string>("client_secret", "kCaQGqLBjF"),
-                new KeyValuePair<string, string>("grant_type", "client_credentials"),
-                new KeyValuePair<string, string>("scope", "gusto_fos_api"),
-             });
-
-            // Get the response
-            HttpResponseMessage response = await client.PostAsync("https://id.uog.gustodian.com/connect/token", requestContent);
-
-            // Get the response content
-            HttpContent responseContent = response.Content;
-
-            using (var reader = new StreamReader(await responseContent.ReadAsStreamAsync()))
+            if (repository.CheckifEmpty())
             {
-                // Write the output.
-                output = await reader.ReadToEndAsync();
-            }
-            var result = JObject.Parse(output);
-            var accessToken = result["access_token"].ToString();
+                var client = new HttpClient();
+                string output;
 
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sdas);
-            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-            client.DefaultRequestHeaders.Add("X-TENANT-CODE", "EDINBURGH");
-            var res = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/statistics?range_start=2017-12-09&range_end=2018-12-09");
+                // Create the HttpContent for the form to be posted.
+                var requestContent = new FormUrlEncodedContent(new[] {
+                    new KeyValuePair<string, string>("client_id", "49968FB3-3492-4243-9A8D-9EB4DB2A1E8D"),
+                    new KeyValuePair<string, string>("client_secret", "kCaQGqLBjF"),
+                    new KeyValuePair<string, string>("grant_type", "client_credentials"),
+                    new KeyValuePair<string, string>("scope", "gusto_fos_api"),
+                });
 
-            // Get the response content
-            var resContent = res.Content;
+                // Get the response
+                HttpResponseMessage response = await client.PostAsync("https://id.uog.gustodian.com/connect/token", requestContent);
 
-            using (var outc = new StreamReader(await resContent.ReadAsStreamAsync()))
-            {
-                // Write the output.
-                var test  = await outc.ReadToEndAsync();
-            }
+                // Get the response content
+                HttpContent responseContent = response.Content;
 
+                using (var reader = new StreamReader(await responseContent.ReadAsStreamAsync()))
+                {
+                    // Write the output.
+                    output = await reader.ReadToEndAsync();
+                }
+                var result = JObject.Parse(output);
+                var accessToken = result["access_token"].ToString();
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+                client.DefaultRequestHeaders.Add("X-TENANT-CODE", "EDINBURGH");
+                var res = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start=2018-12-08&range_end=2018-12-09");
+
+                // Get the response content
+                var resContent = res.Content;
+
+                using (var outc = new StreamReader(await resContent.ReadAsStreamAsync()))
+                {
+                    // Write the output.
+                    var test = await outc.ReadToEndAsync();
+                    repository.SeedRoomRates(test);
+                }
+            }         
             return View();
         }
 
