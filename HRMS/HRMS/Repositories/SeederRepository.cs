@@ -1,5 +1,5 @@
 ﻿using HRMS.Data;
-using HRMS.Models;
+using HRMS.EntityModels;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;

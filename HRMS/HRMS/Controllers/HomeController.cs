@@ -54,7 +54,7 @@ namespace HRMS.Controllers
 
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
                 client.DefaultRequestHeaders.Add("X-TENANT-CODE", "EDINBURGH");
-                var res = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start=2018-12-08&range_end=2018-12-09");
+                var res = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start=2017-12-09&range_end=2018-12-09");
 
                 // Get the response content
                 var resContent = res.Content;
@@ -65,7 +65,12 @@ namespace HRMS.Controllers
                     var test = await outc.ReadToEndAsync();
                     repository.SeedRoomRates(test);
                 }
-            }         
+
+                
+            }   
+            
+
+
             return View();
         }
 
