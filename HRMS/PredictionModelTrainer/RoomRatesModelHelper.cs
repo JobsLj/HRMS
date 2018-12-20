@@ -22,9 +22,11 @@ namespace PredictionModelTrainer
 
             // Transform the data
             var pipeline = context.Transforms.Categorical.OneHotEncoding("Date")
-              .Append(context.Transforms.CopyColumns("Amount", "Label"))
-              .Append(context.Transforms.Concatenate(outputColumn: "Features", "Date"))
-              .Append(trainer);
+                .Append(context.Transforms.Categorical.OneHotEncoding("RateCode"))
+                .Append(context.Transforms.Categorical.OneHotEncoding("RoomType"))
+                .Append(context.Transforms.CopyColumns("Amount", "Label"))
+                .Append(context.Transforms.Concatenate(outputColumn: "Features", "Date"))
+                .Append(trainer);
 
             // Cross-Validate with single dataset
             Console.WriteLine("=============== Cross-validating to get model's accuracy metrics ===============");
