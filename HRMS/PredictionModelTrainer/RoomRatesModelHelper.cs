@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Linq;
 using static PredictionModelTrainer.ConsoleView;
@@ -23,9 +24,8 @@ namespace PredictionModelTrainer
             // Transform the data
             var pipeline = context.Transforms.Categorical.OneHotEncoding("Date")
                 .Append(context.Transforms.Categorical.OneHotEncoding("RateCode"))
-                .Append(context.Transforms.Categorical.OneHotEncoding("RoomType"))
                 .Append(context.Transforms.CopyColumns("Amount", "Label"))
-                .Append(context.Transforms.Concatenate(outputColumn: "Features", "Date"))
+                .Append(context.Transforms.Concatenate(outputColumn: "Features", "Date", "Month", "Date", "Year"))
                 .Append(trainer);
 
             // Cross-Validate with single dataset
@@ -50,13 +50,16 @@ namespace PredictionModelTrainer
 
             using (var context = new AppContext())
             {
-                var dblist = context.RoomRates.ToList();
+                var dblist = context.RoomRates.Where(item => item.RoomTypeId == 7).ToList();
                 foreach (var item in dblist)
                 {
                     if(item.AmountTypeExclusive != 0)
                     {
                         Rates modelRate = new Rates();
-                        modelRate.Date = item.Date.ToString("dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                        modelRate.Date = item.Date.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
+                        modelRate.Day = item.Date.Day;
+                        modelRate.Month = item.Date.Month;
+                        modelRate.Year = item.Date.Year;
                         modelRate.RoomType = item.RoomTypeCode;
                         modelRate.RateCode = item.RateCode;
                         modelRate.Amount = item.AmountTypeExclusive;

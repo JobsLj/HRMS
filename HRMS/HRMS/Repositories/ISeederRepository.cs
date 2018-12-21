@@ -9,5 +9,6 @@ namespace HRMS.Repositories
     {
         bool CheckifEmpty();
         void SeedRoomRates(string json);
+        void SeedOccupancy(string json);
     }
 }

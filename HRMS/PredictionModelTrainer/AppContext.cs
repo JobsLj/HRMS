@@ -8,6 +8,7 @@ namespace PredictionModelTrainer
     public class AppContext : DbContext
     {
         public DbSet<RoomRates> RoomRates { get; set; }
+        public DbSet<Occupancy> Occupancy { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

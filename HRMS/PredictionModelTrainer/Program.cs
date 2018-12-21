@@ -12,8 +12,12 @@ namespace PredictionModelTrainer
             try
             {
                 MLContext context = new MLContext(seed: 1);
-                RoomRatesModelHelper.CreateModelPipeline(context);
-                RoomRatesModelHelper.Evaluate(context);
+
+                //RoomRatesModelHelper.CreateModelPipeline(context);
+                //RoomRatesModelHelper.Evaluate(context);
+
+                OccupancyModelHelper.CreateModelPipeline(context);
+                OccupancyModelHelper.Evaluate(context);
             }
             catch (Exception ex)
             {

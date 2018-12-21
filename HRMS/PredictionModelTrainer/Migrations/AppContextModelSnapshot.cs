@@ -19,6 +19,63 @@ namespace PredictionModelTrainer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("PredictionModelTrainer.Occupancy", b =>
+                {
+                    b.Property<int>("DailyOccupancyId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AdultNo");
+
+                    b.Property<int>("Arriving");
+
+                    b.Property<int>("AssignedReservation");
+
+                    b.Property<int>("ChildrenNo");
+
+                    b.Property<int>("Complimentary");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("DayUse");
+
+                    b.Property<int>("Departing");
+
+                    b.Property<int>("Inhouse");
+
+                    b.Property<int>("NoShow");
+
+                    b.Property<int>("ReservationNo");
+
+                    b.Property<int>("RoomInventory");
+
+                    b.Property<int>("RoomOccupied");
+
+                    b.Property<int>("RoomSold");
+
+                    b.Property<int>("Tentative");
+
+                    b.Property<int>("TentativeCancellation");
+
+                    b.Property<int>("TotalCancellation");
+
+                    b.Property<int>("TotalRoom");
+
+                    b.Property<int>("UnassignedReservation");
+
+                    b.Property<int>("Unavailable");
+
+                    b.Property<int>("UserCancellation");
+
+                    b.Property<int>("VacantRoom");
+
+                    b.Property<int>("Vip");
+
+                    b.HasKey("DailyOccupancyId");
+
+                    b.ToTable("Occuapancy");
+                });
+
             modelBuilder.Entity("PredictionModelTrainer.RoomRates", b =>
                 {
                     b.Property<int>("DailyRoomRateId")
