@@ -93,7 +93,7 @@ namespace HRMS.Controllers
                     repository.SeedRoomRates(streamResult);
                 }
 
-                var occRes = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/statistics?range_start=2018-10-09&range_end=2018-12-09");
+                var occRes = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/statistics?range_start=2017-12-09&range_end=2018-12-09");
                 var occResContent = occRes.Content;
 
                 using (var outc = new StreamReader(await occResContent.ReadAsStreamAsync()))

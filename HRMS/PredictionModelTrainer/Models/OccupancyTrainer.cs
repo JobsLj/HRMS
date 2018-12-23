@@ -15,6 +15,7 @@ namespace PredictionModelTrainer
         public float AdultNo { get; set; }
         public float ChildrenNo { get; set; }
         public float Arriving { get; set; }
+        public float Next { get; set; }
     }
 
     public class OccupancyPrediction
