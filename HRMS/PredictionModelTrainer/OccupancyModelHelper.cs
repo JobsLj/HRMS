@@ -26,8 +26,7 @@ namespace PredictionModelTrainer
             // Transform the data
             var pipeline = context.Transforms.Categorical.OneHotEncoding("Date")
                 .Append(context.Transforms.CopyColumns("Next", "Label"))
-                .Append(context.Transforms.Concatenate(outputColumn: "Features", "Date", "TotalRoom", "RoomInventory", "AssignedReservation"
-                , "UnassignedReservation", "AdultNo", "ChildrenNo", "Arriving", "Occupied"))
+                .Append(context.Transforms.Concatenate(outputColumn: "Features", "Date", "TotalRoom", "Prev", "Occupied"))
                 .Append(trainer);
 
             // Cross-Validate with single dataset
@@ -60,31 +59,65 @@ namespace PredictionModelTrainer
 
             var dataSample = new OccupancyTrainer()
             {
-                Date = "07-12-2018",
-                Occupied = 16,
-                RoomInventory = 70,
+                Date = DateTime.Parse("25-10-2018"),
+                Occupied = 40,
                 TotalRoom = 71,
-                AssignedReservation = 16,
-                UnassignedReservation = 0,
-                AdultNo = 33,
-                ChildrenNo = 1,
-                Arriving = 4,
+                Prev = 51,
             };
             // Predict sample data
             var prediction = predictionFunct.Predict(dataSample);
+            Console.WriteLine($"Date: {dataSample.Date}, date to predict: 26-10-2018, - Real value: 40, Predicted Forecast: {prediction.Score}");
+
+            dataSample = new OccupancyTrainer()
+            {
+                Date = DateTime.Parse("26-10-2018"),
+                Occupied = 40,
+                TotalRoom = 71,
+                Prev = 40,
+            };
+            // Predict sample data
+            prediction = predictionFunct.Predict(dataSample);
+            Console.WriteLine($"Date: {dataSample.Date}, date to predict: 27-10-2018, - Real value: 44, Predicted Forecast: {prediction.Score}");
+
+            dataSample = new OccupancyTrainer()
+            {
+                Date = DateTime.Parse("05-12-2018"),
+                Occupied = 25,
+                TotalRoom = 71,
+                Prev = 28,
+            };
+            // Predict sample data
+            prediction = predictionFunct.Predict(dataSample);
+            Console.WriteLine($"Date: {dataSample.Date}, date to predict: 06-12-2018, - Real value: 14, Predicted Forecast: {prediction.Score}");
+
+            dataSample = new OccupancyTrainer()
+            {
+                Date = DateTime.Parse("06-12-2018"),
+                Occupied = 14,
+                TotalRoom = 71,
+                Prev = 25,
+            };
+            // Predict sample data
+            prediction = predictionFunct.Predict(dataSample);
+            Console.WriteLine($"Date: {dataSample.Date}, date to predict: 07-12-2018, - Real value: 16, Predicted Forecast: {prediction.Score}");
+
+            dataSample = new OccupancyTrainer()
+            {
+                Date = DateTime.Parse("07-12-2018"),
+                Occupied = 16,
+                TotalRoom = 71,
+                Prev = 14,
+            };
+            // Predict sample data
+            prediction = predictionFunct.Predict(dataSample);
             Console.WriteLine($"Date: {dataSample.Date}, date to predict: 08-12-2018, - Real value: 13, Predicted Forecast: {prediction.Score}");
 
             dataSample = new OccupancyTrainer()
             {
-                Date = "08-12-2018",
+                Date = DateTime.Parse("08-12-2018"),
                 Occupied = 13,
-                RoomInventory = 70,
                 TotalRoom = 71,
-                AssignedReservation = 13,
-                UnassignedReservation = 0,
-                AdultNo = 27,
-                ChildrenNo = 1,
-                Arriving = 0,
+                Prev = 16,
             };
             // Predict sample data
             prediction = predictionFunct.Predict(dataSample);
@@ -92,18 +125,36 @@ namespace PredictionModelTrainer
 
             dataSample = new OccupancyTrainer()
             {
-                Date = "09-12-2018",
+                Date = DateTime.Parse("09-12-2018"),
                 Occupied = 27,
-                RoomInventory = 70,
                 TotalRoom = 71,
-                AssignedReservation = 27,
-                UnassignedReservation = 0,
-                AdultNo = 54,
-                ChildrenNo = 1,
-                Arriving = 15,
+                Prev = 13,
             };
             prediction = predictionFunct.Predict(dataSample);
             Console.WriteLine($"Date: {dataSample.Date}, date to predict: 10-12-2018, - Predicted Forecast: {prediction.Score}");
+
+
+
+            Console.WriteLine("=============== Attempt to predict the next 30 days occupancy ===============");
+            float ps = 38;
+            float oed = 47;
+            var datey = DateTime.Parse("09-12-2018");
+            for (int i = 0; i < 30; i++)
+            {
+                dataSample = new OccupancyTrainer()
+                {
+                    Date = datey,
+                    Occupied = oed,
+                    TotalRoom = 71,
+                    Prev = ps,
+                };
+                prediction = predictionFunct.Predict(dataSample);
+                Console.WriteLine($"Date to predict: {dataSample.Date.AddDays(1)}, - Predicted Forecast: {prediction.Score}");
+
+                datey = datey.AddDays(1);
+                ps = oed;
+                oed = prediction.Score;
+            }
         }
 
         private static IList<OccupancyTrainer> GetOccupancyData()
@@ -116,16 +167,11 @@ namespace PredictionModelTrainer
                 foreach (var item in dblist)
                 {
                     OccupancyTrainer modelOcc = new OccupancyTrainer();
-                    modelOcc.Date = item.Date.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
+                    modelOcc.Date = item.Date;
                     modelOcc.Occupied = item.RoomOccupied;
                     modelOcc.TotalRoom = item.TotalRoom;
-                    modelOcc.RoomInventory = item.RoomInventory;
-                    modelOcc.AssignedReservation = item.AssignedReservation;
-                    modelOcc.UnassignedReservation = item.UnassignedReservation;
-                    modelOcc.AdultNo = item.AdultNo;
-                    modelOcc.ChildrenNo = item.ChildrenNo;
-                    modelOcc.Arriving = item.Arriving;
                     modelOcc.Next = GetNextDayValue(item.Date);
+                    modelOcc.Prev = GetPrevDayValue(item.Date);
 
                     occupancyList.Add(modelOcc);
                 }
@@ -138,6 +184,20 @@ namespace PredictionModelTrainer
             using (var context = new AppContext())
             {
                 date = date.AddDays(1);
+                var item = context.Occupancy.Where(i => i.Date == date).FirstOrDefault();
+
+                if (item != null)
+                    return item.RoomOccupied;
+                else
+                    return 0;
+            }
+        }
+
+        private static float GetPrevDayValue(DateTime date)
+        {
+            using (var context = new AppContext())
+            {
+                date = date.AddDays(-1);
                 var item = context.Occupancy.Where(i => i.Date == date).FirstOrDefault();
 
                 if (item != null)
