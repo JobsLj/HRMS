@@ -14,7 +14,7 @@ namespace PredictionModelTrainer
         public static void CreateModelPipeline(MLContext context)
         {
             ConsoleWriteHeader("Training prediction model");
-            IList<Rates> roomData = GetRoomRates();
+            IList<SprRates> roomData = GetRoomRates();
             // Load the data
             var trainData = context.CreateDataView(roomData);
 
@@ -23,9 +23,8 @@ namespace PredictionModelTrainer
 
             // Transform the data
             var pipeline = context.Transforms.Categorical.OneHotEncoding("Date")
-                .Append(context.Transforms.Categorical.OneHotEncoding("RateCode"))
                 .Append(context.Transforms.CopyColumns("Amount", "Label"))
-                .Append(context.Transforms.Concatenate(outputColumn: "Features", "Date", "Month", "Date", "Year"))
+                .Append(context.Transforms.Concatenate(outputColumn: "Features", "Date", "Next", "Prev", "Avg"))
                 .Append(trainer);
 
             // Cross-Validate with single dataset
@@ -44,9 +43,9 @@ namespace PredictionModelTrainer
 
         }
 
-        private static IList<Rates> GetRoomRates()
+        private static IList<SprRates> GetRoomRates()
         {
-            IList<Rates> roomRateList = new List<Rates>();
+            IList<SprRates> roomRateList = new List<SprRates>();
 
             using (var context = new AppContext())
             {
@@ -55,20 +54,79 @@ namespace PredictionModelTrainer
                 {
                     if(item.AmountTypeExclusive != 0)
                     {
-                        Rates modelRate = new Rates();
-                        modelRate.Date = item.Date.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
-                        modelRate.Day = item.Date.Day;
-                        modelRate.Month = item.Date.Month;
-                        modelRate.Year = item.Date.Year;
-                        modelRate.RoomType = item.RoomTypeCode;
+                        SprRates modelRate = new SprRates();
+                        modelRate.Date = item.Date;
                         modelRate.RateCode = item.RateCode;
                         modelRate.Amount = item.AmountTypeExclusive;
+                        modelRate.Avg = GetAvgAmount(item.Date);
+                        modelRate.Next = GetNextAmount(item.Date);
+                        modelRate.Prev = GetPrevAmount(item.Date);
 
                         roomRateList.Add(modelRate);
                     }
                 }
             }
             return roomRateList;
+        }
+
+        private static float GetAvgAmount(DateTime date)
+        {
+            using (var context = new AppContext())
+            {
+                var items = context.RoomRates.Where(i => i.Date == date).ToList();
+
+                var total = 0;
+                foreach(var item in items)
+                {
+                    total += item.AmountTypeExclusive;
+                }
+
+                var average = total / items.Count;
+                return average;
+            }
+        }
+        private static float GetNextAmount(DateTime date)
+        {
+            using (var context = new AppContext())
+            {
+                date = date.AddDays(1);
+                var items = context.RoomRates.Where(i => i.Date == date && i.RoomTypeId == 7).ToList();
+
+                if (items.Count != 0)
+                {
+                    var total = 0;
+                    foreach (var item in items)
+                    {
+                        total += item.AmountTypeExclusive;
+                    }
+
+                    var average = total / items.Count;
+                    return average;
+                }
+                else
+                    return 0;
+            }
+        }
+        private static float GetPrevAmount(DateTime date)
+        {
+            using (var context = new AppContext())
+            {
+                date = date.AddDays(-1);
+                var items = context.RoomRates.Where(i => i.Date == date && i.RoomTypeId == 7).ToList();
+
+                if (items.Count != 0)
+                {
+                    var total = 0;
+                    foreach (var item in items)
+                    {
+                        total += item.AmountTypeExclusive;
+                    }
+                    var average = total / items.Count;
+                    return average;
+                }
+                else
+                    return 0;
+            }
         }
     }
 }
