@@ -23,33 +23,6 @@ namespace HRMS.Controllers
             this.repository = repository;
         }
 
-        private async void GetRoomRates(HttpClient client)
-        {
-            // Get the response content
-            var res = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start=2018-10-09&range_end=2018-12-09");
-            var resContent = res.Content;
-
-            using (var outc = new StreamReader(await resContent.ReadAsStreamAsync()))
-            {
-                // Write the output.
-                var test = await outc.ReadToEndAsync();
-                repository.SeedRoomRates(test);
-            }
-        }
-
-        private async void GetOccupancy(HttpClient client)
-        {
-            var res = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/statistics?range_start=2018-10-09&range_end=2018-12-09");
-            var resContent = res.Content;
-
-            using (var outc = new StreamReader(await resContent.ReadAsStreamAsync()))
-            {
-                // Write the output.
-                var test = await outc.ReadToEndAsync();
-                repository.SeedOccupancy(test);
-            }
-        }
-
         public async Task<IActionResult> Index()
         {
             if (repository.CheckifEmpty())
@@ -83,7 +56,7 @@ namespace HRMS.Controllers
                 client.DefaultRequestHeaders.Add("X-TENANT-CODE", "EDINBURGH");
 
                 // Get the response content
-                var res = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start=2018-10-09&range_end=2018-12-09");
+                var res = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start=2018-06-09&range_end=2018-12-09");
                 var resContent = res.Content;
 
                 using (var outc = new StreamReader(await resContent.ReadAsStreamAsync()))

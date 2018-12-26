@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using static PredictionModelTrainer.ConsoleView;
 using Microsoft.ML;
@@ -31,7 +30,7 @@ namespace PredictionModelTrainer
 
             // Cross-Validate with single dataset
             Console.WriteLine("=============== Cross-validating to get model's accuracy metrics ===============");
-            var crossValidateResults = context.Regression.CrossValidate(trainData, pipeline, numFolds: 5, labelColumn: "Label");
+            var crossValidateResults = context.Regression.CrossValidate(trainData, pipeline, numFolds: 10, labelColumn: "Label");
             PrintRegressionFoldsAverageMetrics(trainer.ToString(), crossValidateResults);
 
             // Create and train the model
@@ -135,11 +134,11 @@ namespace PredictionModelTrainer
 
 
 
-            Console.WriteLine("=============== Attempt to predict the next 30 days occupancy ===============");
+            Console.WriteLine("\n\n=============== Attempt to predict the next 14 days occupancy ===============");
             float ps = 38;
             float oed = 47;
             var datey = DateTime.Parse("09-12-2018");
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 14; i++)
             {
                 dataSample = new OccupancyTrainer()
                 {
