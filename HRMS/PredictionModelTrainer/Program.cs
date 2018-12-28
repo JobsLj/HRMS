@@ -35,6 +35,26 @@ namespace PredictionModelTrainer
 
                 OccupancyModelHelper.CreateModelPipeline(context);
                 OccupancyModelHelper.Evaluate(context);
+
+                // STD Occupancy
+                StdOccupancyModelHelper.CreateModelPipeline(context);
+                StdOccupancyModelHelper.Evaluate(context);
+
+                // SPR Occupancy
+                SprOccupancyModelHelper.CreateModelPipeline(context);
+                SprOccupancyModelHelper.Evaluate(context);
+
+                // FAM Occupancy
+                FamOccupancyModelHelper.CreateModelPipeline(context);
+                FamOccupancyModelHelper.Evaluate(context);
+
+                // SUITE Occupancy
+                SuiteOccupancyModelHelper.CreateModelPipeline(context);
+                SuiteOccupancyModelHelper.Evaluate(context);
+
+                // Dlx Occupancy
+                DlxOccupancyModelHelper.CreateModelPipeline(context);
+                DlxOccupancyModelHelper.Evaluate(context);
             }
             catch (Exception ex)
             {

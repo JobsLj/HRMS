@@ -56,6 +56,8 @@ namespace HRMS.Controllers
                 client.DefaultRequestHeaders.Add("X-TENANT-CODE", "EDINBURGH");
 
                 // Get the response content
+
+                // Room Rates
                 var res = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start=2018-06-09&range_end=2018-12-09");
                 var resContent = res.Content;
 
@@ -66,6 +68,7 @@ namespace HRMS.Controllers
                     repository.SeedRoomRates(streamResult);
                 }
 
+                // Occupancy
                 var occRes = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/statistics?range_start=2017-12-09&range_end=2018-12-09");
                 var occResContent = occRes.Content;
 
@@ -74,6 +77,17 @@ namespace HRMS.Controllers
                     // Write the output.
                     var streamResult = await outc.ReadToEndAsync();
                     repository.SeedOccupancy(streamResult);
+                }
+
+                // Occupancy By Room Type
+                var occResByRoom = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/statistics/by-room-type?range_start=2017-12-09&range_end=2018-12-09");
+                var occResByRoomContent = occResByRoom.Content;
+
+                using (var outc = new StreamReader(await occResByRoomContent.ReadAsStreamAsync()))
+                {
+                    // Write the output.
+                    var streamResult = await outc.ReadToEndAsync();
+                    repository.SeedRoomTypeOccupancy(streamResult);
                 }
             }   
            

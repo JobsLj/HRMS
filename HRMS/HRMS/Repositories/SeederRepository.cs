@@ -78,5 +78,37 @@ namespace HRMS.Repositories
             }
             context.SaveChanges();
         }
+        public void SeedRoomTypeOccupancy(string json)
+        {
+            var result = JObject.Parse(json);
+            foreach (var item in result["data"])
+            {
+                DailyOccupancyRoomType occ = new DailyOccupancyRoomType();
+                occ.Date = DateTime.Parse(item["date"].ToString());
+                occ.RoomTypeId = Convert.ToInt32(item["room_type_id"].ToString());
+                occ.RoomTypeCode = item["room_type_code"].ToString();
+                occ.RoomTypeDesc = item["room_type_description"].ToString();
+                occ.ReservationNo = Convert.ToInt32(item["no_of_reservation"].ToString());
+                occ.RoomOccupied = Convert.ToInt32(item["room_occupied"].ToString());
+                occ.RoomSold = Convert.ToInt32(item["room_sold"].ToString());
+                occ.Complimentary = Convert.ToInt32(item["complimentary"].ToString());
+                occ.DayUse = Convert.ToInt32(item["day_use"].ToString());
+                occ.Tentative = Convert.ToInt32(item["tentative"].ToString());
+                occ.Unavailable = Convert.ToInt32(item["unavailable"].ToString());
+                occ.TotalRoom = Convert.ToInt32(item["total_room"].ToString());
+                occ.RoomInventory = Convert.ToInt32(item["room_inventory"].ToString());
+                occ.VacantRoom = Convert.ToInt32(item["vacant_room"].ToString());
+                occ.UnassignedReservation = Convert.ToInt32(item["unassigned_reservation"].ToString());
+                occ.AdultNo = Convert.ToInt32(item["no_of_adult"].ToString());
+                occ.ChildrenNo = Convert.ToInt32(item["no_of_children"].ToString());
+                occ.TotalCancellation = Convert.ToInt32(item["total_cancellation"].ToString());
+                occ.NoShow = Convert.ToInt32(item["no_show"].ToString());
+                occ.UserCancellation = Convert.ToInt32(item["user_cancellation"].ToString());
+                occ.TentativeCancellation = Convert.ToInt32(item["tentative_cancellation"].ToString());
+
+                context.RoomTypeOccupancy.Add(occ);
+            }
+            context.SaveChanges();
+        }
     }
 }

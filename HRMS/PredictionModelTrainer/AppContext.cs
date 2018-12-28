@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PredictionModelTrainer.EntityModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,7 @@ namespace PredictionModelTrainer
     {
         public DbSet<RoomRates> RoomRates { get; set; }
         public DbSet<Occupancy> Occupancy { get; set; }
+        public DbSet<OccupancyRoomType> RoomTypeOccupancy { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
