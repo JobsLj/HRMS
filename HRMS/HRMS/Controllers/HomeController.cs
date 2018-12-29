@@ -11,16 +11,31 @@ using HRMS.Models;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using HRMS.Repositories;
+using HRMS.Prediction.DataStructures.RoomRates;
+using HRMS.Prediction.DataStructures;
+using Microsoft.ML.Runtime.Data;
 
 namespace HRMS.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ISeederRepository repository;
+        private readonly PredictionFunction<RoomRateData, RoomRatePrediction> StdRoomRatePredFunction;
 
-        public HomeController(ISeederRepository repository)
+        public HomeController(ISeederRepository repository, PredictionFunction<RoomRateData, RoomRatePrediction> StdRoomRatePredFunction)
         {
             this.repository = repository;
+            this.StdRoomRatePredFunction = StdRoomRatePredFunction;
+        }
+
+        public float RoomRatePredictions()
+        {
+            var sample = new RoomRateData(DateTime.Parse("08-12-2018"), 623144, 623119);
+
+            RoomRatePrediction pred = null;
+            pred = this.StdRoomRatePredFunction.Predict(sample);
+
+            return pred.Score;
         }
 
         public async Task<IActionResult> Index()
@@ -57,8 +72,12 @@ namespace HRMS.Controllers
 
                 // Get the response content
 
+                var today = DateTime.Today.ToString("yyyy-MM-dd");
+                var roomDates = DateTime.Today.AddMonths(-6).ToString("yyyy-MM-dd");
+                var occupancyDates = DateTime.Today.AddYears(-1).ToString("yyyy-MM-dd");
+
                 // Room Rates
-                var res = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start=2018-06-09&range_end=2018-12-09");
+                var res = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start={roomDates}&range_end={today}");
                 var resContent = res.Content;
 
                 using (var outc = new StreamReader(await resContent.ReadAsStreamAsync()))
@@ -69,7 +88,7 @@ namespace HRMS.Controllers
                 }
 
                 // Occupancy
-                var occRes = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/statistics?range_start=2017-12-09&range_end=2018-12-09");
+                var occRes = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/statistics?range_start={occupancyDates}&range_end={today}");
                 var occResContent = occRes.Content;
 
                 using (var outc = new StreamReader(await occResContent.ReadAsStreamAsync()))
@@ -80,7 +99,7 @@ namespace HRMS.Controllers
                 }
 
                 // Occupancy By Room Type
-                var occResByRoom = await client.GetAsync("https://api.fos.uog.gustodian.com/v1/analytics/statistics/by-room-type?range_start=2017-12-09&range_end=2018-12-09");
+                var occResByRoom = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/statistics/by-room-type?range_start={occupancyDates}&range_end={today}");
                 var occResByRoomContent = occResByRoom.Content;
 
                 using (var outc = new StreamReader(await occResByRoomContent.ReadAsStreamAsync()))
@@ -89,8 +108,10 @@ namespace HRMS.Controllers
                     var streamResult = await outc.ReadToEndAsync();
                     repository.SeedRoomTypeOccupancy(streamResult);
                 }
-            }   
-           
+            }
+
+            var test = RoomRatePredictions();
+
             return View();
         }
 

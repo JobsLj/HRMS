@@ -137,7 +137,25 @@ namespace HRMS.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<int>("RoomPrice");
+                    b.Property<float>("DlxOccupancy");
+
+                    b.Property<float>("DlxRoomRate");
+
+                    b.Property<float>("FamOccupancy");
+
+                    b.Property<float>("FamRoomRate");
+
+                    b.Property<float>("SprOccupancy");
+
+                    b.Property<float>("SprRoomRate");
+
+                    b.Property<float>("StdOccupancy");
+
+                    b.Property<float>("StdRoomRate");
+
+                    b.Property<float>("SuiteOccupancy");
+
+                    b.Property<float>("SuiteRoomRate");
 
                     b.HasKey("Id");
 

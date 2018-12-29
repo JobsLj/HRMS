@@ -4,6 +4,8 @@ using Microsoft.ML;
 using Microsoft.ML.Core.Data;
 using Microsoft.ML.Runtime.Data;
 using Microsoft.Extensions.Configuration;
+using HRMS.Prediction.DataStructures;
+using HRMS.Prediction.DataStructures.RoomRates;
 
 namespace HRMS.Prediction
 {
@@ -16,18 +18,17 @@ namespace HRMS.Prediction
         public StdRoomRateModel(MLContext mlContext, IConfiguration configuration)
         {
             _mlContext = mlContext;
-            string modelFolder = configuration["ForecastModelsPath"];
 
-            //Load the ProductSalesForecast model from the .ZIP file
-            using (var fileStream = File.OpenRead($"{modelFolder}/stdRate_fastTreeTweedie.zip"))
+            //Load the Standard rooms rate model from the .ZIP file
+            using (var fileStream = File.OpenRead($"Prediction/ModelFiles/stdRate_fastTreeTweedie.zip"))
             {
                 _model = mlContext.Model.Load(fileStream);
             }
         }
 
-        //public PredictionFunction<CountryData, CountrySalesPrediction> CreatePredictionFunction()
-        //{
-        //    return _model.MakePredictionFunction<CountryData, CountrySalesPrediction>(_mlContext);
-        //}
+        public PredictionFunction<RoomRateData, RoomRatePrediction> CreatePredictionFunction()
+        {
+            return _model.MakePredictionFunction<RoomRateData, RoomRatePrediction>(_mlContext);
+        }
     }
 }
