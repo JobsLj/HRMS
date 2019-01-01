@@ -14,103 +14,75 @@ using HRMS.Repositories;
 using HRMS.Prediction.DataStructures.RoomRates;
 using HRMS.Prediction.DataStructures;
 using Microsoft.ML.Runtime.Data;
+using HRMS.EntityModels;
 
 namespace HRMS.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ISeederRepository repository;
-        private readonly PredictionFunction<RoomRateData, RoomRatePrediction> StdRoomRatePredFunction;
+        private readonly PredictionFunction<StdRoomRateData, RoomRatePrediction> StdRoomRatePredFunction;
+        private readonly PredictionFunction<SprRoomRateData, RoomRatePrediction> SprRoomRatePredFunction;
+        private readonly PredictionFunction<FamRoomRateData, RoomRatePrediction> FamRoomRatePredFunction;
+        private readonly PredictionFunction<SuiteRoomRateData, RoomRatePrediction> SuiteRoomRatePredFunction;
+        private readonly PredictionFunction<DlxRoomRateData, RoomRatePrediction> DlxRoomRatePredFunction;
 
-        public HomeController(ISeederRepository repository, PredictionFunction<RoomRateData, RoomRatePrediction> StdRoomRatePredFunction)
+        public HomeController(ISeederRepository repository, 
+            PredictionFunction<StdRoomRateData, RoomRatePrediction> StdRoomRatePredFunction, 
+            PredictionFunction<SprRoomRateData, RoomRatePrediction> SprRoomRatePredFunction,
+            PredictionFunction<FamRoomRateData, RoomRatePrediction> FamRoomRatePredFunction,
+            PredictionFunction<SuiteRoomRateData, RoomRatePrediction> SuiteRoomRatePredFunction,
+            PredictionFunction<DlxRoomRateData, RoomRatePrediction> DlxRoomRatePredFunction)
         {
             this.repository = repository;
             this.StdRoomRatePredFunction = StdRoomRatePredFunction;
+            this.SprRoomRatePredFunction = SprRoomRatePredFunction;
+            this.FamRoomRatePredFunction = FamRoomRatePredFunction;
+            this.SuiteRoomRatePredFunction = SuiteRoomRatePredFunction;
+            this.DlxRoomRatePredFunction = DlxRoomRatePredFunction;
         }
 
-        public float RoomRatePredictions()
+        public List<Tuple<DateTime, float>> StdRoomRatePredictions()
         {
-            var sample = new RoomRateData(DateTime.Parse("08-12-2018"), 623144, 623119);
+            var stdRoomList = repository.GetLatestRoomRates();
+            var prevList = repository.GetLatestRoomRates(stdRoomList.FirstOrDefault().Date.AddDays(-1));
 
-            RoomRatePrediction pred = null;
-            pred = this.StdRoomRatePredFunction.Predict(sample);
+            var date = stdRoomList.FirstOrDefault().Date;
+            var prevAmount = GetAvgAmount(prevList);
+            var Amount = GetAvgAmount(stdRoomList);
 
-            return pred.Score;
+            var predictions = new List<Tuple<DateTime, float>>();
+
+            for (int i = 0; i < 14; i++)
+            {
+                var sample = new StdRoomRateData(date, prevAmount, Amount);
+
+                RoomRatePrediction pred = null;
+                pred = this.StdRoomRatePredFunction.Predict(sample);
+                predictions.Add(new Tuple<DateTime, float>(date.AddDays(1), pred.Score));
+
+                date = date.AddDays(1);
+                prevAmount = Amount;
+                Amount = pred.Score;
+            }
+
+            return predictions;
+        }
+
+        private float GetAvgAmount(List<DailyRoomRates> list)
+        {
+            var total = 0;
+            foreach (var item in list)
+            {
+                total += item.AmountTypeExclusive;
+            }
+            var average = total / list.Count();
+            return average;
         }
 
         public async Task<IActionResult> Index()
-        {
-            if (repository.CheckifEmpty())
-            {
-                var client = new HttpClient();
-                string output;
-
-                // Create the HttpContent for the form to be posted.
-                var requestContent = new FormUrlEncodedContent(new[] {
-                    new KeyValuePair<string, string>("client_id", "49968FB3-3492-4243-9A8D-9EB4DB2A1E8D"),
-                    new KeyValuePair<string, string>("client_secret", "kCaQGqLBjF"),
-                    new KeyValuePair<string, string>("grant_type", "client_credentials"),
-                    new KeyValuePair<string, string>("scope", "gusto_fos_api"),
-                });
-
-                // Get the response
-                HttpResponseMessage response = await client.PostAsync("https://id.uog.gustodian.com/connect/token", requestContent);
-
-                // Get the response content
-                HttpContent responseContent = response.Content;
-
-                using (var reader = new StreamReader(await responseContent.ReadAsStreamAsync()))
-                {
-                    // Write the output.
-                    output = await reader.ReadToEndAsync();
-                }
-                var result = JObject.Parse(output);
-                var accessToken = result["access_token"].ToString();
-
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-                client.DefaultRequestHeaders.Add("X-TENANT-CODE", "EDINBURGH");
-
-                // Get the response content
-
-                var today = DateTime.Today.ToString("yyyy-MM-dd");
-                var roomDates = DateTime.Today.AddMonths(-6).ToString("yyyy-MM-dd");
-                var occupancyDates = DateTime.Today.AddYears(-1).ToString("yyyy-MM-dd");
-
-                // Room Rates
-                var res = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start={roomDates}&range_end={today}");
-                var resContent = res.Content;
-
-                using (var outc = new StreamReader(await resContent.ReadAsStreamAsync()))
-                {
-                    // Write the output.
-                    var streamResult = await outc.ReadToEndAsync();
-                    repository.SeedRoomRates(streamResult);
-                }
-
-                // Occupancy
-                var occRes = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/statistics?range_start={occupancyDates}&range_end={today}");
-                var occResContent = occRes.Content;
-
-                using (var outc = new StreamReader(await occResContent.ReadAsStreamAsync()))
-                {
-                    // Write the output.
-                    var streamResult = await outc.ReadToEndAsync();
-                    repository.SeedOccupancy(streamResult);
-                }
-
-                // Occupancy By Room Type
-                var occResByRoom = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/statistics/by-room-type?range_start={occupancyDates}&range_end={today}");
-                var occResByRoomContent = occResByRoom.Content;
-
-                using (var outc = new StreamReader(await occResByRoomContent.ReadAsStreamAsync()))
-                {
-                    // Write the output.
-                    var streamResult = await outc.ReadToEndAsync();
-                    repository.SeedRoomTypeOccupancy(streamResult);
-                }
-            }
-
-            var test = RoomRatePredictions();
+        {         
+            var StdRoomPred = StdRoomRatePredictions();
 
             return View();
         }

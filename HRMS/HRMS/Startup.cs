@@ -40,15 +40,47 @@ namespace HRMS
             // Prediction models created as singleton for the whole ASP.NET Core app
             // since it is threadsafe and models can be pretty large objects
             services.AddSingleton<StdRoomRateModel>();
+            services.AddSingleton<SprRoomRateModel>();
+            services.AddSingleton<FamRoomRateModel>();
+            services.AddSingleton<SuiteRoomRateModel>();
+            services.AddSingleton<DlxRoomRateModel>();
 
             // PredictionFunction created as scoped because it is not thread-safe
             // Prediction Functions should be be re-used across calls because there are expensive initializations
             // If set to be used as Singleton is very important to use critical sections "lock(predFunct" in the code
             // because the 'Predict()' method is not reentrant. 
-            services.AddScoped<PredictionFunction<RoomRateData, RoomRatePrediction>>((ctx) =>
+            services.AddScoped<PredictionFunction<StdRoomRateData, RoomRatePrediction>>((ctx) =>
             {
                 //Create the Prediction Function object from its related model
                 var model = ctx.GetRequiredService<StdRoomRateModel>();
+                return model.CreatePredictionFunction();
+            });
+
+            services.AddScoped<PredictionFunction<SprRoomRateData, RoomRatePrediction>>((ctx) =>
+            {
+                //Create the Prediction Function object from its related model
+                var model = ctx.GetRequiredService<SprRoomRateModel>();
+                return model.CreatePredictionFunction();
+            });
+
+            services.AddScoped<PredictionFunction<FamRoomRateData, RoomRatePrediction>>((ctx) =>
+            {
+                //Create the Prediction Function object from its related model
+                var model = ctx.GetRequiredService<FamRoomRateModel>();
+                return model.CreatePredictionFunction();
+            });
+
+            services.AddScoped<PredictionFunction<SuiteRoomRateData, RoomRatePrediction>>((ctx) =>
+            {
+                //Create the Prediction Function object from its related model
+                var model = ctx.GetRequiredService<SuiteRoomRateModel>();
+                return model.CreatePredictionFunction();
+            });
+
+            services.AddScoped<PredictionFunction<DlxRoomRateData, RoomRatePrediction>>((ctx) =>
+            {
+                //Create the Prediction Function object from its related model
+                var model = ctx.GetRequiredService<DlxRoomRateModel>();
                 return model.CreatePredictionFunction();
             });
         }

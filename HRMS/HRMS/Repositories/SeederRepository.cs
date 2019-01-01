@@ -22,6 +22,15 @@ namespace HRMS.Repositories
             return !context.RoomRates.Any()? true: false;
         }
 
+        public List<DailyRoomRates> GetLatestRoomRates(DateTime? latest = null)
+        {
+            if (latest == null)
+                latest = context.RoomRates.Max(r => r.Date);
+
+            var dblist = context.RoomRates.Where(item => item.RoomTypeId == 8 && item.Date == latest).ToList();
+            return dblist;
+        }
+
         public void SeedRoomRates(string json)
         {
             var result = JObject.Parse(json);

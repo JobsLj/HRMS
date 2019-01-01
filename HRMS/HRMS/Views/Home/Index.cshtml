@@ -4,6 +4,8 @@
 @{
     ViewData["Title"] = "Dashboard";
     List<CalendarEvent> events = new List<CalendarEvent>();
+    var currentMonth = DateTime.Today.Month;
+    var currentYear = DateTime.Today.Year;
 
     DateTime nov25 = new DateTime(2018, 11, 25);
     DateTime nov26 = new DateTime(2018, 11, 26);
@@ -110,7 +112,7 @@
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
             <div class="card-body">
-                <calendar month="12" year="2018" events="@events" />
+                <calendar month="@currentMonth" year="@currentYear" events="@events" />
             </div>
         </div>
     </div>

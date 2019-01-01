@@ -26,9 +26,9 @@ namespace HRMS.Prediction
             }
         }
 
-        public PredictionFunction<RoomRateData, RoomRatePrediction> CreatePredictionFunction()
+        public PredictionFunction<StdRoomRateData, RoomRatePrediction> CreatePredictionFunction()
         {
-            return _model.MakePredictionFunction<RoomRateData, RoomRatePrediction>(_mlContext);
+            return _model.MakePredictionFunction<StdRoomRateData, RoomRatePrediction>(_mlContext);
         }
     }
 }

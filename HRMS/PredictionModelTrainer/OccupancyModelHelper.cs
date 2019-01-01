@@ -135,16 +135,22 @@ namespace PredictionModelTrainer
 
 
             Console.WriteLine("\n\n=============== Attempt to predict the next 14 days occupancy ===============");
-            float ps = 38;
-            float oed = 47;
-            var datey = DateTime.Parse("09-12-2018");
+            var appcontext = new AppContext();
+            var latestDate = appcontext.Occupancy.Max(r => r.Date);
+            var latestItem = appcontext.Occupancy.Where(i => i.Date == latestDate).FirstOrDefault();
+            var previousItem = appcontext.Occupancy.Where(i => i.Date == latestDate.AddDays(-1)).FirstOrDefault();
+
+
+            float ps = previousItem.RoomOccupied;
+            float oed = latestItem.RoomOccupied;
+            var datey = latestItem.Date;
             for (int i = 0; i < 14; i++)
             {
                 dataSample = new OccupancyTrainer()
                 {
                     Date = datey,
                     Occupied = oed,
-                    TotalRoom = 71,
+                    TotalRoom = latestItem.TotalRoom,
                     Prev = ps,
                 };
                 prediction = predictionFunct.Predict(dataSample);
