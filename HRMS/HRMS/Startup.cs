@@ -1,6 +1,7 @@
 ﻿using HRMS.Data;
 using HRMS.Prediction;
 using HRMS.Prediction.DataStructures;
+using HRMS.Prediction.DataStructures.RoomOccupancy;
 using HRMS.Prediction.DataStructures.RoomRates;
 using HRMS.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -45,6 +46,12 @@ namespace HRMS
             services.AddSingleton<SuiteRoomRateModel>();
             services.AddSingleton<DlxRoomRateModel>();
 
+            services.AddSingleton<StdOccupancyModel>();
+            services.AddSingleton<SprOccupancyModel>();
+            services.AddSingleton<FamOccupancyModel>();
+            services.AddSingleton<SuiteOccupancyModel>();
+            services.AddSingleton<DlxOccupancyModel>();
+
             // PredictionFunction created as scoped because it is not thread-safe
             // Prediction Functions should be be re-used across calls because there are expensive initializations
             // If set to be used as Singleton is very important to use critical sections "lock(predFunct" in the code
@@ -81,6 +88,41 @@ namespace HRMS
             {
                 //Create the Prediction Function object from its related model
                 var model = ctx.GetRequiredService<DlxRoomRateModel>();
+                return model.CreatePredictionFunction();
+            });
+
+            services.AddScoped<PredictionFunction<SprOccupancyData, OccupancyPrediction>>((ctx) =>
+            {
+                //Create the Prediction Function object from its related model
+                var model = ctx.GetRequiredService<SprOccupancyModel>();
+                return model.CreatePredictionFunction();
+            });
+
+            services.AddScoped<PredictionFunction<FamOccupancyData, OccupancyPrediction>>((ctx) =>
+            {
+                //Create the Prediction Function object from its related model
+                var model = ctx.GetRequiredService<FamOccupancyModel>();
+                return model.CreatePredictionFunction();
+            });
+
+            services.AddScoped<PredictionFunction<SuiteOccupancyData, OccupancyPrediction>>((ctx) =>
+            {
+                //Create the Prediction Function object from its related model
+                var model = ctx.GetRequiredService<SuiteOccupancyModel>();
+                return model.CreatePredictionFunction();
+            });
+
+            services.AddScoped<PredictionFunction<DlxOccupancyData, OccupancyPrediction>>((ctx) =>
+            {
+                //Create the Prediction Function object from its related model
+                var model = ctx.GetRequiredService<DlxOccupancyModel>();
+                return model.CreatePredictionFunction();
+            });
+
+            services.AddScoped<PredictionFunction<StdOccupancyData, OccupancyPrediction>>((ctx) =>
+            {
+                //Create the Prediction Function object from its related model
+                var model = ctx.GetRequiredService<StdOccupancyModel>();
                 return model.CreatePredictionFunction();
             });
         }

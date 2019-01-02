@@ -22,13 +22,42 @@ namespace HRMS.Repositories
             return !context.RoomRates.Any()? true: false;
         }
 
-        public List<DailyRoomRates> GetLatestRoomRates(DateTime? latest = null)
+        public bool CheckPredictions()
+        {
+            return !context.Predictions.Any() ? true : false;
+        }
+
+        public List<DailyRoomRates> GetLatestRoomRates(int roomid, DateTime? latest = null)
         {
             if (latest == null)
                 latest = context.RoomRates.Max(r => r.Date);
 
-            var dblist = context.RoomRates.Where(item => item.RoomTypeId == 8 && item.Date == latest).ToList();
+            var dblist = context.RoomRates.Where(item => item.RoomTypeId == roomid && item.Date == latest).ToList();
             return dblist;
+        }
+
+        public List<DailyOccupancyRoomType> GetLatestRoomTypeOccupancy(int roomid, DateTime? latest = null)
+        {
+            if (latest == null)
+                latest = context.RoomTypeOccupancy.Max(r => r.Date);
+
+            var list = context.RoomTypeOccupancy.Where(item => item.RoomTypeId == roomid && item.Date == latest).ToList();
+            return list;
+        }
+
+        public List<DailyPredictionModel> GetPredictions()
+        {
+            var list = context.Predictions.OrderByDescending(x => x.Date).ToList();
+            return list.Take(14).ToList();
+        }
+
+        public void AddPredictions(List<DailyPredictionModel> list)
+        {
+            foreach(var item in list)
+            {
+                context.Predictions.Add(item);
+            }
+            context.SaveChanges();
         }
 
         public void SeedRoomRates(string json)

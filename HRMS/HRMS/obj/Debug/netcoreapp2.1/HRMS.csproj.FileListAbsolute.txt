@@ -94,11 +94,6 @@ C:\Users\USER\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.Views.pdb
 C:\Users\USER\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.dll
 C:\Users\USER\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.pdb
 C:\Users\USER\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csproj.CopyComplete
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csproj.CoreCompileInputs.cache
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorAssemblyInfo.cache
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorAssemblyInfo.cs
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.AssemblyInfoInputs.cache
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.AssemblyInfo.cs
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.deps.json
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.runtimeconfig.json
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.runtimeconfig.dev.json
@@ -106,6 +101,12 @@ C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.dll
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.pdb
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.Views.dll
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\bin\Debug\netcoreapp2.1\HRMS.Views.pdb
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csprojAssemblyReference.cache
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csproj.CoreCompileInputs.cache
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorAssemblyInfo.cache
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorAssemblyInfo.cs
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.AssemblyInfoInputs.cache
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.AssemblyInfo.cs
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.TagHelpers.input.cache
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.TagHelpers.output.cache
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.RazorCoreGenerate.cache
@@ -126,4 +127,3 @@ C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.Views.p
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.dll
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.pdb
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csproj.CopyComplete
-C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csprojAssemblyReference.cache

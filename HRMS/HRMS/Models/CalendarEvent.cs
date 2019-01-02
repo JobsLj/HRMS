@@ -7,8 +7,10 @@ namespace HRMS.Models
 {
     public class CalendarEvent
     {
-        public string Title { get; set; }
         public DateTime Date { get; set; }
         public string Type { get; set; }
+        public string RevPar { get; set; }
+        public string Occupancy { get; set; }
+        public string Adr { get; set; }
     }
 }

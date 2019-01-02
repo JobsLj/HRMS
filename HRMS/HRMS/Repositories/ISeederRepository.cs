@@ -9,7 +9,11 @@ namespace HRMS.Repositories
     public interface ISeederRepository
     {
         bool CheckifEmpty();
-        List<DailyRoomRates> GetLatestRoomRates(DateTime? latest = null);
+        bool CheckPredictions();
+        List<DailyRoomRates> GetLatestRoomRates(int roomid, DateTime? latest = null);
+        List<DailyOccupancyRoomType> GetLatestRoomTypeOccupancy(int roomid, DateTime? latest = null);
+        List<DailyPredictionModel> GetPredictions();
+        void AddPredictions(List<DailyPredictionModel> list);
         void SeedRoomRates(string json);
         void SeedOccupancy(string json);
         void SeedRoomTypeOccupancy(string json);
