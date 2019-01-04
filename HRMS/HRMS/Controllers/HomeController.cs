@@ -324,6 +324,38 @@ namespace HRMS.Controllers
         public IActionResult Details(string selected)
         {
             ViewData["id"] = selected;
+            var model = new DetailsViewModel();
+
+            var selectedModel = repository.GetPredictionByDate(DateTime.Parse(selected));
+            var prevMonthOcc = repository.GetOccupancyByDate(DateTime.Parse(selected).AddMonths(-1)).RoomOccupied;
+            var prevYearOcc = repository.GetOccupancyByDate(DateTime.Parse(selected).AddYears(-1)).RoomOccupied;
+
+            var prevMonthSprRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddMonths(-1), 7));
+            var prevMonthStdRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddMonths(-1), 8));
+            var prevMonthFamRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddMonths(-1), 9));
+            var prevMonthSuiteRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddMonths(-1), 10));
+            var prevMonthDlxRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddMonths(-1), 11));
+
+            var prevYearSprRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddYears(-1), 7));
+            var prevYearStdRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddYears(-1), 8));
+            var prevYearFamRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddYears(-1), 9));
+            var prevYearSuiteRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddYears(-1), 10));
+            var prevYearDlxRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddYears(-1), 11));
+
+            // Calculate ADR/RevPar/Occupancy rate
+            var totalOccupancy = selectedModel.SprOccupancy + selectedModel.StdOccupancy + selectedModel.FamOccupancy +
+                selectedModel.SuiteOccupancy + selectedModel.DlxOccupancy;
+            var totalRevenue = (selectedModel.SprRoomRate * selectedModel.SprOccupancy) + 
+                (selectedModel.StdRoomRate * selectedModel.StdOccupancy) +
+                (selectedModel.FamRoomRate * selectedModel.FamOccupancy) + 
+                (selectedModel.SuiteRoomRate * selectedModel.SuiteOccupancy) +
+                (selectedModel.DlxRoomRate * selectedModel.DlxOccupancy);
+
+            var adr = totalRevenue / totalOccupancy;
+            var revpar = totalRevenue / 71;
+            var occupancyRate = totalOccupancy / 71;
+
+
 
             return View("Details");
         }

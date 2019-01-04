@@ -13,6 +13,9 @@ namespace HRMS.Repositories
         List<DailyRoomRates> GetLatestRoomRates(int roomid, DateTime? latest = null);
         List<DailyOccupancyRoomType> GetLatestRoomTypeOccupancy(int roomid, DateTime? latest = null);
         List<DailyPredictionModel> GetPredictions();
+        DailyPredictionModel GetPredictionByDate(DateTime date);
+        DailyOccupancy GetOccupancyByDate(DateTime date);
+        List<DailyRoomRates> GetRoomRatesByDate(DateTime date, int roomid);
         void AddPredictions(List<DailyPredictionModel> list);
         void SeedRoomRates(string json);
         void SeedOccupancy(string json);

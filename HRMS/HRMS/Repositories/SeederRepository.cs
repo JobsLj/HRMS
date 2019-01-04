@@ -51,6 +51,21 @@ namespace HRMS.Repositories
             return list.Take(14).ToList();
         }
 
+        public DailyPredictionModel GetPredictionByDate(DateTime date)
+        {
+            return context.Predictions.Where(d => d.Date == date).FirstOrDefault();
+        }
+
+        public DailyOccupancy GetOccupancyByDate(DateTime date)
+        {
+            return context.Occupancy.Where(d => d.Date == date).FirstOrDefault();
+        }
+
+        public List<DailyRoomRates> GetRoomRatesByDate(DateTime date, int roomid)
+        {
+            return context.RoomRates.Where(d => d.Date == date && d.RoomTypeId == roomid).ToList();
+        }
+
         public void AddPredictions(List<DailyPredictionModel> list)
         {
             foreach(var item in list)

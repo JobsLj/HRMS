@@ -64,7 +64,7 @@ namespace HRMS.Controllers
                 // Get the response content
 
                 var today = DateTime.Today.ToString("yyyy-MM-dd");
-                var roomDates = DateTime.Today.AddMonths(-6).ToString("yyyy-MM-dd");
+                var roomDates = DateTime.Today.AddYears(-1).ToString("yyyy-MM-dd");
                 var occupancyDates = DateTime.Today.AddYears(-1).ToString("yyyy-MM-dd");
 
                 // Room Rates
