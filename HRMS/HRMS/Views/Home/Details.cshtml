@@ -1,7 +1,7 @@
 ﻿@model DetailsViewModel
 @{
     ViewData["Title"] = "Details";
-    var id = ViewData["id"];
+    var id = Model.Date.ToString("dd MMMM yyyy");
 }
 
 <!-- pageheader -->
@@ -37,9 +37,9 @@
                 <h3 class="profile-title">Revenue Forecast</h3>
                 <div class="">
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-2">ADR: $125</li>
-                        <li class="mb-2">OCCUPANCY: 80%</li>
-                        <li class="mb-2">RevPAR: $91</li>
+                        <li class="mb-2">ADR: @Model.Adr</li>
+                        <li class="mb-2">OCCUPANCY: @Model.Occupancy</li>
+                        <li class="mb-2">RevPAR: @Model.RevPar</li>
                     </ul>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                     <ul class="list-unstyled mb-0">
                         <li class="mb-2">Seasonal Demands: 10%</li>
                         <li class="mb-2">Historical Data: 80%</li>
-                        <li class="mb-2">Social Media: 10%</li>
+                        @*<li class="mb-2">Social Media: 10%</li>*@
                     </ul>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <h5 class="text-muted">Yesterday</h5>
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">ADR: $110</h5>
+                                        <h5 class="mb-1">ADR: @Model.yestAdr</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                                         <span>+5.86%</span>
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">OCCUPANCY: 75%</h5>
+                                        <h5 class="mb-1">OCCUPANCY: @Model.yestOccupancy</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                                        <span>+5.86%</span>
@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">RevPAR: $85</h5>
+                                        <h5 class="mb-1">RevPAR: @Model.yestRevPar</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                                         <span>+5.86%</span>
@@ -112,7 +112,7 @@
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <h5 class="text-muted">Previous Month</h5>
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">ADR: $110</h5>
+                                        <h5 class="mb-1">ADR: @Model.prevMonthAdr</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                                         <span>5.86%</span>
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">OCCUPANCY: 75%</h5>
+                                        <h5 class="mb-1">OCCUPANCY: @Model.prevMonthOccupancy</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                                         <span>+5.86%</span>
@@ -128,7 +128,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">RevPAR: $85</h5>
+                                        <h5 class="mb-1">RevPAR: @Model.prevMonthRevPar</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                                         <span>+5.86%</span>
@@ -141,7 +141,7 @@
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <h5 class="text-muted">Previous Year</h5>
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">ADR: $125</h5>
+                                        <h5 class="mb-1">ADR: @Model.prevYearAdr</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
                                         <span>N/A</span>
@@ -149,7 +149,7 @@
                                 </div>
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">OCCUPANCY: 80%</h5>
+                                        <h5 class="mb-1">OCCUPANCY: @Model.prevYearOccupancy</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
                                         <span>N/A</span>
@@ -157,7 +157,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">RevPAR: $91</h5>
+                                        <h5 class="mb-1">RevPAR: @Model.prevYearRevPar</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
                                         <span>N/A</span>
@@ -178,16 +178,16 @@
                                     <h4 class="mb-0 text-white"> Recommended Rate</h4>
                                 </div>
                                 <div class="card-body text-center">
-                                    <h1 class="mb-1">$150</h1>
+                                    <h1 class="mb-1">@Model.Adr</h1>
                                     <p>Average Daily Rate</p>
                                 </div>
                                 <div class="card-body border-top">
                                     <ul class="list-unstyled bullet-check font-14">
-                                        <li>Standard Room: $112</li>
-                                        <li>Superior Room: $180</li>
-                                        <li>Deluxe Room: $200</li>
-                                        <li>Family Room: $210</li>
-                                        <li>Suite Room: $280</li>
+                                        <li>Standard Room: @Model.StdRate</li>
+                                        <li>Superior Room: @Model.SprRate</li>
+                                        <li>Deluxe Room: @Model.DlxRate</li>
+                                        <li>Family Room: @Model.FamRate</li>
+                                        <li>Suite Room: @Model.SuiteRate</li>
                                     </ul>
                                     <a href="#" class="btn btn-outline-secondary btn-block btn-lg">Selected</a>
                                 </div>
@@ -225,11 +225,11 @@
                                 </div>
                                 <div class="card-body border-top">
                                     <ul class="list-unstyled bullet-check font-14">
-                                        <li>Standard Room: $102</li>
-                                        <li>Superior Room: $150</li>
-                                        <li>Deluxe Room: $190</li>
-                                        <li>Family Room: $200</li>
-                                        <li>Suite Room: $230</li>
+                                        <li>Standard Room: </li>
+                                        <li>Superior Room: </li>
+                                        <li>Deluxe Room: </li>
+                                        <li>Family Room: </li>
+                                        <li>Suite Room: </li>
                                     </ul>
                                     <a href="#" class="btn btn-secondary btn-block btn-lg">Adjust Rate</a>
                                 </div>

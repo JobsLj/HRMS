@@ -36,13 +36,12 @@ namespace HRMS.Repositories
             return dblist;
         }
 
-        public List<DailyOccupancyRoomType> GetLatestRoomTypeOccupancy(int roomid, DateTime? latest = null)
+        public DailyOccupancyRoomType GetLatestRoomTypeOccupancy(int roomid, DateTime? latest = null)
         {
             if (latest == null)
                 latest = context.RoomTypeOccupancy.Max(r => r.Date);
 
-            var list = context.RoomTypeOccupancy.Where(item => item.RoomTypeId == roomid && item.Date == latest).ToList();
-            return list;
+            return context.RoomTypeOccupancy.Where(item => item.RoomTypeId == roomid && item.Date == latest).FirstOrDefault();
         }
 
         public List<DailyPredictionModel> GetPredictions()
@@ -59,11 +58,6 @@ namespace HRMS.Repositories
         public DailyOccupancy GetOccupancyByDate(DateTime date)
         {
             return context.Occupancy.Where(d => d.Date == date).FirstOrDefault();
-        }
-
-        public List<DailyRoomRates> GetRoomRatesByDate(DateTime date, int roomid)
-        {
-            return context.RoomRates.Where(d => d.Date == date && d.RoomTypeId == roomid).ToList();
         }
 
         public void AddPredictions(List<DailyPredictionModel> list)

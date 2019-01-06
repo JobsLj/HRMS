@@ -65,12 +65,12 @@ namespace HRMS.Controllers
         public List<Tuple<DateTime, float>> OccupancyPredictions(int roomid)
         {
             var RoomList = repository.GetLatestRoomTypeOccupancy(roomid);
-            var prevList = repository.GetLatestRoomTypeOccupancy(roomid, RoomList.FirstOrDefault().Date.AddDays(-1));
+            var prevList = repository.GetLatestRoomTypeOccupancy(roomid, RoomList.Date.AddDays(-1));
 
-            var date = RoomList.FirstOrDefault().Date;
-            float occupied = RoomList.FirstOrDefault().RoomOccupied;
-            float totalRoom = RoomList.FirstOrDefault().TotalRoom;
-            float prevOccupied = prevList.FirstOrDefault().RoomOccupied;
+            var date = RoomList.Date;
+            float occupied = RoomList.RoomOccupied;
+            float totalRoom = RoomList.TotalRoom;
+            float prevOccupied = prevList.RoomOccupied;
 
             var predictions = new List<Tuple<DateTime, float>>();
 
@@ -222,6 +222,137 @@ namespace HRMS.Controllers
             return average;
         }
 
+        private List<Tuple<string, float>> GetPreviousMonthDetails(string selected)
+        {
+            var prevMonthDetails = new List<Tuple<string, float>>();
+
+            var prevMonthSprRates = GetAvgAmount(repository.GetLatestRoomRates(7, DateTime.Parse(selected).AddMonths(-1)));
+            var prevMonthStdRates = GetAvgAmount(repository.GetLatestRoomRates(8, DateTime.Parse(selected).AddMonths(-1)));
+            var prevMonthFamRates = GetAvgAmount(repository.GetLatestRoomRates(9, DateTime.Parse(selected).AddMonths(-1)));
+            var prevMonthSuiteRates = GetAvgAmount(repository.GetLatestRoomRates(10, DateTime.Parse(selected).AddMonths(-1)));
+            var prevMonthDlxRates = GetAvgAmount(repository.GetLatestRoomRates(11, DateTime.Parse(selected).AddMonths(-1)));
+
+            var prevMonthSprOcc = repository.GetLatestRoomTypeOccupancy(7, DateTime.Parse(selected).AddMonths(-1));
+            var prevMonthStdOcc = repository.GetLatestRoomTypeOccupancy(8, DateTime.Parse(selected).AddMonths(-1));
+            var prevMonthFamOcc = repository.GetLatestRoomTypeOccupancy(9, DateTime.Parse(selected).AddMonths(-1));
+            var prevMonthSuiteOcc = repository.GetLatestRoomTypeOccupancy(10, DateTime.Parse(selected).AddMonths(-1));
+            var prevMonthDlxOcc = repository.GetLatestRoomTypeOccupancy(11, DateTime.Parse(selected).AddMonths(-1));
+
+            // Calculate ADR/RevPar/Occupancy rate
+            var totalOccupancy = repository.GetOccupancyByDate(DateTime.Parse(selected).AddMonths(-1)).RoomOccupied;
+
+            var totalRevenue = (prevMonthSprRates * prevMonthSprOcc.RoomOccupied) +
+                (prevMonthStdRates * prevMonthStdOcc.RoomOccupied) +
+                (prevMonthFamRates * prevMonthFamOcc.RoomOccupied) +
+                (prevMonthSuiteRates * prevMonthSuiteOcc.RoomOccupied) +
+                (prevMonthDlxRates * prevMonthDlxOcc.RoomOccupied);
+
+            var adr = totalRevenue / totalOccupancy;
+            var revpar = totalRevenue / 71;
+            var occupancyRate = totalOccupancy *100 / 71;
+
+            prevMonthDetails.Add(new Tuple<string, float>("adr", adr));
+            prevMonthDetails.Add(new Tuple<string, float>("revpar", revpar));
+            prevMonthDetails.Add(new Tuple<string, float>("occ", occupancyRate));
+
+            return prevMonthDetails;
+        }
+
+        private List<Tuple<string, float>> GetPreviousYearDetails(string selected)
+        {
+            var prevYearDetails = new List<Tuple<string, float>>();
+
+            var prevYearSprRates = GetAvgAmount(repository.GetLatestRoomRates(7, DateTime.Parse(selected).AddYears(-1)));
+            var prevYearStdRates = GetAvgAmount(repository.GetLatestRoomRates(8, DateTime.Parse(selected).AddYears(-1)));
+            var prevYearFamRates = GetAvgAmount(repository.GetLatestRoomRates(9, DateTime.Parse(selected).AddYears(-1)));
+            var prevYearSuiteRates = GetAvgAmount(repository.GetLatestRoomRates(10, DateTime.Parse(selected).AddYears(-1)));
+            var prevYearDlxRates = GetAvgAmount(repository.GetLatestRoomRates(11, DateTime.Parse(selected).AddYears(-1)));
+
+            var prevYearSprOcc = repository.GetLatestRoomTypeOccupancy(7, DateTime.Parse(selected).AddYears(-1));
+            var prevYearStdOcc = repository.GetLatestRoomTypeOccupancy(8, DateTime.Parse(selected).AddYears(-1));
+            var prevYearFamOcc = repository.GetLatestRoomTypeOccupancy(9, DateTime.Parse(selected).AddYears(-1));
+            var prevYearSuiteOcc = repository.GetLatestRoomTypeOccupancy(10, DateTime.Parse(selected).AddYears(-1));
+            var prevYearDlxOcc = repository.GetLatestRoomTypeOccupancy(11, DateTime.Parse(selected).AddYears(-1));
+
+            // Calculate ADR/RevPar/Occupancy rate
+            var totalOccupancy = repository.GetOccupancyByDate(DateTime.Parse(selected).AddYears(-1)).RoomOccupied;
+
+            var totalRevenue = (prevYearSprRates * prevYearSprOcc.RoomOccupied) +
+                (prevYearStdRates * prevYearStdOcc.RoomOccupied) +
+                (prevYearFamRates * prevYearFamOcc.RoomOccupied) +
+                (prevYearSuiteRates * prevYearSuiteOcc.RoomOccupied) +
+                (prevYearDlxRates * prevYearDlxOcc.RoomOccupied);
+
+            var adr = totalRevenue / totalOccupancy;
+            var revpar = totalRevenue / 71;
+            var occupancyRate = totalOccupancy * 100 / 71;
+
+            prevYearDetails.Add(new Tuple<string, float>("adr", adr));
+            prevYearDetails.Add(new Tuple<string, float>("revpar", revpar));
+            prevYearDetails.Add(new Tuple<string, float>("occ", occupancyRate));
+
+            return prevYearDetails;
+        }
+
+        private List<Tuple<string, float>> GetYesterdayDetails(string selected)
+        {
+            var yesterdayDetails = new List<Tuple<string, float>>();
+
+            if (repository.GetOccupancyByDate(DateTime.Parse(selected).AddDays(-1)) ==  null)
+            {
+                var yesterdayModel = repository.GetPredictionByDate(DateTime.Parse(selected).AddDays(-1));
+
+                var totalOccupancy = yesterdayModel.SprOccupancy + yesterdayModel.StdOccupancy + yesterdayModel.FamOccupancy +
+                yesterdayModel.SuiteOccupancy + yesterdayModel.DlxOccupancy;
+                var totalRevenue = (yesterdayModel.SprRoomRate * yesterdayModel.SprOccupancy) +
+                    (yesterdayModel.StdRoomRate * yesterdayModel.StdOccupancy) +
+                    (yesterdayModel.FamRoomRate * yesterdayModel.FamOccupancy) +
+                    (yesterdayModel.SuiteRoomRate * yesterdayModel.SuiteOccupancy) +
+                    (yesterdayModel.DlxRoomRate * yesterdayModel.DlxOccupancy);
+
+                var adr = totalRevenue / totalOccupancy;
+                var revpar = totalRevenue / 71;
+                var occupancyRate = totalOccupancy * 100 / 71;
+
+                yesterdayDetails.Add(new Tuple<string, float>("adr", adr));
+                yesterdayDetails.Add(new Tuple<string, float>("revpar", revpar));
+                yesterdayDetails.Add(new Tuple<string, float>("occ", occupancyRate));
+            }
+            else
+            {
+                var yesterdaySprRates = GetAvgAmount(repository.GetLatestRoomRates(7, DateTime.Parse(selected).AddDays(-1)));
+                var yesterdayStdRates = GetAvgAmount(repository.GetLatestRoomRates(8, DateTime.Parse(selected).AddDays(-1)));
+                var yesterdayFamRates = GetAvgAmount(repository.GetLatestRoomRates(9, DateTime.Parse(selected).AddDays(-1)));
+                var yesterdaySuiteRates = GetAvgAmount(repository.GetLatestRoomRates(10, DateTime.Parse(selected).AddDays(-1)));
+                var yesterdayDlxRates = GetAvgAmount(repository.GetLatestRoomRates(11, DateTime.Parse(selected).AddDays(-1)));
+
+                var yesterdaySprOcc = repository.GetLatestRoomTypeOccupancy(7, DateTime.Parse(selected).AddDays(-1));
+                var yesterdayStdOcc = repository.GetLatestRoomTypeOccupancy(8, DateTime.Parse(selected).AddDays(-1));
+                var yesterdayFamOcc = repository.GetLatestRoomTypeOccupancy(9, DateTime.Parse(selected).AddDays(-1));
+                var yesterdaySuiteOcc = repository.GetLatestRoomTypeOccupancy(10, DateTime.Parse(selected).AddDays(-1));
+                var yesterdayDlxOcc = repository.GetLatestRoomTypeOccupancy(11, DateTime.Parse(selected).AddDays(-1));
+
+                // Calculate ADR/RevPar/Occupancy rate
+                var totalOccupancy = repository.GetOccupancyByDate(DateTime.Parse(selected).AddDays(-1)).RoomOccupied;
+
+                var totalRevenue = (yesterdaySprRates * yesterdaySprOcc.RoomOccupied) +
+                    (yesterdayStdRates * yesterdayStdOcc.RoomOccupied) +
+                    (yesterdayFamRates * yesterdayFamOcc.RoomOccupied) +
+                    (yesterdaySuiteRates * yesterdaySuiteOcc.RoomOccupied) +
+                    (yesterdayDlxRates * yesterdayDlxOcc.RoomOccupied);
+
+                var adr = totalRevenue / totalOccupancy;
+                var revpar = totalRevenue / 71;
+                var occupancyRate = totalOccupancy * 100 / 71;
+
+                yesterdayDetails.Add(new Tuple<string, float>("adr", adr));
+                yesterdayDetails.Add(new Tuple<string, float>("revpar", revpar));
+                yesterdayDetails.Add(new Tuple<string, float>("occ", occupancyRate));
+            }
+
+            return yesterdayDetails;
+        }
+
         public async Task<IActionResult> Index()
         {
             var CalendarModel = new List<CalendarEvent>();
@@ -327,20 +458,6 @@ namespace HRMS.Controllers
             var model = new DetailsViewModel();
 
             var selectedModel = repository.GetPredictionByDate(DateTime.Parse(selected));
-            var prevMonthOcc = repository.GetOccupancyByDate(DateTime.Parse(selected).AddMonths(-1)).RoomOccupied;
-            var prevYearOcc = repository.GetOccupancyByDate(DateTime.Parse(selected).AddYears(-1)).RoomOccupied;
-
-            var prevMonthSprRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddMonths(-1), 7));
-            var prevMonthStdRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddMonths(-1), 8));
-            var prevMonthFamRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddMonths(-1), 9));
-            var prevMonthSuiteRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddMonths(-1), 10));
-            var prevMonthDlxRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddMonths(-1), 11));
-
-            var prevYearSprRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddYears(-1), 7));
-            var prevYearStdRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddYears(-1), 8));
-            var prevYearFamRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddYears(-1), 9));
-            var prevYearSuiteRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddYears(-1), 10));
-            var prevYearDlxRates = GetAvgAmount(repository.GetRoomRatesByDate(DateTime.Parse(selected).AddYears(-1), 11));
 
             // Calculate ADR/RevPar/Occupancy rate
             var totalOccupancy = selectedModel.SprOccupancy + selectedModel.StdOccupancy + selectedModel.FamOccupancy +
@@ -355,9 +472,30 @@ namespace HRMS.Controllers
             var revpar = totalRevenue / 71;
             var occupancyRate = totalOccupancy / 71;
 
+            var prevMonthDetails = GetPreviousMonthDetails(selected);
+            var prevYearDetails = GetPreviousYearDetails(selected);
+            var yesterdayDetails = GetYesterdayDetails(selected);
 
+            model.Adr = adr.ToString();
+            model.RevPar = revpar.ToString();
+            model.Occupancy = occupancyRate.ToString("#0.##%");
+            model.Date = DateTime.Parse(selected);
+            model.SprRate = selectedModel.SprRoomRate.ToString();
+            model.StdRate = selectedModel.StdRoomRate.ToString();
+            model.FamRate = selectedModel.FamRoomRate.ToString();
+            model.SuiteRate = selectedModel.SuiteRoomRate.ToString();
+            model.DlxRate = selectedModel.DlxRoomRate.ToString();
+            model.yestAdr = yesterdayDetails[0].Item2.ToString();
+            model.yestRevPar = yesterdayDetails[1].Item2.ToString();
+            model.yestOccupancy = yesterdayDetails[2].Item2.ToString() + "%";
+            model.prevMonthAdr = prevMonthDetails[0].Item2.ToString();
+            model.prevMonthRevPar = prevMonthDetails[1].Item2.ToString();
+            model.prevMonthOccupancy = prevMonthDetails[2].Item2.ToString() + "%";
+            model.prevYearAdr = prevYearDetails[0].Item2.ToString();
+            model.prevYearRevPar = prevYearDetails[1].Item2.ToString();
+            model.prevYearOccupancy = prevYearDetails[2].Item2.ToString() + "%";
 
-            return View("Details");
+            return View("Details", model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
