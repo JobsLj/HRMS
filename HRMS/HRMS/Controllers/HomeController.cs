@@ -470,7 +470,7 @@ namespace HRMS.Controllers
 
             var adr = totalRevenue / totalOccupancy;
             var revpar = totalRevenue / 71;
-            var occupancyRate = totalOccupancy / 71;
+            var occupancyRate = totalOccupancy * 100 / 71;
 
             var prevMonthDetails = GetPreviousMonthDetails(selected);
             var prevYearDetails = GetPreviousYearDetails(selected);
@@ -478,7 +478,8 @@ namespace HRMS.Controllers
 
             model.Adr = adr.ToString();
             model.RevPar = revpar.ToString();
-            model.Occupancy = occupancyRate.ToString("#0.##%");
+            //model.Occupancy = occupancyRate.ToString("#0.##");
+            model.Occupancy = occupancyRate.ToString();
             model.Date = DateTime.Parse(selected);
             model.SprRate = selectedModel.SprRoomRate.ToString();
             model.StdRate = selectedModel.StdRoomRate.ToString();
@@ -487,13 +488,13 @@ namespace HRMS.Controllers
             model.DlxRate = selectedModel.DlxRoomRate.ToString();
             model.yestAdr = yesterdayDetails[0].Item2.ToString();
             model.yestRevPar = yesterdayDetails[1].Item2.ToString();
-            model.yestOccupancy = yesterdayDetails[2].Item2.ToString() + "%";
+            model.yestOccupancy = yesterdayDetails[2].Item2.ToString();
             model.prevMonthAdr = prevMonthDetails[0].Item2.ToString();
             model.prevMonthRevPar = prevMonthDetails[1].Item2.ToString();
-            model.prevMonthOccupancy = prevMonthDetails[2].Item2.ToString() + "%";
+            model.prevMonthOccupancy = prevMonthDetails[2].Item2.ToString();
             model.prevYearAdr = prevYearDetails[0].Item2.ToString();
             model.prevYearRevPar = prevYearDetails[1].Item2.ToString();
-            model.prevYearOccupancy = prevYearDetails[2].Item2.ToString() + "%";
+            model.prevYearOccupancy = prevYearDetails[2].Item2.ToString();
 
             return View("Details", model);
         }

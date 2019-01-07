@@ -2,6 +2,18 @@
 @{
     ViewData["Title"] = "Details";
     var id = Model.Date.ToString("dd MMMM yyyy");
+
+    var yestAdr = Math.Round((Convert.ToDouble(Model.Adr) - Convert.ToDouble(Model.yestAdr)) / Convert.ToDouble(Model.yestAdr) * 100, 2);
+    var yestRevpar = Math.Round((Convert.ToDouble(Model.RevPar) - Convert.ToDouble(Model.yestRevPar)) / Convert.ToDouble(Model.yestRevPar) * 100, 2);
+    var yestOcc = Math.Round((Convert.ToDouble(Model.Occupancy) - Convert.ToDouble(Model.yestOccupancy)) / Convert.ToDouble(Model.yestOccupancy) * 100, 2);
+
+    var monthAdr = Math.Round((Convert.ToDouble(Model.Adr) - Convert.ToDouble(Model.prevMonthAdr)) / Convert.ToDouble(Model.prevMonthAdr) * 100, 2);
+    var monthRevpar = Math.Round((Convert.ToDouble(Model.RevPar) - Convert.ToDouble(Model.prevMonthRevPar)) / Convert.ToDouble(Model.prevMonthRevPar) * 100, 2);
+    var monthOcc = Math.Round((Convert.ToDouble(Model.Occupancy) - Convert.ToDouble(Model.prevMonthOccupancy)) / Convert.ToDouble(Model.prevMonthOccupancy) * 100, 2);
+
+    var yearAdr = Math.Round((Convert.ToDouble(Model.Adr) - Convert.ToDouble(Model.prevYearAdr)) / Convert.ToDouble(Model.prevYearAdr) * 100, 2);
+    var yearRevpar = Math.Round((Convert.ToDouble(Model.RevPar) - Convert.ToDouble(Model.prevYearRevPar)) / Convert.ToDouble(Model.prevYearRevPar) * 100, 2);
+    var yearOcc = Math.Round((Convert.ToDouble(Model.Occupancy) - Convert.ToDouble(Model.prevYearOccupancy)) / Convert.ToDouble(Model.prevYearOccupancy) * 100, 2);
 }
 
 <!-- pageheader -->
@@ -38,7 +50,7 @@
                 <div class="">
                     <ul class="list-unstyled mb-0">
                         <li class="mb-2">ADR: @Model.Adr</li>
-                        <li class="mb-2">OCCUPANCY: @Model.Occupancy</li>
+                        <li class="mb-2">OCCUPANCY: @Math.Round(Convert.ToDouble(Model.Occupancy), 2)%</li>
                         <li class="mb-2">RevPAR: @Model.RevPar</li>
                     </ul>
                 </div>
@@ -48,7 +60,7 @@
                 <div class="">
                     <ul class="list-unstyled mb-0">
                         <li class="mb-2">Seasonal Demands: 10%</li>
-                        <li class="mb-2">Historical Data: 80%</li>
+                        <li class="mb-2">Historical Data: 90%</li>
                         @*<li class="mb-2">Social Media: 10%</li>*@
                     </ul>
                 </div>
@@ -58,9 +70,9 @@
     </div>
     <!-- end Details -->
 
-    <!-- campaign data -->
+    <!-- details data -->
     <div class="col-xl-9 col-lg-9 col-md-7 col-sm-12 col-12">
-        <!-- campaign tab one -->
+        <!-- details tabs -->
         <div class="influence-profile-content pills-regular">
             <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
                 <li class="nav-item">
@@ -71,6 +83,7 @@
                 </li>
             </ul>
             <div class="tab-content" id="pills-tabContent">
+                <!-- details summary tab-->
                 <div class="tab-pane fade show active" id="pills-campaign" role="tabpanel" aria-labelledby="pills-campaign-tab">
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -86,15 +99,15 @@
                                         <h5 class="mb-1">ADR: @Model.yestAdr</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                        <span>+5.86%</span>
+                                        <span>@yestAdr%</span>
                                     </div>
                                 </div>
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">OCCUPANCY: @Model.yestOccupancy</h5>
+                                        <h5 class="mb-1">OCCUPANCY: @Math.Round(Convert.ToDouble(Model.yestOccupancy), 2)%</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                       <span>+5.86%</span>
+                                        <span>@yestOcc%</span>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -102,7 +115,7 @@
                                         <h5 class="mb-1">RevPAR: @Model.yestRevPar</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                        <span>+5.86%</span>
+                                        <span>@yestRevpar%</span>
                                     </div>
                                 </div>
                             </div>
@@ -115,15 +128,15 @@
                                         <h5 class="mb-1">ADR: @Model.prevMonthAdr</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                        <span>5.86%</span>
+                                        <span>@monthAdr%</span>
                                     </div>
                                 </div>
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">OCCUPANCY: @Model.prevMonthOccupancy</h5>
+                                        <h5 class="mb-1">OCCUPANCY: @Model.prevMonthOccupancy%</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                        <span>+5.86%</span>
+                                        <span>@monthOcc%</span>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -131,7 +144,7 @@
                                         <h5 class="mb-1">RevPAR: @Model.prevMonthRevPar</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                        <span>+5.86%</span>
+                                        <span>@monthRevpar%</span>
                                     </div>
                                 </div>
                             </div>
@@ -144,15 +157,15 @@
                                         <h5 class="mb-1">ADR: @Model.prevYearAdr</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
-                                        <span>N/A</span>
+                                        <span>@yearAdr%</span>
                                     </div>
                                 </div>
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">OCCUPANCY: @Model.prevYearOccupancy</h5>
+                                        <h5 class="mb-1">OCCUPANCY: @Model.prevYearOccupancy%</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
-                                        <span>N/A</span>
+                                        <span>@yearOcc%</span>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -160,7 +173,7 @@
                                         <h5 class="mb-1">RevPAR: @Model.prevYearRevPar</h5>
                                     </div>
                                     <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
-                                        <span>N/A</span>
+                                        <span>@yearRevpar%</span>
                                     </div>
                                 </div>
                             </div>
@@ -231,17 +244,26 @@
                                         <li>Family Room: </li>
                                         <li>Suite Room: </li>
                                     </ul>
-                                    <a href="#" class="btn btn-secondary btn-block btn-lg">Adjust Rate</a>
+                                    <a href="#" data-toggle="modal" data-target="#adjustedModal" class="btn btn-secondary btn-block btn-lg">Adjust Rate</a>
                                 </div>
                             </div>
                         </div>
-                    </div>  
+                    </div>
                 </div>
+                <!-- details what-if tab-->
                 <div class="tab-pane fade" id="pills-packages" role="tabpanel" aria-labelledby="pills-packages-tab">
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="section-block">
-                                <h2 class="section-title">What-If Analysis</h2>
+                                <h2 class="section-title" style="font-size:20px;">What-If Analysis</h2>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Pricing Scenario</h5>
+                                <div class="card-body">
+                                    @await Component.InvokeAsync("WhatifModal")
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -255,4 +277,12 @@
     <!-- ============================================================== -->
     <!-- end campaign data -->
     <!-- ============================================================== -->
+</div>
+
+<div class="modal fade" id="adjustedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            @await Component.InvokeAsync("CalendarModal")
+        </div>
+    </div>
 </div>

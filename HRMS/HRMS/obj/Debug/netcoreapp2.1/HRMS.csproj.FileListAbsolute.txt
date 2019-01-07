@@ -127,3 +127,4 @@ C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.Views.p
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.dll
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.pdb
 C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\HRMS.csproj.CopyComplete
+C:\Users\Siew Mun\Desktop\FYP-APP\HRMS\HRMS\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\WhatifModal\Default.g.cshtml.cs
