@@ -15,6 +15,7 @@ namespace HRMS.Repositories
         List<DailyPredictionModel> GetPredictions();
         DailyPredictionModel GetPredictionByDate(DateTime date);
         DailyOccupancy GetOccupancyByDate(DateTime date);
+        void UpdatePredictions(DailyPredictionModel item);
         void AddPredictions(List<DailyPredictionModel> list);
         void SeedRoomRates(string json);
         void SeedOccupancy(string json);

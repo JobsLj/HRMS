@@ -464,23 +464,22 @@ namespace HRMS.Controllers
         }
 
         [HttpGet("Home/Details/{selected}")]
-        public IActionResult Details(string selected, int? id)
+        public IActionResult Details(string selected, int id = 0)
         {
             ViewData["id"] = selected;
             var model = new DetailsViewModel();
-
-            var selectedModel = repository.GetPredictionByDate(DateTime.Parse(selected));
-            //if (id != null)
-
+            var selectedModel = repository.GetPredictionByDate(DateTime.Parse(selected));      
 
             // Calculate ADR/RevPar/Occupancy rate
             var totalOccupancy = selectedModel.SprOccupancy + selectedModel.StdOccupancy + selectedModel.FamOccupancy +
                 selectedModel.SuiteOccupancy + selectedModel.DlxOccupancy;
+
             var totalRevenue = (selectedModel.SprRoomRate * selectedModel.SprOccupancy) + 
                 (selectedModel.StdRoomRate * selectedModel.StdOccupancy) +
                 (selectedModel.FamRoomRate * selectedModel.FamOccupancy) + 
                 (selectedModel.SuiteRoomRate * selectedModel.SuiteOccupancy) +
                 (selectedModel.DlxRoomRate * selectedModel.DlxOccupancy);
+
             var defaultRevenue = (DEFAULT_SPR * selectedModel.SprOccupancy) +
                 (DEFAULT_STD * selectedModel.StdOccupancy) +
                 (DEFAULT_FAM * selectedModel.FamOccupancy) +
@@ -518,6 +517,13 @@ namespace HRMS.Controllers
             model.selectedPlan = selectedModel.SelectedRoomRate;
             model.defaultAdr = defaultAdr.ToString();
             model.defaultRevpar = defaultRevpar.ToString();
+
+            if (id != 0)
+            {
+                selectedModel.SelectedRoomRate = id;
+                repository.UpdatePredictions(selectedModel);
+                model.selectedPlan = id;
+            }
 
             return View("Details", model);
         }

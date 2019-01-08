@@ -60,6 +60,12 @@ namespace HRMS.Repositories
             return context.Occupancy.Where(d => d.Date == date).FirstOrDefault();
         }
 
+        public void UpdatePredictions(DailyPredictionModel item)
+        {
+            context.Predictions.Update(item);
+            context.SaveChanges();
+        }
+
         public void AddPredictions(List<DailyPredictionModel> list)
         {
             foreach(var item in list)
