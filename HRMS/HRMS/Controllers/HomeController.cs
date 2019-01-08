@@ -470,6 +470,8 @@ namespace HRMS.Controllers
             var model = new DetailsViewModel();
 
             var selectedModel = repository.GetPredictionByDate(DateTime.Parse(selected));
+            //if (id != null)
+
 
             // Calculate ADR/RevPar/Occupancy rate
             var totalOccupancy = selectedModel.SprOccupancy + selectedModel.StdOccupancy + selectedModel.FamOccupancy +
