@@ -34,6 +34,12 @@ namespace HRMS.Controllers
         private readonly PredictionFunction<SuiteOccupancyData, OccupancyPrediction> SuiteOccupancyPredFunction;
         private readonly PredictionFunction<DlxOccupancyData, OccupancyPrediction> DlxOccupancyPredFunction;
 
+        private static readonly int DEFAULT_SPR = 743802;
+        private static readonly int DEFAULT_STD = 589659;
+        private static readonly int DEFAULT_FAM = 818182;
+        private static readonly int DEFAULT_SUITE = 1368595;
+        private static readonly int DEFAULT_DLX = 920000;
+
         // Controller
         public HomeController(ISeederRepository repository, 
             PredictionFunction<StdRoomRateData, RoomRatePrediction> StdRoomRatePredFunction, 
@@ -392,6 +398,12 @@ namespace HRMS.Controllers
                     pred.SuiteOccupancy = SuiteOccPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
                     pred.DlxRoomRate = SuiteRoomPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
                     pred.DlxOccupancy = DlxOccPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
+                    pred.SelectedRoomRate = 1;
+                    pred.AdjSprRoomRate = 0;
+                    pred.AdjStdRoomRate = 0;
+                    pred.AdjFamRoomRate = 0;
+                    pred.AdjSuiteRoomRate = 0;
+                    pred.AdjDlxRoomRate = 0;
 
                     PredictionList.Add(pred);
 
@@ -452,7 +464,7 @@ namespace HRMS.Controllers
         }
 
         [HttpGet("Home/Details/{selected}")]
-        public IActionResult Details(string selected)
+        public IActionResult Details(string selected, int? id)
         {
             ViewData["id"] = selected;
             var model = new DetailsViewModel();
@@ -467,9 +479,16 @@ namespace HRMS.Controllers
                 (selectedModel.FamRoomRate * selectedModel.FamOccupancy) + 
                 (selectedModel.SuiteRoomRate * selectedModel.SuiteOccupancy) +
                 (selectedModel.DlxRoomRate * selectedModel.DlxOccupancy);
+            var defaultRevenue = (DEFAULT_SPR * selectedModel.SprOccupancy) +
+                (DEFAULT_STD * selectedModel.StdOccupancy) +
+                (DEFAULT_FAM * selectedModel.FamOccupancy) +
+                (DEFAULT_SUITE * selectedModel.SuiteOccupancy) +
+                (DEFAULT_DLX * selectedModel.DlxOccupancy);
 
             var adr = totalRevenue / totalOccupancy;
+            var defaultAdr = defaultRevenue / totalOccupancy;
             var revpar = totalRevenue / 71;
+            var defaultRevpar = defaultRevenue / 71;
             var occupancyRate = totalOccupancy * 100 / 71;
 
             var prevMonthDetails = GetPreviousMonthDetails(selected);
@@ -478,7 +497,6 @@ namespace HRMS.Controllers
 
             model.Adr = adr.ToString();
             model.RevPar = revpar.ToString();
-            //model.Occupancy = occupancyRate.ToString("#0.##");
             model.Occupancy = occupancyRate.ToString();
             model.Date = DateTime.Parse(selected);
             model.SprRate = selectedModel.SprRoomRate.ToString();
@@ -495,6 +513,9 @@ namespace HRMS.Controllers
             model.prevYearAdr = prevYearDetails[0].Item2.ToString();
             model.prevYearRevPar = prevYearDetails[1].Item2.ToString();
             model.prevYearOccupancy = prevYearDetails[2].Item2.ToString();
+            model.selectedPlan = selectedModel.SelectedRoomRate;
+            model.defaultAdr = defaultAdr.ToString();
+            model.defaultRevpar = defaultRevpar.ToString();
 
             return View("Details", model);
         }

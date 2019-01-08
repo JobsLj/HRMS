@@ -135,6 +135,16 @@ namespace HRMS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<float>("AdjDlxRoomRate");
+
+                    b.Property<float>("AdjFamRoomRate");
+
+                    b.Property<float>("AdjSprRoomRate");
+
+                    b.Property<float>("AdjStdRoomRate");
+
+                    b.Property<float>("AdjSuiteRoomRate");
+
                     b.Property<DateTime>("Date");
 
                     b.Property<float>("DlxOccupancy");
@@ -144,6 +154,8 @@ namespace HRMS.Migrations
                     b.Property<float>("FamOccupancy");
 
                     b.Property<float>("FamRoomRate");
+
+                    b.Property<int>("SelectedRoomRate");
 
                     b.Property<float>("SprOccupancy");
 

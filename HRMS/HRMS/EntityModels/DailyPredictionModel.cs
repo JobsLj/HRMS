@@ -19,5 +19,11 @@ namespace HRMS.EntityModels
         public float FamOccupancy { get; set; }
         public float SuiteOccupancy { get; set; }
         public float DlxOccupancy { get; set; }
+        public int SelectedRoomRate { get; set; }
+        public float AdjStdRoomRate { get; set; }
+        public float AdjSprRoomRate { get; set; }
+        public float AdjFamRoomRate { get; set; }
+        public float AdjSuiteRoomRate { get; set; }
+        public float AdjDlxRoomRate { get; set; }
     }
 }

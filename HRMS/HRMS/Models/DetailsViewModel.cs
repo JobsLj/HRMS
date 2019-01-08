@@ -25,5 +25,8 @@ namespace HRMS.Models
         public string prevYearAdr { get; set; }
         public string prevYearRevPar { get; set; }
         public string prevYearOccupancy { get; set; }
+        public int selectedPlan { get; set; }
+        public string defaultAdr { get; set; }
+        public string defaultRevpar { get; set; }
     }
 }

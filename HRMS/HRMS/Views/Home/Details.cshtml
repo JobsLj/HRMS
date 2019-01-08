@@ -49,9 +49,24 @@
                 <h3 class="profile-title">Revenue Forecast</h3>
                 <div class="">
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-2">ADR: @Model.Adr</li>
-                        <li class="mb-2">OCCUPANCY: @Math.Round(Convert.ToDouble(Model.Occupancy), 2)%</li>
-                        <li class="mb-2">RevPAR: @Model.RevPar</li>
+                        @if (Model.selectedPlan == 1)
+                        {
+                            <li class="mb-2">ADR: @Model.Adr</li>
+                            <li class="mb-2">OCCUPANCY: @Math.Round(Convert.ToDouble(Model.Occupancy), 2)%</li>
+                            <li class="mb-2">RevPAR: @Model.RevPar</li>
+                        }
+                        else if (Model.selectedPlan == 2)
+                        {
+                            <li class="mb-2">ADR: @Model.defaultAdr</li>
+                            <li class="mb-2">OCCUPANCY: @Math.Round(Convert.ToDouble(Model.Occupancy), 2)%</li>
+                            <li class="mb-2">RevPAR: @Model.defaultRevpar</li>
+                        }
+                        else
+                        {
+                            <li class="mb-2">ADR: @Model.Adr</li>
+                            <li class="mb-2">OCCUPANCY: @Math.Round(Convert.ToDouble(Model.Occupancy), 2)%</li>
+                            <li class="mb-2">RevPAR: @Model.RevPar</li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -202,7 +217,14 @@
                                         <li>Family Room: @Model.FamRate</li>
                                         <li>Suite Room: @Model.SuiteRate</li>
                                     </ul>
-                                    <a href="#" class="btn btn-outline-secondary btn-block btn-lg">Selected</a>
+                                    @if (Model.selectedPlan == 1)
+                                    {
+                                        <a href="#" class="btn btn-outline-secondary btn-block btn-lg">Selected</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-route-id="1" asp-controller="Home" asp-action="Details" class="btn btn-secondary btn-block btn-lg">Use This Rate</a>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -212,18 +234,25 @@
                                     <h4 class="mb-0 text-white"> Default Rate</h4>
                                 </div>
                                 <div class="card-body text-center">
-                                    <h1 class="mb-1">$120</h1>
+                                    <h1 class="mb-1">@Model.defaultAdr</h1>
                                     <p>Average Daily Rate</p>
                                 </div>
                                 <div class="card-body border-top">
                                     <ul class="list-unstyled bullet-check font-14">
-                                        <li>Standard Room: $102</li>
-                                        <li>Superior Room: $150</li>
-                                        <li>Deluxe Room: $190</li>
-                                        <li>Family Room: $200</li>
-                                        <li>Suite Room: $230</li>
+                                        <li>Standard Room: 589659</li>
+                                        <li>Superior Room: 743802</li>
+                                        <li>Deluxe Room: 920000</li>
+                                        <li>Family Room: 818182</li>
+                                        <li>Suite Room: 1368595</li>
                                     </ul>
-                                    <a href="#" class="btn btn-secondary btn-block btn-lg">Use This Rate</a>
+                                    @if (Model.selectedPlan == 2)
+                                    {
+                                        <a href="#" class="btn btn-outline-secondary btn-block btn-lg">Selected</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-route-id="2" asp-controller="Home" asp-action="Details" class="btn btn-secondary btn-block btn-lg">Use This Rate</a>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -233,7 +262,7 @@
                                     <h4 class="mb-0 text-white">Adjusted Rate</h4>
                                 </div>
                                 <div class="card-body text-center">
-                                    <h1 class="mb-1">$150</h1>
+                                    <h1 class="mb-1">0</h1>
                                     <p>Average Daily Rate</p>
                                 </div>
                                 <div class="card-body border-top">
@@ -244,7 +273,14 @@
                                         <li>Family Room: </li>
                                         <li>Suite Room: </li>
                                     </ul>
-                                    <a href="#" data-toggle="modal" data-target="#adjustedModal" class="btn btn-secondary btn-block btn-lg">Adjust Rate</a>
+                                    @if (Model.selectedPlan == 3)
+                                    {
+                                        <a href="#" class="btn btn-outline-secondary btn-block btn-lg">Selected</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" data-toggle="modal" data-target="#adjustedModal" class="btn btn-secondary btn-block btn-lg">Adjust Rate</a>
+                                    }
                                 </div>
                             </div>
                         </div>
