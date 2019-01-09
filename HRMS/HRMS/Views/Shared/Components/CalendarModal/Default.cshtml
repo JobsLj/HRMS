@@ -1,4 +1,6 @@
-﻿<div class="modal-header MHeader">
+﻿@model AdjustedRateModel
+
+<div class="modal-header MHeader">
     <h5 class="modal-title" id="exampleModalLongTitle">Set Adjusted Rate</h5>
     <button type="button" class="close MHeader-close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -7,57 +9,59 @@
 <div class="modal-body">
     <div class="tab-pane" id="networking">
         <div class="metrics-container">
-            <div class="row" style="margin-top:20px;">
-                <div class="col-4">
-                    <label for="StandardRoomWI">Standard Room</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Rp</div>
+            <form asp-controller="Home" asp-action="Details">
+                <div class="row" style="margin-top:20px;">
+                    <div class="col-4">
+                        <label for="StandardRoomWI">Standard Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input asp-for="std" type="number" class="form-control" id="StandardRoomWI" min="0" placeholder="Price">
                         </div>
-                        <input type="number" class="form-control" id="StandardRoomWI" min="0" placeholder="Price">
+                    </div>
+                    <div class="col-4">
+                        <label for="SuperiorRoomWI">Superior Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input asp-for="spr" type="number" class="form-control" id="SuperiorRoomWI" min="0" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="DeluxeRoomWI">Deluxe Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input asp-for="dlx" type="number" class="form-control" id="DeluxeRoomWI" min="0" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="FamilyRoomWI" style="margin-top:10px;">Family Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input asp-for="fam" type="number" class="form-control" id="FamilyRoomWI" min="0" placeholder="Price">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="SuiteRoomWI" style="margin-top:10px;">Suite Room</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp</div>
+                            </div>
+                            <input asp-for="suite" type="number" class="form-control" id="SuiteRoomWI" min="0" placeholder="Price">
+                        </div> 
                     </div>
                 </div>
-                <div class="col-4">
-                    <label for="SuperiorRoomWI">Superior Room</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Rp</div>
-                        </div>
-                        <input type="number" class="form-control" id="SuperiorRoomWI" min="0" placeholder="Price">
-                    </div>
+                <div class="modal-footer" style="border:none; margin-top:20px;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
-                <div class="col-4">
-                    <label for="DeluxeRoomWI">Deluxe Room</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Rp</div>
-                        </div>
-                        <input type="number" class="form-control" id="DeluxeRoomWI" min="0" placeholder="Price">
-                    </div>
-                </div>
-                <div class="col-4">
-                    <label for="FamilyRoomWI" style="margin-top:10px;">Family Room</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Rp</div>
-                        </div>
-                        <input type="number" class="form-control" id="FamilyRoomWI" min="0" placeholder="Price">
-                    </div>
-                </div>
-                <div class="col-4">
-                    <label for="SuiteRoomWI" style="margin-top:10px;">Suite Room</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Rp</div>
-                        </div>
-                        <input type="number" class="form-control" id="SuiteRoomWI" min="0" placeholder="Price">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer" style="border:none; margin-top:20px;">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>

@@ -464,7 +464,7 @@ namespace HRMS.Controllers
         }
 
         [HttpGet("Home/Details/{selected}")]
-        public IActionResult Details(string selected, int id = 0)
+        public IActionResult Details(string selected, int id = 0, int spr = 0)
         {
             ViewData["id"] = selected;
             var model = new DetailsViewModel();
