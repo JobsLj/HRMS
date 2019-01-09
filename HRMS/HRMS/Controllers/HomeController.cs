@@ -39,6 +39,7 @@ namespace HRMS.Controllers
         private static readonly int DEFAULT_FAM = 818182;
         private static readonly int DEFAULT_SUITE = 1368595;
         private static readonly int DEFAULT_DLX = 920000;
+        private static readonly int DEFAULT_ADR = 900000;
 
         // Controller
         public HomeController(ISeederRepository repository, 
@@ -362,6 +363,7 @@ namespace HRMS.Controllers
         public async Task<IActionResult> Index()
         {
             var CalendarModel = new List<CalendarEvent>();
+            
             // Check if database has existing prediction values
             if (repository.CheckPredictions())
             {
@@ -415,12 +417,24 @@ namespace HRMS.Controllers
                     var adr = totalRevenue / totalOccupancy;
                     var revpar = totalRevenue / 71;
                     var occupancyRate = totalOccupancy / 71;
+                    var percent = Math.Round((adr - DEFAULT_ADR) / DEFAULT_ADR * 100, 0);
 
                     modal.Date = item.Item1;
                     modal.Adr = adr.ToString();
                     modal.RevPar = revpar.ToString();
                     modal.Occupancy = occupancyRate.ToString("#0.##%");
-                    modal.Type = "success";
+
+                    if (adr > DEFAULT_ADR)
+                        modal.Type = "success";
+                    else if (adr == DEFAULT_ADR)
+                        modal.Type = "warning";
+                    else
+                        modal.Type = "danger";
+
+                    if (percent < 0)
+                        modal.Percent = percent.ToString() + "%";
+                    else
+                        modal.Percent = "+" + percent.ToString() + "%";
 
                     CalendarModel.Add(modal);
                 }
@@ -444,12 +458,24 @@ namespace HRMS.Controllers
                     var adr = totalRevenue / totalOccupancy;
                     var revpar = totalRevenue / 71;
                     var occupancyRate = totalOccupancy / 71;
+                    var percent = Math.Round((adr - DEFAULT_ADR) / DEFAULT_ADR * 100, 2);
 
                     modal.Date = pred.Date;
                     modal.Adr = adr.ToString();
                     modal.RevPar = revpar.ToString();
                     modal.Occupancy = occupancyRate.ToString("#0.##%");
-                    modal.Type = "success";
+
+                    if (adr > DEFAULT_ADR)
+                        modal.Type = "success";
+                    else if (adr == DEFAULT_ADR)
+                        modal.Type = "warning";
+                    else
+                        modal.Type = "danger";
+
+                    if (percent < 0)
+                        modal.Percent = percent.ToString() + "%";
+                    else
+                        modal.Percent = "+" + percent.ToString() + "%";
 
                     CalendarModel.Add(modal);
                 }
@@ -464,7 +490,7 @@ namespace HRMS.Controllers
         }
 
         [HttpGet("Home/Details/{selected}")]
-        public IActionResult Details(string selected, int id = 0, int spr = 0)
+        public IActionResult Details(string selected, int id = 0)
         {
             ViewData["id"] = selected;
             var model = new DetailsViewModel();
@@ -525,6 +551,12 @@ namespace HRMS.Controllers
                 model.selectedPlan = id;
             }
 
+            return View("Details", model);
+        }
+
+        [HttpPost]
+        public IActionResult Details(DetailsViewModel model)
+        {
             return View("Details", model);
         }
 

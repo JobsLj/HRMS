@@ -5,15 +5,15 @@
 
     var yestAdr = Math.Round((Convert.ToDouble(Model.Adr) - Convert.ToDouble(Model.yestAdr)) / Convert.ToDouble(Model.yestAdr) * 100, 2);
     var yestRevpar = Math.Round((Convert.ToDouble(Model.RevPar) - Convert.ToDouble(Model.yestRevPar)) / Convert.ToDouble(Model.yestRevPar) * 100, 2);
-    var yestOcc = Math.Round((Convert.ToDouble(Model.Occupancy) - Convert.ToDouble(Model.yestOccupancy)) / Convert.ToDouble(Model.yestOccupancy) * 100, 2);
+    var yestOcc = Math.Round((Convert.ToDouble(Model.Occupancy) - Convert.ToDouble(Model.yestOccupancy)), 2);
 
     var monthAdr = Math.Round((Convert.ToDouble(Model.Adr) - Convert.ToDouble(Model.prevMonthAdr)) / Convert.ToDouble(Model.prevMonthAdr) * 100, 2);
     var monthRevpar = Math.Round((Convert.ToDouble(Model.RevPar) - Convert.ToDouble(Model.prevMonthRevPar)) / Convert.ToDouble(Model.prevMonthRevPar) * 100, 2);
-    var monthOcc = Math.Round((Convert.ToDouble(Model.Occupancy) - Convert.ToDouble(Model.prevMonthOccupancy)) / Convert.ToDouble(Model.prevMonthOccupancy) * 100, 2);
+    var monthOcc = Math.Round((Convert.ToDouble(Model.Occupancy) - Convert.ToDouble(Model.prevMonthOccupancy)), 2);
 
     var yearAdr = Math.Round((Convert.ToDouble(Model.Adr) - Convert.ToDouble(Model.prevYearAdr)) / Convert.ToDouble(Model.prevYearAdr) * 100, 2);
     var yearRevpar = Math.Round((Convert.ToDouble(Model.RevPar) - Convert.ToDouble(Model.prevYearRevPar)) / Convert.ToDouble(Model.prevYearRevPar) * 100, 2);
-    var yearOcc = Math.Round((Convert.ToDouble(Model.Occupancy) - Convert.ToDouble(Model.prevYearOccupancy)) / Convert.ToDouble(Model.prevYearOccupancy) * 100, 2);
+    var yearOcc = Math.Round((Convert.ToDouble(Model.Occupancy) - Convert.ToDouble(Model.prevYearOccupancy)), 2);
 }
 
 <!-- pageheader -->
@@ -113,25 +113,52 @@
                                     <div class="metric-value d-inline-block">
                                         <h5 class="mb-1">ADR: @Model.yestAdr</h5>
                                     </div>
-                                    <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                        <span>@yestAdr%</span>
-                                    </div>
+                                    @if (yestAdr >= 0)
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                            <span>+@yestAdr%</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
+                                            <span>@yestAdr%</span>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <div class="metric-value d-inline-block">
                                         <h5 class="mb-1">OCCUPANCY: @Math.Round(Convert.ToDouble(Model.yestOccupancy), 2)%</h5>
                                     </div>
-                                    <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                        <span>@yestOcc%</span>
-                                    </div>
+                                    @if (yestOcc >= 0)
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                            <span>+@yestOcc%</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
+                                            <span>@yestOcc%</span>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="card-body">
                                     <div class="metric-value d-inline-block">
                                         <h5 class="mb-1">RevPAR: @Model.yestRevPar</h5>
                                     </div>
-                                    <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                        <span>@yestRevpar%</span>
-                                    </div>
+                                    @if (yestRevpar >= 0)
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                            <span>+@yestRevpar%</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
+                                            <span>@yestRevpar%</span>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -142,25 +169,53 @@
                                     <div class="metric-value d-inline-block">
                                         <h5 class="mb-1">ADR: @Model.prevMonthAdr</h5>
                                     </div>
-                                    <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                        <span>@monthAdr%</span>
-                                    </div>
+                                    @if (monthAdr >= 0)
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                            <span>+@monthAdr%</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
+                                            <span>@monthAdr%</span>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <div class="metric-value d-inline-block">
                                         <h5 class="mb-1">OCCUPANCY: @Model.prevMonthOccupancy%</h5>
                                     </div>
-                                    <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                        <span>@monthOcc%</span>
-                                    </div>
+                                    @if (monthOcc >= 0)
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                            <span>+@monthOcc%</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
+                                            <span>@monthOcc%</span>
+                                        </div>
+
+                                    }
                                 </div>
                                 <div class="card-body">
                                     <div class="metric-value d-inline-block">
                                         <h5 class="mb-1">RevPAR: @Model.prevMonthRevPar</h5>
                                     </div>
-                                    <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                                        <span>@monthRevpar%</span>
-                                    </div>
+                                    @if (monthRevpar >= 0)
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                            <span>+@monthRevpar%</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
+                                            <span>@monthRevpar%</span>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -171,25 +226,52 @@
                                     <div class="metric-value d-inline-block">
                                         <h5 class="mb-1">ADR: @Model.prevYearAdr</h5>
                                     </div>
-                                    <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
-                                        <span>@yearAdr%</span>
-                                    </div>
+                                    @if (yearAdr >= 0)
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                            <span>+@yearAdr%</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
+                                            <span>@yearAdr%</span>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <div class="metric-value d-inline-block">
                                         <h5 class="mb-1">OCCUPANCY: @Model.prevYearOccupancy%</h5>
                                     </div>
-                                    <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
-                                        <span>@yearOcc%</span>
-                                    </div>
+                                    @if (yearOcc >= 0)
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                            <span>+@yearOcc%</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
+                                            <span>@yearOcc%</span>
+                                        </div>
+                                    }
                                 </div>
                                 <div class="card-body">
                                     <div class="metric-value d-inline-block">
                                         <h5 class="mb-1">RevPAR: @Model.prevYearRevPar</h5>
                                     </div>
-                                    <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
-                                        <span>@yearRevpar%</span>
-                                    </div>
+                                    @if (yearRevpar >= 0)
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                                            <span>+@yearRevpar%</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
+                                            <span>@yearRevpar%</span>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -318,7 +400,71 @@
 <div class="modal fade" id="adjustedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-            @await Component.InvokeAsync("CalendarModal")
+            <div class="modal-header MHeader">
+                <h5 class="modal-title" id="exampleModalLongTitle">Set Adjusted Rate</h5>
+                <button type="button" class="close MHeader-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="tab-pane" id="networking">
+                    <div class="metrics-container">
+                        <form asp-controller="Home" asp-action="Details" method="post">
+                            <div class="row" style="margin-top:20px;">
+                                <div class="col-4">
+                                    <label for="StandardRoomWI">Standard Room</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Rp</div>
+                                        </div>
+                                        <input asp-for="AdjStd" type="number" class="form-control" id="StandardRoomWI" min="0" placeholder="Price">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <label for="SuperiorRoomWI">Superior Room</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Rp</div>
+                                        </div>
+                                        <input asp-for="AdjSpr" type="number" class="form-control" id="SuperiorRoomWI" min="0" placeholder="Price">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <label for="DeluxeRoomWI">Deluxe Room</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Rp</div>
+                                        </div>
+                                        <input asp-for="AdjDlx" type="number" class="form-control" id="DeluxeRoomWI" min="0" placeholder="Price">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <label for="FamilyRoomWI" style="margin-top:10px;">Family Room</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Rp</div>
+                                        </div>
+                                        <input asp-for="AdjFam" type="number" class="form-control" id="FamilyRoomWI" min="0" placeholder="Price">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <label for="SuiteRoomWI" style="margin-top:10px;">Suite Room</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Rp</div>
+                                        </div>
+                                        <input asp-for="AdjSuite" type="number" class="form-control" id="SuiteRoomWI" min="0" placeholder="Price">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="border:none; margin-top:20px;">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

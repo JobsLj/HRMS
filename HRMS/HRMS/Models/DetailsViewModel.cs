@@ -28,5 +28,10 @@ namespace HRMS.Models
         public int selectedPlan { get; set; }
         public string defaultAdr { get; set; }
         public string defaultRevpar { get; set; }
+        public int AdjStd { get; set; }
+        public int AdjSpr { get; set; }
+        public int AdjFam { get; set; }
+        public int AdjSuite { get; set; }
+        public int AdjDlx { get; set; }
     }
 }

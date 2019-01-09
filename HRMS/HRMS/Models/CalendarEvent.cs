@@ -12,5 +12,6 @@ namespace HRMS.Models
         public string RevPar { get; set; }
         public string Occupancy { get; set; }
         public string Adr { get; set; }
+        public string Percent { get; set; }
     }
 }

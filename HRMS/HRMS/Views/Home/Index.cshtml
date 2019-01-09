@@ -6,7 +6,7 @@
     List<CalendarEvent> events = new List<CalendarEvent>();
     foreach (var item in Model)
     {
-        events.Add(new CalendarEvent { Adr = item.Adr, Date = item.Date, Occupancy = item.Occupancy, RevPar = item.RevPar, Type = item.Type });
+        events.Add(new CalendarEvent { Adr = item.Adr, Date = item.Date, Occupancy = item.Occupancy, RevPar = item.RevPar, Type = item.Type, Percent = item.Percent });
     }
     var currentMonth = DateTime.Today.Month;
     var currentYear = DateTime.Today.Year;

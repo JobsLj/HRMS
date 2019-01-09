@@ -136,14 +136,14 @@ namespace HRMS.TagHelpers
                             ),
                         new XElement("span",
                             new XAttribute("class", $"percentage"),
-                            "+3%"
+                            e.Percent
                             ),
                         e.Adr
                     )
                 ) ?? new[] {
                 new XElement("p",
                     new XAttribute("class", "d-lg-none"),
-                    "No events"
+                    "No predictions"
                 )
                 };
                 }
@@ -160,14 +160,14 @@ namespace HRMS.TagHelpers
                             ),
                         new XElement("span",
                             new XAttribute("class", $"percentage"),
-                            "+3%"
+                            e.Percent
                             ),
                         e.Adr
                     )
                 ) ?? new[] {
                 new XElement("p",
                     new XAttribute("class", "d-lg-none"),
-                    "No events"
+                    "No predictions"
                 )
                 };
                 }         
