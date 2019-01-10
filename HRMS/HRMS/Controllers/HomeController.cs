@@ -512,10 +512,20 @@ namespace HRMS.Controllers
                 (DEFAULT_SUITE * selectedModel.SuiteOccupancy) +
                 (DEFAULT_DLX * selectedModel.DlxOccupancy);
 
+            var AdjRevenue = (selectedModel.AdjSprRoomRate * selectedModel.SprOccupancy) +
+                (selectedModel.AdjStdRoomRate * selectedModel.StdOccupancy) +
+                (selectedModel.AdjFamRoomRate * selectedModel.FamOccupancy) +
+                (selectedModel.AdjSuiteRoomRate * selectedModel.SuiteOccupancy) +
+                (selectedModel.AdjDlxRoomRate * selectedModel.DlxOccupancy);
+
             var adr = totalRevenue / totalOccupancy;
             var defaultAdr = defaultRevenue / totalOccupancy;
+            var adjAdr = AdjRevenue / totalOccupancy;
+
             var revpar = totalRevenue / 71;
             var defaultRevpar = defaultRevenue / 71;
+            var adjRevpar = adjAdr / 71;
+
             var occupancyRate = totalOccupancy * 100 / 71;
 
             var prevMonthDetails = GetPreviousMonthDetails(selected);
@@ -543,6 +553,14 @@ namespace HRMS.Controllers
             model.selectedPlan = selectedModel.SelectedRoomRate;
             model.defaultAdr = defaultAdr.ToString();
             model.defaultRevpar = defaultRevpar.ToString();
+            model.AdjStd = Convert.ToInt32(selectedModel.AdjStdRoomRate);
+            model.AdjSpr = Convert.ToInt32(selectedModel.AdjSprRoomRate);
+            model.AdjFam = Convert.ToInt32(selectedModel.AdjFamRoomRate);
+            model.AdjSuite = Convert.ToInt32(selectedModel.AdjSuiteRoomRate);
+            model.AdjDlx = Convert.ToInt32(selectedModel.AdjDlxRoomRate);
+            model.adjAdr = adjAdr.ToString();
+            model.adjRevpar = adjRevpar.ToString();
+            
 
             if (id != 0)
             {
@@ -557,7 +575,37 @@ namespace HRMS.Controllers
         [HttpPost]
         public IActionResult Details(DetailsViewModel model)
         {
+            var PredModel = repository.GetPredictionByDate(model.Date);
+
+            PredModel.AdjSprRoomRate = model.AdjSpr;
+            PredModel.AdjStdRoomRate = model.AdjStd;
+            PredModel.AdjFamRoomRate = model.AdjFam;
+            PredModel.AdjSuiteRoomRate = model.AdjSuite;
+            PredModel.AdjDlxRoomRate = model.AdjDlx;
+            PredModel.SelectedRoomRate = model.selectedPlan;
+            repository.UpdatePredictions(PredModel);
+
+            var totalOccupancy = PredModel.SprOccupancy + PredModel.StdOccupancy + PredModel.FamOccupancy +
+                PredModel.SuiteOccupancy + PredModel.DlxOccupancy;
+
+            var totalRevenue = (PredModel.AdjSprRoomRate * PredModel.SprOccupancy) +
+                (PredModel.AdjStdRoomRate * PredModel.StdOccupancy) +
+                (PredModel.AdjFamRoomRate * PredModel.FamOccupancy) +
+                (PredModel.AdjSuiteRoomRate * PredModel.SuiteOccupancy) +
+                (PredModel.AdjDlxRoomRate * PredModel.DlxOccupancy);
+
+            var adr = totalRevenue / totalOccupancy;
+            var revpar = totalRevenue / 71;
+
+            model.adjAdr = adr.ToString();
+            model.adjRevpar = revpar.ToString();
+            
             return View("Details", model);
+        }
+
+        public IActionResult WhatIfAnalysis()
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -107,7 +107,7 @@ namespace PredictionModelTrainer
                 var dblist = context.RoomRates.Where(item => item.RoomTypeId == 8).GroupBy(i => i.Date).ToList();
                 foreach (var item in dblist)
                 {
-                    if (item.Key != DateTime.Parse("09-12-2018"))
+                    if (item.Key != DateTime.Parse("08-1-2019"))
                     {
                         Rates modelRate = new Rates();
                         modelRate.Date = item.Key;

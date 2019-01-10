@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Details";
     var id = Model.Date.ToString("dd MMMM yyyy");
+    var DateString = Model.Date.ToString("dd-MM-yyyy");
 
     var yestAdr = Math.Round((Convert.ToDouble(Model.Adr) - Convert.ToDouble(Model.yestAdr)) / Convert.ToDouble(Model.yestAdr) * 100, 2);
     var yestRevpar = Math.Round((Convert.ToDouble(Model.RevPar) - Convert.ToDouble(Model.yestRevPar)) / Convert.ToDouble(Model.yestRevPar) * 100, 2);
@@ -63,9 +64,9 @@
                         }
                         else
                         {
-                            <li class="mb-2">ADR: @Model.Adr</li>
+                            <li class="mb-2">ADR: @Model.adjAdr</li>
                             <li class="mb-2">OCCUPANCY: @Math.Round(Convert.ToDouble(Model.Occupancy), 2)%</li>
-                            <li class="mb-2">RevPAR: @Model.RevPar</li>
+                            <li class="mb-2">RevPAR: @Model.adjRevpar</li>
                         }
                     </ul>
                 </div>
@@ -305,7 +306,7 @@
                                     }
                                     else
                                     {
-                                        <a asp-route-id="1" asp-controller="Home" asp-action="Details" class="btn btn-secondary btn-block btn-lg">Use This Rate</a>
+                                        <a asp-route-id="1" asp-route-selected="@DateString" asp-controller="Home" asp-action="Details" class="btn btn-secondary btn-block btn-lg">Use This Rate</a>
                                     }
                                 </div>
                             </div>
@@ -333,7 +334,7 @@
                                     }
                                     else
                                     {
-                                        <a asp-route-id="2" asp-controller="Home" asp-action="Details" class="btn btn-secondary btn-block btn-lg">Use This Rate</a>
+                                        <a asp-route-id="2" asp-route-selected="@DateString" asp-controller="Home" asp-action="Details" class="btn btn-secondary btn-block btn-lg">Use This Rate</a>
                                     }
                                 </div>
                             </div>
@@ -344,16 +345,16 @@
                                     <h4 class="mb-0 text-white">Adjusted Rate</h4>
                                 </div>
                                 <div class="card-body text-center">
-                                    <h1 class="mb-1">0</h1>
+                                    <h1 class="mb-1">@Model.adjAdr</h1>
                                     <p>Average Daily Rate</p>
                                 </div>
                                 <div class="card-body border-top">
                                     <ul class="list-unstyled bullet-check font-14">
-                                        <li>Standard Room: </li>
-                                        <li>Superior Room: </li>
-                                        <li>Deluxe Room: </li>
-                                        <li>Family Room: </li>
-                                        <li>Suite Room: </li>
+                                        <li>Standard Room: @Model.AdjStd</li>
+                                        <li>Superior Room: @Model.AdjSpr</li>
+                                        <li>Deluxe Room: @Model.AdjDlx</li>
+                                        <li>Family Room: @Model.AdjFam</li>
+                                        <li>Suite Room: @Model.AdjSuite</li>
                                     </ul>
                                     @if (Model.selectedPlan == 3)
                                     {
@@ -412,12 +413,34 @@
                         <form asp-controller="Home" asp-action="Details" method="post">
                             <div class="row" style="margin-top:20px;">
                                 <div class="col-4">
+                                    <input asp-for="Date" type="datetime" style="display:none" value="@Model.Date">
+                                    <input asp-for="RevPar" type="text" style="display:none" value="@Model.RevPar">
+                                    <input asp-for="Adr" type="text" style="display:none" value="@Model.Adr">
+                                    <input asp-for="Occupancy" type="text" style="display:none" value="@Model.Occupancy">
+                                    <input asp-for="SprRate" type="text" style="display:none" value="@Model.SprRate">
+                                    <input asp-for="StdRate" type="text" style="display:none" value="@Model.StdRate">
+                                    <input asp-for="FamRate" type="text" style="display:none" value="@Model.FamRate">
+                                    <input asp-for="SuiteRate" type="text" style="display:none" value="@Model.SuiteRate">
+                                    <input asp-for="DlxRate" type="text" style="display:none" value="@Model.DlxRate">
+                                    <input asp-for="yestAdr" type="text" style="display:none" value="@Model.yestAdr">
+                                    <input asp-for="yestRevPar" type="text" style="display:none" value="@Model.yestRevPar">
+                                    <input asp-for="yestOccupancy" type="text" style="display:none" value="@Model.yestOccupancy">
+                                    <input asp-for="prevMonthAdr" type="text" style="display:none" value="@Model.prevMonthAdr">
+                                    <input asp-for="prevMonthOccupancy" type="text" style="display:none" value="@Model.prevMonthOccupancy">
+                                    <input asp-for="prevMonthRevPar" type="text" style="display:none" value="@Model.prevMonthRevPar">
+                                    <input asp-for="prevYearAdr" type="text" style="display:none" value="@Model.prevYearAdr">
+                                    <input asp-for="prevYearOccupancy" type="text" style="display:none" value="@Model.prevYearOccupancy">
+                                    <input asp-for="prevYearRevPar" type="text" style="display:none" value="@Model.prevYearRevPar">
+                                    <input asp-for="defaultAdr" type="text" style="display:none" value="@Model.defaultAdr">
+                                    <input asp-for="defaultRevpar" type="text" style="display:none" value="@Model.defaultRevpar">
+                                    <input asp-for="selectedPlan" type="number" style="display:none" value="3">
+
                                     <label for="StandardRoomWI">Standard Room</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Rp</div>
                                         </div>
-                                        <input asp-for="AdjStd" type="number" class="form-control" id="StandardRoomWI" min="0" placeholder="Price">
+                                        <input asp-for="AdjStd" type="number" class="form-control" id="StandardRoomWI" min="1000" placeholder="Price">
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -426,7 +449,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Rp</div>
                                         </div>
-                                        <input asp-for="AdjSpr" type="number" class="form-control" id="SuperiorRoomWI" min="0" placeholder="Price">
+                                        <input asp-for="AdjSpr" type="number" class="form-control" id="SuperiorRoomWI" min="1000" placeholder="Price">
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -435,7 +458,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Rp</div>
                                         </div>
-                                        <input asp-for="AdjDlx" type="number" class="form-control" id="DeluxeRoomWI" min="0" placeholder="Price">
+                                        <input asp-for="AdjDlx" type="number" class="form-control" id="DeluxeRoomWI" min="1000" placeholder="Price">
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -444,7 +467,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Rp</div>
                                         </div>
-                                        <input asp-for="AdjFam" type="number" class="form-control" id="FamilyRoomWI" min="0" placeholder="Price">
+                                        <input asp-for="AdjFam" type="number" class="form-control" id="FamilyRoomWI" min="1000" placeholder="Price">
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -453,7 +476,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Rp</div>
                                         </div>
-                                        <input asp-for="AdjSuite" type="number" class="form-control" id="SuiteRoomWI" min="0" placeholder="Price">
+                                        <input asp-for="AdjSuite" type="number" class="form-control" id="SuiteRoomWI" min="1000" placeholder="Price">
                                     </div>
                                 </div>
                             </div>

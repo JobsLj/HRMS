@@ -33,5 +33,7 @@ namespace HRMS.Models
         public int AdjFam { get; set; }
         public int AdjSuite { get; set; }
         public int AdjDlx { get; set; }
+        public string adjAdr { get; set; }
+        public string adjRevpar { get; set; }
     }
 }

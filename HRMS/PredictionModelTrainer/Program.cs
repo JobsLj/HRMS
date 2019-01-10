@@ -13,28 +13,28 @@ namespace PredictionModelTrainer
             {
                 MLContext context = new MLContext(seed: 1);
 
-                //// SPR 
-                //SprRoomRatesModelHelper.CreateModelPipeline(context);
-                //SprRoomRatesModelHelper.Evaluate(context);
+                // SPR 
+                SprRoomRatesModelHelper.CreateModelPipeline(context);
+                SprRoomRatesModelHelper.Evaluate(context);
 
-                //// STD
-                //StdRoomRatesModelHelper.CreateModelPipeline(context);
-                //StdRoomRatesModelHelper.Evaluate(context);
+                // STD
+                StdRoomRatesModelHelper.CreateModelPipeline(context);
+                StdRoomRatesModelHelper.Evaluate(context);
 
-                //// FAM
-                //FamRoomRatesModelHelper.CreateModelPipeline(context);
-                //FamRoomRatesModelHelper.Evaluate(context);
+                // FAM
+                FamRoomRatesModelHelper.CreateModelPipeline(context);
+                FamRoomRatesModelHelper.Evaluate(context);
 
-                //// SUITE
-                //SuiteRoomRatesModelHelper.CreateModelPipeline(context);
-                //SuiteRoomRatesModelHelper.Evaluate(context);
+                // SUITE
+                SuiteRoomRatesModelHelper.CreateModelPipeline(context);
+                SuiteRoomRatesModelHelper.Evaluate(context);
 
-                //// DLX
-                //DlxRoomRatesModelHelper.CreateModelPipeline(context);
-                //DlxRoomRatesModelHelper.Evaluate(context);
+                // DLX
+                DlxRoomRatesModelHelper.CreateModelPipeline(context);
+                DlxRoomRatesModelHelper.Evaluate(context);
 
-                OccupancyModelHelper.CreateModelPipeline(context);
-                OccupancyModelHelper.Evaluate(context);
+                //OccupancyModelHelper.CreateModelPipeline(context);
+                //OccupancyModelHelper.Evaluate(context);
 
                 //// STD Occupancy
                 //StdOccupancyModelHelper.CreateModelPipeline(context);
