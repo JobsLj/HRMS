@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Components\" />
     <Folder Include="Prediction\ModelFiles\" />
+    <Folder Include="Views\Shared\Components\" />
   </ItemGroup>
 
 </Project>

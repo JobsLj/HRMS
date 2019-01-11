@@ -367,6 +367,9 @@ namespace HRMS.Controllers
             // Check if database has existing prediction values
             if (repository.CheckPredictions())
             {
+                // If database prediction table is empty
+                // Calculate predictions for all room types occupancy and rates
+
                 // Get predicted rates for the different room type
                 var SprRoomPred = RoomRatePredictions(7);
                 var StdRoomPred = RoomRatePredictions(8);
@@ -423,6 +426,7 @@ namespace HRMS.Controllers
                     modal.Adr = adr.ToString();
                     modal.RevPar = revpar.ToString();
                     modal.Occupancy = occupancyRate.ToString("#0.##%");
+                    modal.SelectedPlan = 1;
 
                     if (adr > DEFAULT_ADR)
                         modal.Type = "success";
@@ -464,6 +468,7 @@ namespace HRMS.Controllers
                     modal.Adr = adr.ToString();
                     modal.RevPar = revpar.ToString();
                     modal.Occupancy = occupancyRate.ToString("#0.##%");
+                    modal.SelectedPlan = pred.SelectedRoomRate;
 
                     if (adr > DEFAULT_ADR)
                         modal.Type = "success";
@@ -603,9 +608,19 @@ namespace HRMS.Controllers
             return View("Details", model);
         }
 
-        public IActionResult WhatIfAnalysis()
+        [HttpPost]
+        public IActionResult WhatIfAnalysis(DetailsViewModel DetailsModel)
         {
-            return View();
+            var model = new WhatIfAnalysisViewModel();
+
+            model.Date = DetailsModel.Date;
+            model.StdRate = DetailsModel.AdjStd;
+            model.SprRate = DetailsModel.AdjSpr;
+            model.FamRate = DetailsModel.AdjFam;
+            model.SuiteRate = DetailsModel.AdjFam;
+            model.DlxRate = DetailsModel.AdjDlx;
+
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

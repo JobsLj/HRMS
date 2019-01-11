@@ -13,5 +13,6 @@ namespace HRMS.Models
         public string Occupancy { get; set; }
         public string Adr { get; set; }
         public string Percent { get; set; }
+        public int SelectedPlan { get; set; }
     }
 }
