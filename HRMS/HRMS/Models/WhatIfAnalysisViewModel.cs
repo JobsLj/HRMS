@@ -16,5 +16,6 @@ namespace HRMS.Models
         public int FamRate { get; set; }
         public int SuiteRate { get; set; }
         public int DlxRate { get; set; }
+        public List<string> DatesLabel { get; set; }
     }
 }

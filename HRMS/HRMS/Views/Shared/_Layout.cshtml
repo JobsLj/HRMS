@@ -7,7 +7,9 @@
 
     <link rel="stylesheet" href="~/css/bootstrap.css">
     <link rel="stylesheet" href="~/css/site.css">
-
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/charts/charts-bundle/Chart.bundle.js"></script>
+    
 </head>
 <body>
     <div class="dashboard-main-wrapper">
@@ -68,9 +70,8 @@
                 @RenderBody()
             </div>
         </div>
-
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/js/bootstrap.js"></script>
+        <script src="~/lib/charts/charts-bundle/chartjs.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
 
         @RenderSection("Scripts", required: false)

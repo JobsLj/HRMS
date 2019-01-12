@@ -619,6 +619,14 @@ namespace HRMS.Controllers
             model.FamRate = DetailsModel.AdjFam;
             model.SuiteRate = DetailsModel.AdjFam;
             model.DlxRate = DetailsModel.AdjDlx;
+            model.DatesLabel = new List<string>();
+
+            model.DatesLabel.Add(DetailsModel.Date.ToString("dd-MM-yyyy"));
+            for(int i = 0; i < 6; i++)
+            {
+                model.DatesLabel.Add(DetailsModel.Date.AddDays(-(i + 1)).ToString("dd-MM-yyyy"));
+            }
+            model.DatesLabel.Reverse();
 
             return View(model);
         }

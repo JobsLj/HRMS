@@ -2,6 +2,8 @@
 @{
     var DateString = Model.Date.ToString("dd-MM-yyyy");
     ViewData["Title"] = Model.Date.ToString("dd MMMM yyyy") + " Analysis";
+    var xlabel = Newtonsoft.Json.JsonConvert.SerializeObject(Model.DatesLabel);
+
 }
 
 <!-- pageheader -->
@@ -24,7 +26,208 @@
     </div>
 </div>
 
-<div class="row">
 
+<!-- Average Daily Rate What-If -->
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <h5 class="card-header">Average Daily Rate</h5>
+            <div class="card-body">
+                <canvas id="averageDailyRate" width="400" height="150"></canvas>
+            </div>
+            <div class="card-body border-top">
+                <div class="row">
+                    <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 p-3">
+                        <h4> Today's Earning: $2,800.30</h4>
+                        <p>
+                            Suspendisse potenti. Done csit amet rutrum.
+                        </p>
+                    </div>
+                    <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-3">
+                        <h2 class="font-weight-normal mb-3"><span>$48,325</span>                                                    </h2>
+                        <div class="mb-0 mt-3 legend-item">
+                            <span class="fa-xs text-primary mr-1 legend-title "><i class="fa fa-fw fa-square-full"></i></span>
+                            <span class="legend-text">Predicted ADR</span>
+                        </div>
+                    </div>
+                    <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-3">
+                        <h2 class="font-weight-normal mb-3">
+                            <span>$59,567</span>
+                        </h2>
+                        <div class="text-muted mb-0 mt-3 legend-item"> <span class="fa-xs text-secondary mr-1 legend-title"><i class="fa fa-fw fa-square-full"></i></span><span class="legend-text">Adjusted ADR</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RevPAR What-If -->
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <h5 class="card-header">Revenue Per Average Room</h5>
+            <div class="card-body">
+                <canvas id="revenuePerAvg" width="400" height="150"></canvas>
+            </div>
+            <div class="card-body border-top">
+                <div class="row">
+                    <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 p-3">
+                        <h4> Today's Earning: $2,800.30</h4>
+                        <p>
+                            Suspendisse potenti. Done csit amet rutrum.
+                        </p>
+                    </div>
+                    <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-3">
+                        <h2 class="font-weight-normal mb-3"><span>$48,325</span>                                                    </h2>
+                        <div class="mb-0 mt-3 legend-item">
+                            <span class="fa-xs text-primary mr-1 legend-title "><i class="fa fa-fw fa-square-full"></i></span>
+                            <span class="legend-text">Predicted RevPAR</span>
+                        </div>
+                    </div>
+                    <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-3">
+                        <h2 class="font-weight-normal mb-3">
+                            <span>$59,567</span>
+                        </h2>
+                        <div class="text-muted mb-0 mt-3 legend-item"> <span class="fa-xs text-secondary mr-1 legend-title"><i class="fa fa-fw fa-square-full"></i></span><span class="legend-text">Adjusted RevPAR</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<!-- Line Chart -->
+<script type="text/javascript">
+    $(function () {
+        var ctx = document.getElementById('averageDailyRate').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+
+            data: {
+                labels: @Html.Raw(xlabel),
+                datasets: [{
+                    label: 'Predicted ADR',
+                    data: [12, 19, 3, 17, 6, 3, 47],
+                    backgroundColor: "rgba(89, 105, 255,0.5)",
+                    borderColor: "rgba(89, 105, 255,0.7)",
+                    borderWidth: 2
+
+                }, {
+                    label: 'Adjusted ADR',
+                    data: [2, 29, 5, 5, 2, 3, 10],
+                    backgroundColor: "rgba(255, 64, 123,0.5)",
+                    borderColor: "rgba(255, 64, 123,0.7)",
+                    borderWidth: 2
+                }]
+            },
+            options: {
+
+                legend: {
+                    display: true,
+                    position: 'bottom',
+
+                    labels: {
+                        fontColor: '#71748d',
+                        fontSize: 14,
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            // Include a dollar sign in the ticks
+                            callback: function (value, index, values) {
+                                return '$' + value;
+                            }
+                        }
+                    }]
+                },
+
+
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 14,
+                            fontFamily: 'Circular Std Book',
+                            fontColor: '#71748d',
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            fontSize: 14,
+                            fontFamily: 'Circular Std Book',
+                            fontColor: '#71748d',
+                        }
+                    }]
+                }
+
+            }
+        });
+
+
+        var ctx = document.getElementById('revenuePerAvg').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+
+            data: {
+                labels: @Html.Raw(xlabel),
+                datasets: [{
+                    label: 'Predicted ADR',
+                    data: [12, 19, 3, 17, 6, 3, 47],
+                    backgroundColor: "rgba(89, 105, 255,0.5)",
+                    borderColor: "rgba(89, 105, 255,0.7)",
+                    borderWidth: 2
+
+                }, {
+                    label: 'Adjusted ADR',
+                    data: [2, 29, 5, 5, 2, 3, 10],
+                    backgroundColor: "rgba(255, 64, 123,0.5)",
+                    borderColor: "rgba(255, 64, 123,0.7)",
+                    borderWidth: 2
+                }]
+            },
+            options: {
+
+                legend: {
+                    display: true,
+                    position: 'bottom',
+
+                    labels: {
+                        fontColor: '#71748d',
+                        fontSize: 14,
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            // Include a dollar sign in the ticks
+                            callback: function (value, index, values) {
+                                return '$' + value;
+                            }
+                        }
+                    }]
+                },
+
+
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 14,
+                            fontFamily: 'Circular Std Book',
+                            fontColor: '#71748d',
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            fontSize: 14,
+                            fontFamily: 'Circular Std Book',
+                            fontColor: '#71748d',
+                        }
+                    }]
+                }
+
+            }
+        });
+
+    });
+</script>
 
