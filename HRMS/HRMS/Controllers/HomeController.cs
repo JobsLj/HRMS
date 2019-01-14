@@ -360,6 +360,34 @@ namespace HRMS.Controllers
             return yesterdayDetails;
         }
 
+        private List<string> Get1WeekAdr(DateTime date)
+        {
+            var list = new List<string>();
+
+            for(int i = 0; i < 6; i++)
+            {
+                var details = GetYesterdayDetails(date.ToString());
+                list.Add(details[0].Item2.ToString());
+                date = date.AddDays(-1);
+            }
+            list.Reverse();
+            return list;
+        }
+
+        private List<string> Get1WeekRevpar(DateTime date)
+        {
+            var list = new List<string>();
+
+            for (int i = 0; i < 6; i++)
+            {
+                var details = GetYesterdayDetails(date.ToString());
+                list.Add(details[1].Item2.ToString());
+                date = date.AddDays(-1);
+            }
+            list.Reverse();
+            return list;
+        }
+
         public async Task<IActionResult> Index()
         {
             var CalendarModel = new List<CalendarEvent>();
@@ -612,6 +640,8 @@ namespace HRMS.Controllers
         public IActionResult WhatIfAnalysis(DetailsViewModel DetailsModel)
         {
             var model = new WhatIfAnalysisViewModel();
+            var adrlist = Get1WeekAdr(model.Date);
+            var rplist = Get1WeekRevpar(model.Date);
 
             model.Date = DetailsModel.Date;
             model.StdRate = DetailsModel.AdjStd;

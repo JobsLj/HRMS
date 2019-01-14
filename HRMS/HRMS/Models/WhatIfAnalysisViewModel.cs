@@ -17,5 +17,9 @@ namespace HRMS.Models
         public int SuiteRate { get; set; }
         public int DlxRate { get; set; }
         public List<string> DatesLabel { get; set; }
+        public List<string> PredictedAdr { get; set; }
+        public List<string> AdjustedAdr { get; set; }
+        public List<string> PredictedRevPar { get; set; }
+        public List<string> AdjustedRevPar { get; set; }
     }
 }
