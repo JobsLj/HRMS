@@ -481,12 +481,30 @@ namespace HRMS.Controllers
                 foreach(var pred in list)
                 {
                     var modal = new CalendarEvent();
+                    float totalRevenue = 0;
 
                     // Calculate the ADR
                     var totalOccupancy = pred.SprOccupancy + pred.StdOccupancy + pred.FamOccupancy + pred.SuiteOccupancy + pred.DlxOccupancy;
-                    var totalRevenue = (pred.SprRoomRate * pred.SprOccupancy) + (pred.StdRoomRate * pred.StdOccupancy) +
-                        (pred.FamRoomRate * pred.FamOccupancy) + (pred.SuiteRoomRate * pred.SuiteOccupancy) +
-                        (pred.DlxRoomRate * pred.DlxOccupancy);
+
+                    if (pred.SelectedRoomRate == 1)
+                    {
+                        totalRevenue = (pred.SprRoomRate * pred.SprOccupancy) + (pred.StdRoomRate * pred.StdOccupancy) +
+                            (pred.FamRoomRate * pred.FamOccupancy) + (pred.SuiteRoomRate * pred.SuiteOccupancy) +
+                            (pred.DlxRoomRate * pred.DlxOccupancy);
+                    }
+                    else if (pred.SelectedRoomRate == 2)
+                    {
+                        totalRevenue = (DEFAULT_SPR * pred.SprOccupancy) + (DEFAULT_STD * pred.StdOccupancy) +
+                            (DEFAULT_FAM * pred.FamOccupancy) + (DEFAULT_SUITE * pred.SuiteOccupancy) +
+                            (DEFAULT_DLX * pred.DlxOccupancy);
+                    }
+                    else
+                    {
+                        totalRevenue = (pred.AdjSprRoomRate * pred.SprOccupancy) + (pred.AdjStdRoomRate * pred.StdOccupancy) +
+                            (pred.AdjFamRoomRate * pred.FamOccupancy) + (pred.AdjSuiteRoomRate * pred.SuiteOccupancy) +
+                            (pred.AdjDlxRoomRate * pred.DlxOccupancy);
+                    }
+
                     var adr = totalRevenue / totalOccupancy;
                     var revpar = totalRevenue / 71;
                     var occupancyRate = totalOccupancy / 71;
@@ -551,20 +569,26 @@ namespace HRMS.Controllers
                 (selectedModel.AdjSuiteRoomRate * selectedModel.SuiteOccupancy) +
                 (selectedModel.AdjDlxRoomRate * selectedModel.DlxOccupancy);
 
+            // ADR
             var adr = totalRevenue / totalOccupancy;
             var defaultAdr = defaultRevenue / totalOccupancy;
             var adjAdr = AdjRevenue / totalOccupancy;
 
+            // REVPAR
             var revpar = totalRevenue / 71;
             var defaultRevpar = defaultRevenue / 71;
             var adjRevpar = adjAdr / 71;
 
+            // Occupancy
             var occupancyRate = totalOccupancy * 100 / 71;
 
+            // Get Yesterday/prev month/prev years details
             var prevMonthDetails = GetPreviousMonthDetails(selected);
             var prevYearDetails = GetPreviousYearDetails(selected);
             var yesterdayDetails = GetYesterdayDetails(selected);
 
+
+            // Insert values into modal
             model.Adr = adr.ToString();
             model.RevPar = revpar.ToString();
             model.Occupancy = occupancyRate.ToString();
@@ -594,7 +618,7 @@ namespace HRMS.Controllers
             model.adjAdr = adjAdr.ToString();
             model.adjRevpar = adjRevpar.ToString();
             
-
+            // If user selects the other rates to be used instead
             if (id != 0)
             {
                 selectedModel.SelectedRoomRate = id;
@@ -639,20 +663,56 @@ namespace HRMS.Controllers
         [HttpPost]
         public IActionResult WhatIfAnalysis(DetailsViewModel DetailsModel)
         {
+            var pred = repository.GetPredictionByDate(DetailsModel.Date);
             var model = new WhatIfAnalysisViewModel();
-            var adrlist = Get1WeekAdr(model.Date);
-            var rplist = Get1WeekRevpar(model.Date);
 
+            // Calculate the adr & revpar for the user input values
+            var totalOccupancy = pred.SprOccupancy + pred.StdOccupancy + pred.FamOccupancy +
+                pred.SuiteOccupancy + pred.DlxOccupancy;
+
+            var totalRevenue = (DetailsModel.AdjSpr * pred.SprOccupancy) +
+                (DetailsModel.AdjStd * pred.StdOccupancy) +
+                (DetailsModel.AdjFam * pred.FamOccupancy) +
+                (DetailsModel.AdjSuite * pred.SuiteOccupancy) +
+                (DetailsModel.AdjDlx * pred.DlxOccupancy);
+
+            var adr = totalRevenue / totalOccupancy;
+            var revpar = totalRevenue / 71;
+
+            // Predicted ADR list
+            var predAdr = Get1WeekAdr(DetailsModel.Date);
+            predAdr.Add(DetailsModel.Adr.ToString());
+
+            // Adjusted ADR list
+            var adjAdr = Get1WeekAdr(DetailsModel.Date);
+            adjAdr.Add(adr.ToString());
+
+            // Predicted Revpar list
+            var predrp = Get1WeekRevpar(DetailsModel.Date);
+            predrp.Add(DetailsModel.RevPar.ToString());
+
+            // Adjusted Revpar list
+            var adjrp = Get1WeekRevpar(DetailsModel.Date);
+            adjrp.Add(revpar.ToString());
+
+
+
+            // Insert values into model
             model.Date = DetailsModel.Date;
             model.StdRate = DetailsModel.AdjStd;
             model.SprRate = DetailsModel.AdjSpr;
             model.FamRate = DetailsModel.AdjFam;
-            model.SuiteRate = DetailsModel.AdjFam;
+            model.SuiteRate = DetailsModel.AdjSuite;
             model.DlxRate = DetailsModel.AdjDlx;
-            model.DatesLabel = new List<string>();
+            model.PredictedAdr = predAdr;
+            model.AdjustedAdr = adjAdr;
+            model.PredictedRevPar = predrp;
+            model.AdjustedRevPar = adjrp;
 
+            // List of dates for graph
+            model.DatesLabel = new List<string>();
             model.DatesLabel.Add(DetailsModel.Date.ToString("dd-MM-yyyy"));
-            for(int i = 0; i < 6; i++)
+            for (int i = 0; i < 6; i++)
             {
                 model.DatesLabel.Add(DetailsModel.Date.AddDays(-(i + 1)).ToString("dd-MM-yyyy"));
             }

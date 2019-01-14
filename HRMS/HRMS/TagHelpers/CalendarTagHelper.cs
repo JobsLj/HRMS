@@ -129,7 +129,6 @@ namespace HRMS.TagHelpers
                     return events?.SingleOrDefault(e => e.Key == d)?.Select(e =>
                     new XElement("a",
                         new XAttribute("class", $"event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small over-{e.Type} text-white cal-event over-event"),
-                        new XAttribute("title", e.Adr),
                         new XElement("span",
                             new XAttribute("class", $"occupancy"),
                             $"Occupancy: {e.Occupancy}"
@@ -153,7 +152,6 @@ namespace HRMS.TagHelpers
                     new XElement("a",
                         new XAttribute("class", $"event d-block p-1 pl-2 pr-2 mb-1 rounded text-truncate small bg-{e.Type} text-white cal-event"),
                         new XAttribute("href", $"/Home/Details/" + d.Day + "-" + d.Month + "-" + d.Year),
-                        new XAttribute("title", e.Adr),
                         new XElement("span",
                             new XAttribute("class", $"occupancy"),
                             $"Occupancy: {e.Occupancy}"
