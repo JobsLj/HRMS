@@ -27,6 +27,13 @@ namespace HRMS.Repositories
             return !context.Predictions.Any() ? true : false;
         }
 
+        public bool CheckIfNeedsPredictions(DateTime date)
+        {
+            var latest = context.Predictions.OrderByDescending(i => i.Date).FirstOrDefault();
+
+            return date == latest.Date ? true : false;
+        }
+
         public List<DailyRoomRates> GetLatestRoomRates(int roomid, DateTime? latest = null)
         {
             if (latest == null)
@@ -47,7 +54,7 @@ namespace HRMS.Repositories
         public List<DailyPredictionModel> GetPredictions()
         {
             var list = context.Predictions.OrderByDescending(x => x.Date).ToList();
-            return list.Take(14).ToList();
+            return list.Take(30).ToList();
         }
 
         public DailyPredictionModel GetPredictionByDate(DateTime date)

@@ -451,8 +451,8 @@ namespace HRMS.Controllers
                     var percent = Math.Round((adr - DEFAULT_ADR) / DEFAULT_ADR * 100, 0);
 
                     modal.Date = item.Item1;
-                    modal.Adr = adr.ToString();
-                    modal.RevPar = revpar.ToString();
+                    modal.Adr = adr.ToString("N0");
+                    modal.RevPar = revpar.ToString("N0");
                     modal.Occupancy = occupancyRate.ToString("#0.##%");
                     modal.SelectedPlan = 1;
 
@@ -476,6 +476,12 @@ namespace HRMS.Controllers
             else
             {
                 // If database already has existing predicted data
+                if(repository.CheckIfNeedsPredictions(DateTime.Today) == true)
+                {
+                    // Call the api and retrieve data
+                    // Once data retrieved, do prediction for the next 14 days
+                }
+
                 var list = repository.GetPredictions();
                 
                 foreach(var pred in list)
@@ -511,8 +517,8 @@ namespace HRMS.Controllers
                     var percent = Math.Round((adr - DEFAULT_ADR) / DEFAULT_ADR * 100, 2);
 
                     modal.Date = pred.Date;
-                    modal.Adr = adr.ToString();
-                    modal.RevPar = revpar.ToString();
+                    modal.Adr = adr.ToString("N0");
+                    modal.RevPar = revpar.ToString("N0");
                     modal.Occupancy = occupancyRate.ToString("#0.##%");
                     modal.SelectedPlan = pred.SelectedRoomRate;
 
@@ -589,34 +595,34 @@ namespace HRMS.Controllers
 
 
             // Insert values into modal
-            model.Adr = adr.ToString();
-            model.RevPar = revpar.ToString();
+            model.Adr = adr.ToString("N0");
+            model.RevPar = revpar.ToString("N0");
             model.Occupancy = occupancyRate.ToString();
             model.Date = DateTime.Parse(selected);
-            model.SprRate = selectedModel.SprRoomRate.ToString();
-            model.StdRate = selectedModel.StdRoomRate.ToString();
-            model.FamRate = selectedModel.FamRoomRate.ToString();
-            model.SuiteRate = selectedModel.SuiteRoomRate.ToString();
-            model.DlxRate = selectedModel.DlxRoomRate.ToString();
-            model.yestAdr = yesterdayDetails[0].Item2.ToString();
-            model.yestRevPar = yesterdayDetails[1].Item2.ToString();
+            model.SprRate = selectedModel.SprRoomRate.ToString("N0");
+            model.StdRate = selectedModel.StdRoomRate.ToString("N0");
+            model.FamRate = selectedModel.FamRoomRate.ToString("N0");
+            model.SuiteRate = selectedModel.SuiteRoomRate.ToString("N0");
+            model.DlxRate = selectedModel.DlxRoomRate.ToString("N0");
+            model.yestAdr = yesterdayDetails[0].Item2.ToString("N0");
+            model.yestRevPar = yesterdayDetails[1].Item2.ToString("N0");
             model.yestOccupancy = yesterdayDetails[2].Item2.ToString();
-            model.prevMonthAdr = prevMonthDetails[0].Item2.ToString();
-            model.prevMonthRevPar = prevMonthDetails[1].Item2.ToString();
+            model.prevMonthAdr = prevMonthDetails[0].Item2.ToString("N0");
+            model.prevMonthRevPar = prevMonthDetails[1].Item2.ToString("N0");
             model.prevMonthOccupancy = prevMonthDetails[2].Item2.ToString();
-            model.prevYearAdr = prevYearDetails[0].Item2.ToString();
-            model.prevYearRevPar = prevYearDetails[1].Item2.ToString();
+            model.prevYearAdr = prevYearDetails[0].Item2.ToString("N0");
+            model.prevYearRevPar = prevYearDetails[1].Item2.ToString("N0");
             model.prevYearOccupancy = prevYearDetails[2].Item2.ToString();
             model.selectedPlan = selectedModel.SelectedRoomRate;
-            model.defaultAdr = defaultAdr.ToString();
-            model.defaultRevpar = defaultRevpar.ToString();
+            model.defaultAdr = defaultAdr.ToString("N0");
+            model.defaultRevpar = defaultRevpar.ToString("N0");
             model.AdjStd = Convert.ToInt32(selectedModel.AdjStdRoomRate);
             model.AdjSpr = Convert.ToInt32(selectedModel.AdjSprRoomRate);
             model.AdjFam = Convert.ToInt32(selectedModel.AdjFamRoomRate);
             model.AdjSuite = Convert.ToInt32(selectedModel.AdjSuiteRoomRate);
             model.AdjDlx = Convert.ToInt32(selectedModel.AdjDlxRoomRate);
-            model.adjAdr = adjAdr.ToString();
-            model.adjRevpar = adjRevpar.ToString();
+            model.adjAdr = adjAdr.ToString("N0");
+            model.adjRevpar = adjRevpar.ToString("N0");
             
             // If user selects the other rates to be used instead
             if (id != 0)
@@ -654,8 +660,8 @@ namespace HRMS.Controllers
             var adr = totalRevenue / totalOccupancy;
             var revpar = totalRevenue / 71;
 
-            model.adjAdr = adr.ToString();
-            model.adjRevpar = revpar.ToString();
+            model.adjAdr = adr.ToString("N0");
+            model.adjRevpar = revpar.ToString("N0");
             
             return View("Details", model);
         }
@@ -685,7 +691,7 @@ namespace HRMS.Controllers
 
             // Adjusted ADR list
             var adjAdr = Get1WeekAdr(DetailsModel.Date);
-            adjAdr.Add(adr.ToString());
+            adjAdr.Add(adr.ToString("N0"));
 
             // Predicted Revpar list
             var predrp = Get1WeekRevpar(DetailsModel.Date);
@@ -693,7 +699,7 @@ namespace HRMS.Controllers
 
             // Adjusted Revpar list
             var adjrp = Get1WeekRevpar(DetailsModel.Date);
-            adjrp.Add(revpar.ToString());
+            adjrp.Add(revpar.ToString("N0"));
 
 
 
