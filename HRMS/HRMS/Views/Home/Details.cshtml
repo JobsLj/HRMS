@@ -1,6 +1,13 @@
 ﻿@model DetailsViewModel
 @{
     ViewData["Title"] = "Details";
+
+    var defaultStd = 589659.ToString("N0");
+    var defaultSpr = 743802.ToString("N0");
+    var defaultFam = 818182.ToString("N0");
+    var defaultSuite = 1368595.ToString("N0");
+    var defaultDlx = 920000.ToString("N0");
+
     var id = Model.Date.ToString("dd MMMM yyyy");
     var DateString = Model.Date.ToString("dd-MM-yyyy");
 
@@ -321,11 +328,11 @@
                                 </div>
                                 <div class="card-body border-top">
                                     <ul class="list-unstyled bullet-check font-14">
-                                        <li>Standard Room: 589659</li>
-                                        <li>Superior Room: 743802</li>
-                                        <li>Deluxe Room: 920000</li>
-                                        <li>Family Room: 818182</li>
-                                        <li>Suite Room: 1368595</li>
+                                        <li>Standard Room: @defaultStd</li>
+                                        <li>Superior Room: @defaultSpr</li>
+                                        <li>Deluxe Room: @defaultDlx</li>
+                                        <li>Family Room: @defaultFam</li>
+                                        <li>Suite Room: @defaultSuite</li>
                                     </ul>
                                     @if (Model.selectedPlan == 2)
                                     {
@@ -349,11 +356,11 @@
                                 </div>
                                 <div class="card-body border-top">
                                     <ul class="list-unstyled bullet-check font-14">
-                                        <li>Standard Room: @Model.AdjStd</li>
-                                        <li>Superior Room: @Model.AdjSpr</li>
-                                        <li>Deluxe Room: @Model.AdjDlx</li>
-                                        <li>Family Room: @Model.AdjFam</li>
-                                        <li>Suite Room: @Model.AdjSuite</li>
+                                        <li>Standard Room: @Model.AdjStd.ToString("N0")</li>
+                                        <li>Superior Room: @Model.AdjSpr.ToString("N0")</li>
+                                        <li>Deluxe Room: @Model.AdjDlx.ToString("N0")</li>
+                                        <li>Family Room: @Model.AdjFam.ToString("N0")</li>
+                                        <li>Suite Room: @Model.AdjSuite.ToString("N0")</li>
                                     </ul>
                                     @if (Model.selectedPlan == 3)
                                     {

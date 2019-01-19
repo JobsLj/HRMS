@@ -388,6 +388,87 @@ namespace HRMS.Controllers
             return list;
         }
 
+        private List<CalendarEvent> CalendarPredictions()
+        {
+            var CalendarList = new List<CalendarEvent>();
+
+            // Get predicted rates for the different room type
+            var SprRoomPred = RoomRatePredictions(7);
+            var StdRoomPred = RoomRatePredictions(8);
+            var FamRoomPred = RoomRatePredictions(9);
+            var SuiteRoomPred = RoomRatePredictions(10);
+            var DlxRoomPred = RoomRatePredictions(11);
+
+            // Get the predicted occupancy for the different room type
+            var SprOccPred = OccupancyPredictions(7);
+            var StdOccPred = OccupancyPredictions(8);
+            var FamOccPred = OccupancyPredictions(9);
+            var SuiteOccPred = OccupancyPredictions(10);
+            var DlxOccPred = OccupancyPredictions(11);
+
+            var PredictionList = new List<DailyPredictionModel>();
+
+            foreach (var item in SprRoomPred)
+            {
+                // Store into database
+                var pred = new DailyPredictionModel();
+                var modal = new CalendarEvent();
+
+                pred.Date = item.Item1;
+                pred.SprRoomRate = item.Item2;
+                pred.SprOccupancy = SprOccPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
+                pred.StdRoomRate = StdRoomPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
+                pred.StdOccupancy = StdOccPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
+                pred.FamRoomRate = FamRoomPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
+                pred.FamOccupancy = FamOccPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
+                pred.SuiteRoomRate = SuiteRoomPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
+                pred.SuiteOccupancy = SuiteOccPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
+                pred.DlxRoomRate = SuiteRoomPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
+                pred.DlxOccupancy = DlxOccPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
+                pred.SelectedRoomRate = 1;
+                pred.AdjSprRoomRate = 0;
+                pred.AdjStdRoomRate = 0;
+                pred.AdjFamRoomRate = 0;
+                pred.AdjSuiteRoomRate = 0;
+                pred.AdjDlxRoomRate = 0;
+
+                PredictionList.Add(pred);
+
+                // Calculate the ADR
+                var totalOccupancy = pred.SprOccupancy + pred.StdOccupancy + pred.FamOccupancy + pred.SuiteOccupancy + pred.DlxOccupancy;
+                var totalRevenue = (pred.SprRoomRate * pred.SprOccupancy) + (pred.StdRoomRate * pred.StdOccupancy) +
+                    (pred.FamRoomRate * pred.FamOccupancy) + (pred.SuiteRoomRate * pred.SuiteOccupancy) +
+                    (pred.DlxRoomRate * pred.DlxOccupancy);
+                var adr = totalRevenue / totalOccupancy;
+                var revpar = totalRevenue / 71;
+                var occupancyRate = totalOccupancy / 71;
+                var percent = Math.Round((adr - DEFAULT_ADR) / DEFAULT_ADR * 100, 0);
+
+                modal.Date = item.Item1;
+                modal.Adr = adr.ToString("N0");
+                modal.RevPar = revpar.ToString("N0");
+                modal.Occupancy = occupancyRate.ToString("#0.##%");
+                modal.SelectedPlan = 1;
+
+                if (adr > DEFAULT_ADR)
+                    modal.Type = "success";
+                else if (adr == DEFAULT_ADR)
+                    modal.Type = "warning";
+                else
+                    modal.Type = "danger";
+
+                if (percent < 0)
+                    modal.Percent = percent.ToString() + "%";
+                else
+                    modal.Percent = "+" + percent.ToString() + "%";
+
+                CalendarList.Add(modal);
+            }
+            // Add the list of new predictions into database
+            repository.AddPredictions(PredictionList);
+            return CalendarList;
+        }
+
         public async Task<IActionResult> Index()
         {
             var CalendarModel = new List<CalendarEvent>();
@@ -397,91 +478,11 @@ namespace HRMS.Controllers
             {
                 // If database prediction table is empty
                 // Calculate predictions for all room types occupancy and rates
-
-                // Get predicted rates for the different room type
-                var SprRoomPred = RoomRatePredictions(7);
-                var StdRoomPred = RoomRatePredictions(8);
-                var FamRoomPred = RoomRatePredictions(9);
-                var SuiteRoomPred = RoomRatePredictions(10);
-                var DlxRoomPred = RoomRatePredictions(11);
-
-                // Get the predicted occupancy for the different room type
-                var SprOccPred = OccupancyPredictions(7);
-                var StdOccPred = OccupancyPredictions(8);
-                var FamOccPred = OccupancyPredictions(9);
-                var SuiteOccPred = OccupancyPredictions(10);
-                var DlxOccPred = OccupancyPredictions(11);
-
-                var PredictionList = new List<DailyPredictionModel>();                
-
-                foreach (var item in SprRoomPred)
-                {
-                    // Store into database
-                    var pred = new DailyPredictionModel();
-                    var modal = new CalendarEvent();
-
-                    pred.Date = item.Item1;
-                    pred.SprRoomRate = item.Item2;
-                    pred.SprOccupancy = SprOccPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
-                    pred.StdRoomRate = StdRoomPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
-                    pred.StdOccupancy = StdOccPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
-                    pred.FamRoomRate = FamRoomPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
-                    pred.FamOccupancy = FamOccPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
-                    pred.SuiteRoomRate = SuiteRoomPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
-                    pred.SuiteOccupancy = SuiteOccPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
-                    pred.DlxRoomRate = SuiteRoomPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
-                    pred.DlxOccupancy = DlxOccPred.Where(i => i.Item1 == item.Item1).FirstOrDefault().Item2;
-                    pred.SelectedRoomRate = 1;
-                    pred.AdjSprRoomRate = 0;
-                    pred.AdjStdRoomRate = 0;
-                    pred.AdjFamRoomRate = 0;
-                    pred.AdjSuiteRoomRate = 0;
-                    pred.AdjDlxRoomRate = 0;
-
-                    PredictionList.Add(pred);
-
-                    // Calculate the ADR
-                    var totalOccupancy = pred.SprOccupancy + pred.StdOccupancy + pred.FamOccupancy + pred.SuiteOccupancy + pred.DlxOccupancy;
-                    var totalRevenue = (pred.SprRoomRate * pred.SprOccupancy) + (pred.StdRoomRate * pred.StdOccupancy) +
-                        (pred.FamRoomRate * pred.FamOccupancy) + (pred.SuiteRoomRate * pred.SuiteOccupancy) +
-                        (pred.DlxRoomRate * pred.DlxOccupancy);
-                    var adr = totalRevenue / totalOccupancy;
-                    var revpar = totalRevenue / 71;
-                    var occupancyRate = totalOccupancy / 71;
-                    var percent = Math.Round((adr - DEFAULT_ADR) / DEFAULT_ADR * 100, 0);
-
-                    modal.Date = item.Item1;
-                    modal.Adr = adr.ToString("N0");
-                    modal.RevPar = revpar.ToString("N0");
-                    modal.Occupancy = occupancyRate.ToString("#0.##%");
-                    modal.SelectedPlan = 1;
-
-                    if (adr > DEFAULT_ADR)
-                        modal.Type = "success";
-                    else if (adr == DEFAULT_ADR)
-                        modal.Type = "warning";
-                    else
-                        modal.Type = "danger";
-
-                    if (percent < 0)
-                        modal.Percent = percent.ToString() + "%";
-                    else
-                        modal.Percent = "+" + percent.ToString() + "%";
-
-                    CalendarModel.Add(modal);
-                }
-
-                repository.AddPredictions(PredictionList);
+                CalendarModel = CalendarPredictions();
             }
             else
             {
-                // If database already has existing predicted data
-                if(repository.CheckIfNeedsPredictions(DateTime.Today) == true)
-                {
-                    // Call the api and retrieve data
-                    // Once data retrieved, do prediction for the next 14 days
-                }
-
+                // If database already has existing predicted data            
                 var list = repository.GetPredictions();
                 
                 foreach(var pred in list)
@@ -535,6 +536,18 @@ namespace HRMS.Controllers
                         modal.Percent = "+" + percent.ToString() + "%";
 
                     CalendarModel.Add(modal);
+                }
+
+                // If there's no new predictions in the database
+                if (repository.CheckIfNeedsPredictions(DateTime.Today) == true)
+                {
+                    var Predictionlist = new List<CalendarEvent>();
+                    Predictionlist = CalendarPredictions();
+                    
+                    foreach(var item in Predictionlist)
+                    {
+                        CalendarModel.Add(item);
+                    }
                 }
             }
 
@@ -687,19 +700,21 @@ namespace HRMS.Controllers
 
             // Predicted ADR list
             var predAdr = Get1WeekAdr(DetailsModel.Date);
-            predAdr.Add(DetailsModel.Adr.ToString());
+            var selectedDatePredAdr = DetailsModel.Adr.Replace(",", "");
+            predAdr.Add(selectedDatePredAdr);
 
             // Adjusted ADR list
             var adjAdr = Get1WeekAdr(DetailsModel.Date);
-            adjAdr.Add(adr.ToString("N0"));
+            adjAdr.Add(adr.ToString());
 
             // Predicted Revpar list
             var predrp = Get1WeekRevpar(DetailsModel.Date);
-            predrp.Add(DetailsModel.RevPar.ToString());
+            var selectedDatePredRP = DetailsModel.RevPar.Replace(",", "");
+            predrp.Add(selectedDatePredRP);
 
             // Adjusted Revpar list
             var adjrp = Get1WeekRevpar(DetailsModel.Date);
-            adjrp.Add(revpar.ToString("N0"));
+            adjrp.Add(revpar.ToString());
 
 
 

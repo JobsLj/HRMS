@@ -10,6 +10,11 @@
 
     var adrdiff = Math.Abs(Convert.ToDouble(Model.PredictedAdr[Model.PredictedAdr.Count - 1]) - Convert.ToDouble(Model.AdjustedAdr[Model.AdjustedAdr.Count - 1]));
     var revpardiff = Math.Abs(Convert.ToDouble(Model.PredictedRevPar[Model.PredictedRevPar.Count - 1]) - Convert.ToDouble(Model.AdjustedRevPar[Model.AdjustedRevPar.Count - 1]));
+
+    var selectedDatePredAdr = Convert.ToDouble(Model.PredictedAdr[Model.PredictedAdr.Count - 1]);
+    var selectedDatePredRP = Convert.ToDouble(Model.PredictedRevPar[Model.PredictedRevPar.Count - 1]);
+    var selectedDateAdjAdr = Convert.ToDouble(Model.AdjustedAdr[Model.AdjustedAdr.Count - 1]);
+    var selectedDateAdjRP = Convert.ToDouble(Model.AdjustedRevPar[Model.AdjustedRevPar.Count - 1]);
 }
 
 <!-- pageheader -->
@@ -44,13 +49,13 @@
             <div class="card-body border-top">
                 <div class="row">
                     <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 p-3">
-                        <h4> Difference Calculated: @adrdiff</h4>
+                        <h4> Difference Calculated: Rp @adrdiff.ToString("N0")</h4>
                         <p>
                             Use this rate.
                         </p>
                     </div>
                     <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-3">
-                        <h2 class="font-weight-normal mb-3"><span>@Model.PredictedAdr[Model.PredictedAdr.Count -1]</span></h2>
+                        <h2 class="font-weight-normal mb-3"><span>Rp @selectedDatePredAdr.ToString("N0")</span></h2>
                         <div class="mb-0 mt-3 legend-item">
                             <span class="fa-xs text-primary mr-1 legend-title "><i class="fa fa-fw fa-square-full"></i></span>
                             <span class="legend-text">Predicted ADR</span>
@@ -58,7 +63,7 @@
                     </div>
                     <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-3">
                         <h2 class="font-weight-normal mb-3">
-                            <span>@Model.AdjustedAdr[Model.AdjustedAdr.Count - 1]</span>
+                            <span>Rp @selectedDateAdjAdr.ToString("N0")</span>
                         </h2>
                         <div class="text-muted mb-0 mt-3 legend-item"> <span class="fa-xs text-secondary mr-1 legend-title"><i class="fa fa-fw fa-square-full"></i></span><span class="legend-text">Adjusted ADR</span></div>
                     </div>
@@ -77,13 +82,13 @@
             <div class="card-body border-top">
                 <div class="row">
                     <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 p-3">
-                        <h4> Difference Calculated: @revpardiff</h4>
+                        <h4> Difference Calculated: Rp @revpardiff.ToString("N0")</h4>
                         <p>
                             Use this rate.
                         </p>
                     </div>
                     <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-3">
-                        <h2 class="font-weight-normal mb-3"><span>@Model.PredictedRevPar[Model.PredictedRevPar.Count -1]</span></h2>
+                        <h2 class="font-weight-normal mb-3"><span>Rp @selectedDatePredRP.ToString("N0")</span></h2>
                         <div class="mb-0 mt-3 legend-item">
                             <span class="fa-xs text-primary mr-1 legend-title "><i class="fa fa-fw fa-square-full"></i></span>
                             <span class="legend-text">Predicted RevPAR</span>
@@ -91,7 +96,7 @@
                     </div>
                     <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-3">
                         <h2 class="font-weight-normal mb-3">
-                            <span>@Model.AdjustedRevPar[Model.AdjustedRevPar.Count -1]</span>
+                            <span>Rp @selectedDateAdjRP.ToString("N0")</span>
                         </h2>
                         <div class="text-muted mb-0 mt-3 legend-item"> <span class="fa-xs text-secondary mr-1 legend-title"><i class="fa fa-fw fa-square-full"></i></span><span class="legend-text">Adjusted RevPAR</span></div>
                     </div>

@@ -11,6 +11,7 @@ namespace HRMS.Repositories
         bool CheckifEmpty();
         bool CheckPredictions();
         bool CheckIfNeedsPredictions(DateTime date);
+        DateTime GetLatestDate();
         List<DailyRoomRates> GetLatestRoomRates(int roomid, DateTime? latest = null);
         DailyOccupancyRoomType GetLatestRoomTypeOccupancy(int roomid, DateTime? latest = null);
         List<DailyPredictionModel> GetPredictions();

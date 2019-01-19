@@ -34,6 +34,12 @@ namespace HRMS.Repositories
             return date == latest.Date ? true : false;
         }
 
+        public DateTime GetLatestDate()
+        {
+            var item = context.Occupancy.OrderByDescending(i => i.Date).FirstOrDefault();
+            return item.Date;
+        }
+
         public List<DailyRoomRates> GetLatestRoomRates(int roomid, DateTime? latest = null)
         {
             if (latest == null)

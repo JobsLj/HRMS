@@ -128,6 +128,7 @@ namespace PredictionModelTrainer
 
         private static float GetAvgAmount(IGrouping<DateTime, RoomRates> list)
         {
+            var highest = list.Max(i => i.AmountTypeInclusive);
             var total = 0;
             foreach (var item in list)
             {
