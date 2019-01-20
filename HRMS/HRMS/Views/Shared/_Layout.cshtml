@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="~/css/bootstrap.css">
     <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="~/lib/fontawesome/css/fontawesome-all.css">
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/charts/charts-bundle/Chart.bundle.js"></script>
     
@@ -40,34 +41,48 @@
                 </div>
             </nav>
         </div>
-        <!-- left sidebar -->
-        <div class="nav-left-sidebar sidebar-dark">
-            <div class="menu-list">
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav flex-column">
-                            <li class="nav-divider">
-                                Menu
-                            </li>
-                            <li class="nav-item ">
-                                <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link active">Dashboard </a>
-                            </li>
-                            <li class="nav-item">
-                                <a asp-area="" asp-controller="Home" asp-action="About" class="nav-link">About </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+
+
+        <div class="row">
+            <!-- left sidebar -->
+            <div class="nav-left-sidebar sidebar-dark sidebar-expanded" id="sidebar-container">
+                <div class="menu-list">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav flex-column">
+                                <li class="nav-divider">
+                                    <a href="#" data-toggle="sidebar-collapse" class="collapse-menu">
+                                        <span id="collapse-icon" class="fa fa-2x mr-2" style="font-size:14px"></span>
+                                        <span id="collapse-text" class="menu-collapsed">Menu</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link active">
+                                        <span class="fa fa-calendar-alt fa-fw mr-1"></span>
+                                        <span class="menu-collapsed">Dashboard</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-area="" asp-controller="Home" asp-action="About" class="nav-link">
+                                        <span class="fa fa-info fa-fw mr-1"></span>
+                                        <span class="menu-collapsed">About</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
             </div>
-        </div>
-        <!-- wrapper  -->
-        <div class="dashboard-wrapper">
-            <div class="container-fluid  dashboard-content">
-                @RenderBody()
+
+            <!-- wrapper  -->
+            <div class="col">
+                <div class="container-fluid  dashboard-content">
+                    @RenderBody()
+                </div>
             </div>
         </div>
         <script src="~/js/bootstrap.js"></script>

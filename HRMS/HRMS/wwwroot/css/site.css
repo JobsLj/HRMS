@@ -214,15 +214,25 @@ Left Navigation Sidebar
 ------------------------- */
 
 .nav-left-sidebar {
-    position: fixed;
-    width: 264px;
-    height: 100%;
+    min-height: 100vh;
     top: 60px;
     overflow: auto;
     background-color: #fff;
     -webkit-box-shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.13);
     box-shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.13);
     -webkit-transition: all 0.3s ease;
+}
+
+.sidebar-expanded {
+    width: 264px;
+}
+
+.sidebar-collapsed {
+    width: 60px;
+}
+
+.collapse-menu:hover {
+    text-decoration:none;
 }
 
 .nav-left-sidebar .nav-link[data-toggle="collapse"] {
@@ -260,7 +270,7 @@ Left Navigation Sidebar
 
 .nav-left-sidebar .navbar {
     position: relative;
-    padding: 14px;
+    padding:  14px 0 14px 14px;
 }
 
 .nav-left-sidebar .navbar-nav .nav-item {
@@ -389,7 +399,7 @@ Leftsidebar - dark
     -webkit-transition: all 0.3s ease;
 }
 
-.sidebar-dark .nav-divider {
+.sidebar-dark .nav-divider > a {
     color: #fff;
     font-size: 12px;
     letter-spacing: 1px;
@@ -599,6 +609,13 @@ Details
 
 .profile-title {
     font-size: 16px;
+    color: #3d405c;
+}
+
+.profile-details {
+    text-align: center;
+    margin-bottom: 35px;
+    color: #3d405c;
 }
 
 /* ----------------------- 

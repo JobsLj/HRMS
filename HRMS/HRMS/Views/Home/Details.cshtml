@@ -54,28 +54,40 @@
                 </div>
             </div>
             <div class="card-body border-top">
-                <h3 class="profile-title">Revenue Forecast</h3>
-                <div class="">
-                    <ul class="list-unstyled mb-0">
-                        @if (Model.selectedPlan == 1)
-                        {
-                            <li class="mb-2">ADR: @Model.Adr</li>
-                            <li class="mb-2">OCCUPANCY: @Math.Round(Convert.ToDouble(Model.Occupancy), 2)%</li>
-                            <li class="mb-2">RevPAR: @Model.RevPar</li>
-                        }
-                        else if (Model.selectedPlan == 2)
-                        {
-                            <li class="mb-2">ADR: @Model.defaultAdr</li>
-                            <li class="mb-2">OCCUPANCY: @Math.Round(Convert.ToDouble(Model.Occupancy), 2)%</li>
-                            <li class="mb-2">RevPAR: @Model.defaultRevpar</li>
-                        }
-                        else
-                        {
-                            <li class="mb-2">ADR: @Model.adjAdr</li>
-                            <li class="mb-2">OCCUPANCY: @Math.Round(Convert.ToDouble(Model.Occupancy), 2)%</li>
-                            <li class="mb-2">RevPAR: @Model.adjRevpar</li>
-                        }
-                    </ul>
+                <div>
+                    @if (Model.selectedPlan == 1)
+                    {
+                        <h3 class="profile-title" style="text-align:center">ADR</h3>
+                        <h2 class="profile-details">Rp @Model.Adr</h2>
+
+                        <h3 class="profile-title" style="text-align:center">OCCUPANCY</h3>
+                        <h2 class="profile-details">@Math.Round(Convert.ToDouble(Model.Occupancy), 2)%</h2>
+
+                        <h3 class="profile-title" style="text-align:center">RevPAR</h3>
+                        <h2 class="profile-details" style="margin-bottom:0px;">Rp @Model.RevPar</h2>
+                    }
+                    else if (Model.selectedPlan == 2)
+                    {
+                        <h3 class="profile-title" style="text-align:center">ADR</h3>
+                        <h2 class="profile-details">Rp @Model.defaultAdr</h2>
+
+                        <h3 class="profile-title" style="text-align:center">OCCUPANCY</h3>
+                        <h2 class="profile-details">@Math.Round(Convert.ToDouble(Model.Occupancy), 2)%</h2>
+
+                        <h3 class="profile-title" style="text-align:center">RevPAR</h3>
+                        <h2 class="profile-details" style="margin-bottom:0px;">Rp @Model.defaultRevpar</h2>
+                    }
+                    else
+                    {
+                        <h3 class="profile-title" style="text-align:center">ADR</h3>
+                        <h2 class="profile-details">Rp @Model.adjAdr</h2>
+
+                        <h3 class="profile-title" style="text-align:center">OCCUPANCY</h3>
+                        <h2 class="profile-details">@Math.Round(Convert.ToDouble(Model.Occupancy), 2)%</h2>
+
+                        <h3 class="profile-title" style="text-align:center">RevPAR</h3>
+                        <h2 class="profile-details" style="margin-bottom:0px;">Rp @Model.adjRevpar</h2>
+                    }
                 </div>
             </div>
             <div class="card-body border-top">
@@ -118,7 +130,7 @@
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <h5 class="text-muted">Yesterday</h5>
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">ADR: @Model.yestAdr</h5>
+                                        <h5 class="mb-1">ADR: Rp @Model.yestAdr</h5>
                                     </div>
                                     @if (yestAdr >= 0)
                                     {
@@ -152,7 +164,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">RevPAR: @Model.yestRevPar</h5>
+                                        <h5 class="mb-1">RevPAR: Rp @Model.yestRevPar</h5>
                                     </div>
                                     @if (yestRevpar >= 0)
                                     {
@@ -174,7 +186,7 @@
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <h5 class="text-muted">Previous Month</h5>
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">ADR: @Model.prevMonthAdr</h5>
+                                        <h5 class="mb-1">ADR: Rp @Model.prevMonthAdr</h5>
                                     </div>
                                     @if (monthAdr >= 0)
                                     {
@@ -209,7 +221,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">RevPAR: @Model.prevMonthRevPar</h5>
+                                        <h5 class="mb-1">RevPAR: Rp @Model.prevMonthRevPar</h5>
                                     </div>
                                     @if (monthRevpar >= 0)
                                     {
@@ -231,7 +243,7 @@
                                 <div class="card-body" style="padding-bottom:0px;">
                                     <h5 class="text-muted">Previous Year</h5>
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">ADR: @Model.prevYearAdr</h5>
+                                        <h5 class="mb-1">ADR: Rp @Model.prevYearAdr</h5>
                                     </div>
                                     @if (yearAdr >= 0)
                                     {
@@ -265,7 +277,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="metric-value d-inline-block">
-                                        <h5 class="mb-1">RevPAR: @Model.prevYearRevPar</h5>
+                                        <h5 class="mb-1">RevPAR: Rp @Model.prevYearRevPar</h5>
                                     </div>
                                     @if (yearRevpar >= 0)
                                     {
@@ -295,16 +307,16 @@
                                     <h4 class="mb-0 text-white"> Recommended Rate</h4>
                                 </div>
                                 <div class="card-body text-center">
-                                    <h1 class="mb-1">@Model.Adr</h1>
+                                    <h1 class="mb-1">Rp @Model.Adr</h1>
                                     <p>Average Daily Rate</p>
                                 </div>
                                 <div class="card-body border-top">
                                     <ul class="list-unstyled bullet-check font-14">
-                                        <li>Standard Room: @Model.StdRate</li>
-                                        <li>Superior Room: @Model.SprRate</li>
-                                        <li>Deluxe Room: @Model.DlxRate</li>
-                                        <li>Family Room: @Model.FamRate</li>
-                                        <li>Suite Room: @Model.SuiteRate</li>
+                                        <li>Standard Room: Rp @Model.StdRate</li>
+                                        <li>Superior Room: Rp @Model.SprRate</li>
+                                        <li>Deluxe Room: Rp @Model.DlxRate</li>
+                                        <li>Family Room: Rp @Model.FamRate</li>
+                                        <li>Suite Room: Rp @Model.SuiteRate</li>
                                     </ul>
                                     @if (Model.selectedPlan == 1)
                                     {
@@ -323,16 +335,16 @@
                                     <h4 class="mb-0 text-white"> Default Rate</h4>
                                 </div>
                                 <div class="card-body text-center">
-                                    <h1 class="mb-1">@Model.defaultAdr</h1>
+                                    <h1 class="mb-1">Rp @Model.defaultAdr</h1>
                                     <p>Average Daily Rate</p>
                                 </div>
                                 <div class="card-body border-top">
                                     <ul class="list-unstyled bullet-check font-14">
-                                        <li>Standard Room: @defaultStd</li>
-                                        <li>Superior Room: @defaultSpr</li>
-                                        <li>Deluxe Room: @defaultDlx</li>
-                                        <li>Family Room: @defaultFam</li>
-                                        <li>Suite Room: @defaultSuite</li>
+                                        <li>Standard Room: Rp @defaultStd</li>
+                                        <li>Superior Room: Rp @defaultSpr</li>
+                                        <li>Deluxe Room: Rp @defaultDlx</li>
+                                        <li>Family Room: Rp @defaultFam</li>
+                                        <li>Suite Room: Rp @defaultSuite</li>
                                     </ul>
                                     @if (Model.selectedPlan == 2)
                                     {
@@ -351,16 +363,16 @@
                                     <h4 class="mb-0 text-white">Adjusted Rate</h4>
                                 </div>
                                 <div class="card-body text-center">
-                                    <h1 class="mb-1">@Model.adjAdr</h1>
+                                    <h1 class="mb-1">Rp @Model.adjAdr</h1>
                                     <p>Average Daily Rate</p>
                                 </div>
                                 <div class="card-body border-top">
                                     <ul class="list-unstyled bullet-check font-14">
-                                        <li>Standard Room: @Model.AdjStd.ToString("N0")</li>
-                                        <li>Superior Room: @Model.AdjSpr.ToString("N0")</li>
-                                        <li>Deluxe Room: @Model.AdjDlx.ToString("N0")</li>
-                                        <li>Family Room: @Model.AdjFam.ToString("N0")</li>
-                                        <li>Suite Room: @Model.AdjSuite.ToString("N0")</li>
+                                        <li>Standard Room: Rp @Model.AdjStd.ToString("N0")</li>
+                                        <li>Superior Room: Rp @Model.AdjSpr.ToString("N0")</li>
+                                        <li>Deluxe Room: Rp @Model.AdjDlx.ToString("N0")</li>
+                                        <li>Family Room: Rp @Model.AdjFam.ToString("N0")</li>
+                                        <li>Suite Room: Rp @Model.AdjSuite.ToString("N0")</li>
                                     </ul>
                                     @if (Model.selectedPlan == 3)
                                     {
