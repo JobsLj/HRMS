@@ -186,14 +186,6 @@ namespace HRMS.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<bool>("Iscomplimentary");
-
-                    b.Property<string>("RateCode");
-
-                    b.Property<int>("RateCodeId");
-
-                    b.Property<bool>("RoomRateIsSet");
-
                     b.Property<string>("RoomTypeCode");
 
                     b.Property<int>("RoomTypeId");

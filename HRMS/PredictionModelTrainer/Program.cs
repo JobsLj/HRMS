@@ -30,14 +30,14 @@ namespace PredictionModelTrainer
                 //SuiteRoomRatesModelHelper.Evaluate(context);
 
                 // DLX
-                DlxRoomRatesModelHelper.CreateModelPipeline(context);
-                DlxRoomRatesModelHelper.Evaluate(context);
+                //DlxRoomRatesModelHelper.CreateModelPipeline(context);
+                //DlxRoomRatesModelHelper.Evaluate(context);
 
                 //OccupancyModelHelper.CreateModelPipeline(context);
                 //OccupancyModelHelper.Evaluate(context);
 
-                //// STD Occupancy
-                //StdOccupancyModelHelper.CreateModelPipeline(context);
+                // STD Occupancy
+                StdOccupancyModelHelper.CreateModelPipeline(context);
                 //StdOccupancyModelHelper.Evaluate(context);
 
                 //// SPR Occupancy

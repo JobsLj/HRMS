@@ -31,7 +31,7 @@ namespace HRMS.Repositories
         {
             var latest = context.Predictions.OrderByDescending(i => i.Date).FirstOrDefault();
 
-            return date == latest.Date ? true : false;
+            return date >= latest.Date ? true : false;
         }
 
         public DateTime GetLatestDate()
@@ -95,15 +95,11 @@ namespace HRMS.Repositories
             {
                 DailyRoomRates rates = new DailyRoomRates();
                 rates.Date = DateTime.Parse(item["date"].ToString());
-                rates.RateCodeId = Convert.ToInt32(item["rate_code_id"].ToString());
-                rates.RateCode = item["rate_code"].ToString();
                 rates.RoomTypeId = Convert.ToInt32(item["room_type_id"].ToString());
                 rates.RoomTypeCode = item["room_type_code"].ToString();
-                rates.AmountTypeInclusive = Convert.ToInt32(item["amount_tax_inclusive"].ToString());
-                rates.AmountTypeExclusive = Convert.ToInt32(item["amount_tax_exclusive"].ToString());
-                rates.TaxAmount = Convert.ToInt32(item["tax_amount"].ToString());
-                rates.RoomRateIsSet = Convert.ToBoolean(item["room_rate_is_set"].ToString());
-                rates.Iscomplimentary = Convert.ToBoolean(item["is_complimentary"].ToString());
+                rates.AmountTypeInclusive = Convert.ToInt32(item["max_amount_tax_inclusive"].ToString());
+                rates.AmountTypeExclusive = Convert.ToInt32(item["max_amount_tax_exclusive"].ToString());
+                rates.TaxAmount = Convert.ToInt32(item["max_tax_amount"].ToString());
 
                 context.RoomRates.Add(rates);
             }

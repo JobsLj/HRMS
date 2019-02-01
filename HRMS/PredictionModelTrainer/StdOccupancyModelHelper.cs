@@ -7,6 +7,7 @@ using Microsoft.ML.Runtime.Api;
 using Microsoft.ML.Core.Data;
 using System.IO;
 using Microsoft.ML.Runtime.Data;
+using CsvHelper;
 
 namespace PredictionModelTrainer
 {
@@ -16,28 +17,36 @@ namespace PredictionModelTrainer
         {
             ConsoleWriteHeader("Training standard room occupancy prediction model");
             IList<OccupancyTrainer> Data = GetOccupancyData();
+
+
+
+
+
+
+
+
             // Load the data
-            var trainData = context.CreateDataView(Data);
+            //var trainData = context.CreateDataView(Data);
 
-            // Choosing regression algorithm
-            var trainer = context.Regression.Trainers.FastTreeTweedie("Label", "Features");
+            //// Choosing regression algorithm
+            //var trainer = context.Regression.Trainers.FastTreeTweedie("Label", "Features");
 
-            // Transform the data
-            var pipeline = context.Transforms.Categorical.OneHotEncoding("Date")
-                .Append(context.Transforms.CopyColumns("Next", "Label"))
-                .Append(context.Transforms.Concatenate(outputColumn: "Features", "Date", "TotalRoom", "Prev", "Occupied"))
-                .Append(trainer);
+            //// Transform the data
+            //var pipeline = context.Transforms.Categorical.OneHotEncoding("Date")
+            //    .Append(context.Transforms.CopyColumns("Next", "Label"))
+            //    .Append(context.Transforms.Concatenate(outputColumn: "Features", "Date", "TotalRoom", "Prev", "Occupied"))
+            //    .Append(trainer);
 
-            // Cross-Validate with single dataset
-            Console.WriteLine("=============== Cross-validating to get model's accuracy metrics ===============");
-            var crossValidateResults = context.Regression.CrossValidate(trainData, pipeline, numFolds: 10, labelColumn: "Label");
-            PrintRegressionFoldsAverageMetrics(trainer.ToString(), crossValidateResults);
+            //// Cross-Validate with single dataset
+            //Console.WriteLine("=============== Cross-validating to get model's accuracy metrics ===============");
+            //var crossValidateResults = context.Regression.CrossValidate(trainData, pipeline, numFolds: 10, labelColumn: "Label");
+            //PrintRegressionFoldsAverageMetrics(trainer.ToString(), crossValidateResults);
 
-            // Create and train the model
-            var model = pipeline.Fit(trainData);
+            //// Create and train the model
+            //var model = pipeline.Fit(trainData);
 
-            using (var file = File.OpenWrite(outputModelPath))
-                model.SaveTo(context, file);
+            //using (var file = File.OpenWrite(outputModelPath))
+            //    model.SaveTo(context, file);
         }
 
         public static void Evaluate(MLContext context, string outputModelPath = "stdoccupancy_fastTreeTweedie.zip")
@@ -97,17 +106,24 @@ namespace PredictionModelTrainer
             using (var context = new AppContext())
             {
                 var dblist = context.RoomTypeOccupancy.Where(i => i.RoomTypeId == 8).ToList();
-                foreach (var item in dblist)
-                {
-                    OccupancyTrainer modelOcc = new OccupancyTrainer();
-                    modelOcc.Date = item.Date;
-                    modelOcc.Occupied = item.RoomOccupied;
-                    modelOcc.TotalRoom = item.TotalRoom;
-                    modelOcc.Next = GetNextDayValue(item.Date);
-                    modelOcc.Prev = GetPrevDayValue(item.Date);
 
-                    occupancyList.Add(modelOcc);
+                using (var writer = new StreamWriter("C:\\Users\\Siew Mun\\Desktop\\csv\\file.csv"))
+                using (var csv = new CsvWriter(writer))
+                {
+                    csv.WriteRecords(dblist);
                 }
+
+                //foreach (var item in dblist)
+                //{
+                //    OccupancyTrainer modelOcc = new OccupancyTrainer();
+                //    modelOcc.Date = item.Date;
+                //    modelOcc.Occupied = item.RoomOccupied;
+                //    modelOcc.TotalRoom = item.TotalRoom;
+                //    modelOcc.Next = GetNextDayValue(item.Date);
+                //    modelOcc.Prev = GetPrevDayValue(item.Date);
+
+                //    occupancyList.Add(modelOcc);
+                //}
             }
             return occupancyList;
         }

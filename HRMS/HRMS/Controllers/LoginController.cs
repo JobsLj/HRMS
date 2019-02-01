@@ -57,7 +57,7 @@ namespace HRMS.Controllers
             var accessToken = result["access_token"].ToString();
 
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
-            client.DefaultRequestHeaders.Add("X-TENANT-CODE", "EDINBURGH");
+            client.DefaultRequestHeaders.Add("X-TENANT-CODE", "TONYSVILLA");
 
             if (repository.CheckifEmpty())
             {
@@ -67,7 +67,7 @@ namespace HRMS.Controllers
                 var occupancyDates = DateTime.Today.AddYears(-1).ToString("yyyy-MM-dd");
 
                 // Room Rates
-                var res = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start={roomDates}&range_end={today}");
+                var res = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/room-rates/actual/by-room-type?range_start={roomDates}&range_end={today}");
                 var resContent = res.Content;
 
                 using (var outc = new StreamReader(await resContent.ReadAsStreamAsync()))
@@ -105,41 +105,41 @@ namespace HRMS.Controllers
             else if (repository.CheckIfNeedsPredictions(DateTime.Today) == true)
             {
                 // Get the response content
-                var today = DateTime.Today.ToString("yyyy-MM-dd");
-                var startDate = repository.GetLatestDate().AddDays(1).ToString("yyyy-MM-dd");
+                //var today = DateTime.Today.ToString("yyyy-MM-dd");
+                //var startDate = repository.GetLatestDate().AddDays(1).ToString("yyyy-MM-dd");
 
-                // Room Rates
-                var res = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start={startDate}&range_end={today}");
-                var resContent = res.Content;
+                //// Room Rates
+                //var res = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start={startDate}&range_end={today}");
+                //var resContent = res.Content;
 
-                using (var outc = new StreamReader(await resContent.ReadAsStreamAsync()))
-                {
-                    // Write the output.
-                    var streamResult = await outc.ReadToEndAsync();
-                    repository.SeedRoomRates(streamResult);
-                }
+                //using (var outc = new StreamReader(await resContent.ReadAsStreamAsync()))
+                //{
+                //    // Write the output.
+                //    var streamResult = await outc.ReadToEndAsync();
+                //    repository.SeedRoomRates(streamResult);
+                //}
 
-                // Occupancy
-                var occRes = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/statistics?range_start={startDate}&range_end={today}");
-                var occResContent = occRes.Content;
+                //// Occupancy
+                //var occRes = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/statistics?range_start={startDate}&range_end={today}");
+                //var occResContent = occRes.Content;
 
-                using (var outc = new StreamReader(await occResContent.ReadAsStreamAsync()))
-                {
-                    // Write the output.
-                    var streamResult = await outc.ReadToEndAsync();
-                    repository.SeedOccupancy(streamResult);
-                }
+                //using (var outc = new StreamReader(await occResContent.ReadAsStreamAsync()))
+                //{
+                //    // Write the output.
+                //    var streamResult = await outc.ReadToEndAsync();
+                //    repository.SeedOccupancy(streamResult);
+                //}
 
-                // Occupancy By Room Type
-                var occResByRoom = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/statistics/by-room-type?range_start={startDate}&range_end={today}");
-                var occResByRoomContent = occResByRoom.Content;
+                //// Occupancy By Room Type
+                //var occResByRoom = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/statistics/by-room-type?range_start={startDate}&range_end={today}");
+                //var occResByRoomContent = occResByRoom.Content;
 
-                using (var outc = new StreamReader(await occResByRoomContent.ReadAsStreamAsync()))
-                {
-                    // Write the output.
-                    var streamResult = await outc.ReadToEndAsync();
-                    repository.SeedRoomTypeOccupancy(streamResult);
-                }
+                //using (var outc = new StreamReader(await occResByRoomContent.ReadAsStreamAsync()))
+                //{
+                //    // Write the output.
+                //    var streamResult = await outc.ReadToEndAsync();
+                //    repository.SeedRoomTypeOccupancy(streamResult);
+                //}
 
             }
 
