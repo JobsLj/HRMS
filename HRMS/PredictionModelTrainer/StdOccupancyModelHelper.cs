@@ -8,6 +8,7 @@ using Microsoft.ML.Core.Data;
 using System.IO;
 using Microsoft.ML.Runtime.Data;
 using CsvHelper;
+using PredictionModelTrainer.Models;
 
 namespace PredictionModelTrainer
 {
@@ -102,28 +103,55 @@ namespace PredictionModelTrainer
         private static IList<OccupancyTrainer> GetOccupancyData()
         {
             IList<OccupancyTrainer> occupancyList = new List<OccupancyTrainer>();
+            IList<occupancyc> newList = new List<occupancyc>();
 
             using (var context = new AppContext())
             {
                 var dblist = context.RoomTypeOccupancy.Where(i => i.RoomTypeId == 8).ToList();
 
-                using (var writer = new StreamWriter("C:\\Users\\Siew Mun\\Desktop\\csv\\file.csv"))
-                using (var csv = new CsvWriter(writer))
+                foreach (var item in dblist)
                 {
-                    csv.WriteRecords(dblist);
+                    occupancyc modelOcc = new occupancyc();
+                    modelOcc.Date = item.Date;
+                    modelOcc.Occupied = item.RoomOccupied;
+
+                    if (item.Date.Month == 1)
+                        modelOcc.Visitors = 460824;
+                    else if (item.Date.Month == 2)
+                        modelOcc.Visitors = 453985;
+                    else if (item.Date.Month == 3)
+                        modelOcc.Visitors = 425499;
+                    else if (item.Date.Month == 4)
+                        modelOcc.Visitors = 477464;
+                    else if (item.Date.Month == 5)
+                        modelOcc.Visitors = 489376;
+                    else if (item.Date.Month == 6)
+                        modelOcc.Visitors = 504141;
+                    else if (item.Date.Month == 7)
+                        modelOcc.Visitors = 592046;
+                    else if (item.Date.Month == 8)
+                        modelOcc.Visitors = 601884;
+                    else if (item.Date.Month == 9)
+                        modelOcc.Visitors = 550520;
+                    else if (item.Date.Month == 10)
+                        modelOcc.Visitors = 465085;
+                    else if (item.Date.Month == 11)
+                        modelOcc.Visitors = 361006;
+                    else
+                        modelOcc.Visitors = 315909;
+
+
+                    newList.Add(modelOcc);
                 }
 
-                //foreach (var item in dblist)
-                //{
-                //    OccupancyTrainer modelOcc = new OccupancyTrainer();
-                //    modelOcc.Date = item.Date;
-                //    modelOcc.Occupied = item.RoomOccupied;
-                //    modelOcc.TotalRoom = item.TotalRoom;
-                //    modelOcc.Next = GetNextDayValue(item.Date);
-                //    modelOcc.Prev = GetPrevDayValue(item.Date);
+                newList = newList.OrderBy(x => x.Date).ToList();
 
-                //    occupancyList.Add(modelOcc);
-                //}
+                //using (var writer = new StreamWriter("C:\\Users\\Siew Mun\\Desktop\\csv\\file.csv"))
+                using (var writer = new StreamWriter("C:\\Users\\User\\Desktop\\test\\wew.csv"))
+                using (var csv = new CsvWriter(writer))
+                {
+                    csv.WriteRecords(newList);
+                }
             }
             return occupancyList;
         }

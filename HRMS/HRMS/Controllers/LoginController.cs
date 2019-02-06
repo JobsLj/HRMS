@@ -109,7 +109,7 @@ namespace HRMS.Controllers
                 //var startDate = repository.GetLatestDate().AddDays(1).ToString("yyyy-MM-dd");
 
                 //// Room Rates
-                //var res = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/room-rates/daily?range_start={startDate}&range_end={today}");
+                //var res = await client.GetAsync($"https://api.fos.uog.gustodian.com/v1/analytics/room-rates/actual/by-room-type?range_start={startDate}&range_end={today}");
                 //var resContent = res.Content;
 
                 //using (var outc = new StreamReader(await resContent.ReadAsStreamAsync()))
